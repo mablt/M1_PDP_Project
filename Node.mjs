@@ -6,7 +6,7 @@ export class Node{
         this.coordinates = coordinates;
     }
 
-    // Getteurs
+    // Getters
     getId(){
         return this.id;
     }
@@ -17,7 +17,7 @@ export class Node{
         return this.coordinates;
     }
 
-    // Setteurs
+    // Setters
     setName(name){
         this.name = name;
     }
@@ -30,7 +30,3 @@ export class Node{
 
     
 }
-
-// Tests
-// var monNoeud = new Node("ASE322G", "Name_MonNoeud", [33, 4, 98]);
-// console.log(monNoeud.getName());

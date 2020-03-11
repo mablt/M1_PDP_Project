@@ -1,12 +1,12 @@
 export class Map{
-    constructor(id, name, nodesArray, edgesArray){
+    constructor(id, name, nodesArray, linksArray){
         this.id = id;
         this.name = name;
         this.nodesArray = nodesArray;
-        this.edgesArray = edgesArray;
+        this.linksArray = linksArray;
     }
 
-    // Getteurs
+    // Getters
     getId(){
         return this.id;
     }
@@ -16,11 +16,11 @@ export class Map{
     getNodesArray(){
         return this.nodesArray;
     }
-    getEdgesArray(){
-        return this.edgesArray;
+    getLinksArray(){
+        return this.linksArray;
     }
 
-    // Setteurs
+    // Setters
     setName(name){
         this.name = name;
     }
@@ -30,16 +30,16 @@ export class Map{
     setNodesArray(nodesArray){
         this.nodesArray = nodesArray;
     }
-    setEdgesArray(edgesArray){
-        this.edgesArray = edgesArray;
+    setLinksArray(linksArray){
+        this.linksArray = linksArray;
     }
 
-    // Methodds
+    // Methods
     addNode(node){
         this.nodesArray.push(node);
     }
-    addEdge(edge){
-        this.edgesArray.push(edge);
+    addLink(link){
+        this.linksArray.push(link);
     }
 }
 
