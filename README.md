@@ -9,7 +9,7 @@ This repository contains 3 files contains classes and 1 file contains test data 
 ## Usage
 To test this data, the use of Node.js is preferable.
 
-`cd classes/`
+`cd testClass/`
 
 
 
