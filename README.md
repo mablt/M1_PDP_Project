@@ -1,5 +1,6 @@
 # Class files and test file for begining of the project
 This repository contains 3 files contains classes and 1 file contains test data for this 3 classes.
+A MODIFIER !!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ## Installation
 
@@ -7,12 +8,8 @@ This repository contains 3 files contains classes and 1 file contains test data 
 
 
 ## Usage
-To test this data, the use of Node.js is preferable.
+To test this data, the use of browser is required.
 
-`cd classes/`
+Open `index.html` in the browser and open the console in development tools (`CTRL+Alt+I` for Chrome and `CTRL+Shift+I` for Firefox).
 
-
-
-`node --experimental-modules test.js`
-
-Node.js version used : v12.16.1
+Tests done with Google Chrome 79.0.3945.117 and Firefox 72.0.1.

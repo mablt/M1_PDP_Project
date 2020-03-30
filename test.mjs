@@ -1,5 +1,4 @@
-response.addHeader("Access-Control-Allow-Origin", "*");
-import { Node } from "./Node.mjs";
+import { Node } from "./Node.js";
 import { Map } from "./Map.mjs";
 import { Link } from "./Link.mjs";
 

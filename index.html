@@ -9,7 +9,22 @@
 <body>
     <h1>Tests of classes</h1>
 
-    <script type="module" src="./test.mjs"></script>
+    <p> Simple test with the file 'simpleTest.js'</p>
+    <script type="text/javascript" src="./simpleTest.js"></script>
+    
+    <!--  <script type="module" src="./Node.mjs"></script> --> 
+
+    <!-- <script nomodule src="https://unpkg.com/browser-es-module-loader/dist/babel-browser-build.js"></script>
+    <script nomodule src="https://unpkg.com/browser-es-module-loader"></script> -->
+    <script type="module">
+        import { Node } from "./Node.js";
+
+    var node1 = new Node(1001, "Node_1", [33, 4, 98]);
+    var node2 = new Node(1002, "Node_2", [3, 24, 12]);
+    var node3 = new Node(1003, "Node_3", [90, 75, 208]);
+
+    </script>  
+    
     
 </body>
 </html>
