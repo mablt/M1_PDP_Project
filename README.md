@@ -9,7 +9,9 @@ A MODIFIER !!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ### Node installation and set up
 `sudo apt-get install npm`
+
 Then, the http-server package is needed : 
+
 `sudo npm install -g http-server`
 
 ## Usage
