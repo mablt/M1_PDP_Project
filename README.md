@@ -4,12 +4,40 @@ A MODIFIER !!!!!!!!!!!!!!!!!!!!!!!!!!
 
 ## Installation
 
+### Import of the repository
 `$ git clone https://gitlab.gencovery.com/dev/internships/2020/m1-ubordeaux/classes.git`
 
+### Node installation and set up
+`sudo apt-get install npm`
+Then, the http-server package is needed : 
+`sudo npm install -g http-server`
 
 ## Usage
 To test this data, the use of browser is required.
 
-Open `index.html` in the browser and open the console in development tools (`CTRL+Alt+I` for Chrome and `CTRL+Shift+I` for Firefox).
+Moreover, the use of a local server is needed to don't have 'CORS policy errors' du to the browser.
 
-Tests done with Google Chrome 79.0.3945.117 and Firefox 72.0.1.
+The node local server is required (See below). 
+
+Execution of the test :
+`cd testClass/`
+
+`http-server`
+
+Then, open th efisrt link the browser (`http://127.0.0.1:8080`).
+
+Open the console in development tools (`CTRL+Alt+I` for Chrome and `CTRL+Shift+I` for Firefox).
+
+It will be print :
+```
+Simple Test to write in the console 
+variable test : 14
+```
+
+And an error for the moment (resolution in progres...).
+
+
+## Programs versions used
+* Google Chrome 79.0.3945.117
+* Firefox 72.0.1
+* Node 6.13.4

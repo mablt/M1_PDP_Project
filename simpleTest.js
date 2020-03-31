@@ -1,2 +1,2 @@
 let tt = 14;
-console.log("TEST ::"+tt);
+console.log("Simple Test to write in the console \nvariable test : "+tt);
