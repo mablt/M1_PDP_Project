@@ -30,15 +30,15 @@ Then, open th efisrt link the browser (`http://127.0.0.1:8080`).
 
 Open the console in development tools (`CTRL+Alt+I` for Chrome and `CTRL+Shift+I` for Firefox).
 
-It will be print :
+__It will be print :__
 
-For Chrome : 
+>For Chrome : 
 
-![Chrome results](./ChromeCapture.png)
+>![Chrome results](./ChromeCapture.png)
 
-For Firefox :
+>For Firefox :
 
-![Firefox results](./Firefox.png)
+>![Firefox results](./FirefoxCapture.png)
 
 ## Programs versions used
 * Google Chrome 79.0.3945.117
