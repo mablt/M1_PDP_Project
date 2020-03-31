@@ -1,6 +1,9 @@
-// import Node from "./Node.js";
+// Imports
+import { Node } from "./Node.mjs";
 import { Map } from "./Map.mjs";
 import { Link } from "./Link.mjs";
+
+console.log("\n\n############ Class test ############\n\n");
 
 var node1 = new Node(1001, "Node_1", [33, 4, 98]);
 var node2 = new Node(1002, "Node_2", [3, 24, 12]);

@@ -1,4 +1,4 @@
-export default class Node{
+export class Node{
 
     constructor(id, name, coordinates){
         this.id = id;
