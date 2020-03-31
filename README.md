@@ -1,6 +1,6 @@
 # Class files and test file for begining of the project
 This repository contains 3 files contains classes and 1 file contains test data for this 3 classes.
-A MODIFIER !!!!!!!!!!!!!!!!!!!!!!!!!!
+A HTML file to test in a browser and simple js file test are present.
 
 ## Installation
 
