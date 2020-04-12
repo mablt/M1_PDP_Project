@@ -1,5 +1,5 @@
 # Class files and test file for begining of the project
-This repository contains 3 files contains classes and 1 file contains test data for this 3 classes.
+This repository contains 5 files contains classes and 1 file contains test data for this classes.
 A HTML file to test in a browser and simple js file test are presentCre.
 
 ## Installation
@@ -26,19 +26,11 @@ Execution of the test :
 
 `http-server`
 
-Then, open th efisrt link the browser (`http://127.0.0.1:8080`).
+Then, open the fisrt link the browser (`http://127.0.0.1:8080`).
 
 Open the console in development tools (`CTRL+Alt+I` for Chrome and `CTRL+Shift+I` for Firefox).
 
-__It will be print :__
-
->For Chrome : 
-
->![Chrome results](./ChromeCapture.png)
-
->For Firefox :
-
->![Firefox results](./FirefoxCapture.png)
+The results of the test will be printed in the console.
 
 ## Programs versions used
 * Google Chrome 79.0.3945.117
