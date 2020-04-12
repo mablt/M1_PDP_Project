@@ -2,7 +2,7 @@ export class Link {
 
     constructor(id, name, source, target) {
         this.id = id;
-        this.name = name;
+        this.name = name;         // Not necessary ?
         this.source = source;
         this.target = target;
     }

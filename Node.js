@@ -1,9 +1,11 @@
 export class Node{
 
-    constructor(id, name, coordinates){
+    constructor(id, name, coordinates, notes="", annotation=""){
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
+        this.notes = notes
+        this.annotation = annotation
     }
 
     // Getters
@@ -17,6 +19,14 @@ export class Node{
         return this.coordinates;
     }
 
+    getNotes(){
+        return this.notes;
+    }
+
+    getAnnotation(){
+        return this.annotation
+    }
+
     // Setters
     setName(name){
         this.name = name;
@@ -27,7 +37,12 @@ export class Node{
     setCoordinates(coordinates){    
         this.coordinates = coordinates;
     }
-
+    setNotes(notes){
+        this.notes = notes;
+    }
+    setAnnotation(annotation){
+        this.annotation = annotation;
+    }
     
 }
 
