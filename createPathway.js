@@ -1,7 +1,7 @@
 
 import { Pathway } from "./Pathway.js";
 import { Metabolite } from "./Metabolite.js";
-import { json } from "./loadJSONfs.js";
+import { json } from "./loadJSON.js";
 
 
 function parseJSON(json){
@@ -13,6 +13,6 @@ function parseJSON(json){
     return pathway;
 }
 
-
+console.log("~~~~~~ Creation of the Pathway object ~~~~~~~\n");
 var p = parseJSON(json);
 console.log(p);

@@ -1,8 +1,7 @@
 export class Link {
 
-    constructor(id, name, source, target) {
+    constructor(id, source, target) {
         this.id = id;
-        this.name = name;         // Not necessary ?
         this.source = source;
         this.target = target;
     }
@@ -10,9 +9,6 @@ export class Link {
     // Getters
     getId() {
         return this.id;
-    }
-    getName() {
-        return this.name;
     }
     getSource() {
         return this.source;
@@ -22,9 +18,6 @@ export class Link {
     }
 
     // Setters
-    setName(name) {
-        this.name = name;
-    }
     setId(id) {
         this.id = id;
     }

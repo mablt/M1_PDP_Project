@@ -1,11 +1,13 @@
 export class Pathway{
-    constructor(id, compartments, version, name="", nodesArray=new Array(), linksArray=new Array()){
+    constructor(id, compartments, version, name="", metabolitesArray=new Array(), reactionsArray=new Array(), linksArray=new Array(), genesArray=new Array()){
         this.id = id;
         this.name = name;
         this.compartments = compartments; 
         this.version = version;
-        this.nodesArray = nodesArray;
+        this.metabolitesArray = metabolitesArray;
+        this.reactionsArray = reactionsArray;
         this.linksArray = linksArray;
+        this.genesArray = genesArray;
     }
 
     // Getters
@@ -21,8 +23,11 @@ export class Pathway{
     getVersion(){
         return this.version;
     }
-    getNodesArray(){
-        return this.nodesArray;
+    getMetabolitesArray(){
+        return this.metabolitesArray;
+    }
+    getReactionsArray(){
+        return this.reactionsArray;
     }
     getLinksArray(){
         return this.linksArray;
@@ -41,19 +46,40 @@ export class Pathway{
     setVersion(version){
         this.version = version;
     }
-    setNodesArray(nodesArray){
-        this.nodesArray = nodesArray;
+    setMetabolitesArray(metabolitesArray){
+        this.metabolitesArray = metabolitesArray;
+    }
+    setReactionsArray(reactionsArray){
+        this.reactionsArray = reactionsArray;
     }
     setLinksArray(linksArray){
         this.linksArray = linksArray;
     }
 
     // Methods
-    addNode(node){
-        this.nodesArray.push(node);
+    addMetabolite(metabolite){
+        this.metabolitesArray.push(metabolite);
+    }
+    addReaction(reaction){
+        this.reactionsArray.push(reaction);
     }
     addLink(link){
         this.linksArray.push(link);
+    }
+    removeMetabolite(metabolite){
+        var index = this.metabolitesArray.indexOf(metabolite);
+        if (index !== -1) 
+            this.metabolitesArray.splice(index, 1);
+    }
+    removeReaction(reaction){
+        var index = this.reactionsArray.indexOf(reaction);
+        if (index !== -1)
+            this.reactionsArray.splice(index, 1);
+    }
+    removeLink(link){
+        var index = this.linksArray.indexOf(link);
+        if (index !== -1)
+            this.linksArray.splice(index, 1);
     }
 }
 
