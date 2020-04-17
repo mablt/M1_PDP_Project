@@ -1,48 +1,18 @@
 // Imports
-import { Node } from "./Node.js";
+import { Metabolite } from "./Metabolite.js";
 import { Pathway } from "./Pathway.js";
 import { Link } from "./Link.js";
-import { Metabolite } from "./Metabolite.js";
 import { Reaction } from "./Reaction.js";
 
 console.log("\n\n############ Class test ############\n\n");
 
-var node1 = new Node(1001, "Node_1", [33, 4, 98]);
-var node2 = new Node(1002, "Node_2", [3, 24, 12]);
-var node3 = new Node(1003, "Node_3", [90, 75, 208]);
-// Tests on Node
-console.log("~~~~~~~~~ Node ~~~~~~~~~\n");
-console.log(node1.getId());
-console.log("Node2's Coordinates : "+node2.getCoordinates());
-node2.setCoordinates([45, 72, 2])
-console.log("New Node2's Coordinates : "+node2.getCoordinates());
 
-// Tests on Link
-console.log("~~~~~~~~~ Link ~~~~~~~~~\n");
-var link1 = new Link(91, "Link1", node2, node3);
-var link2 = new Link(92, "Link2", node2, node1);
-console.log(link1.getSource());
-link2.setName("New_Name_link2"); 
-console.log(link2.getName());
-
-// Tests on Map
-console.log("~~~~~~~~~ Map ~~~~~~~~~\n");
-var listOfNodes = [node2, node3];
-var listOfLinks = [link1, link2];
-var map = new Pathway(1, "Map_Name", listOfNodes, []);
-console.log(map.getNodesArray());
-map.addNode(node1);
-console.log(map.getNodesArray());
-console.log(map.getLinksArray());
-map.setLinksArray(listOfLinks);
-console.log(map.getLinksArray());
-
-
-var metabolite1 = new Metabolite("adp_c", "ADP C10H12N5O10P2", [33, 4, 98], "c", -3,"C10H12N5O10P2");
-var metabolite2 = new Metabolite("id_metabolite2", "Metabolite_2", [3, 24, 12]);
 
 
 // Tests on Metabolite
+var metabolite1 = new Metabolite("adp_c", "ADP C10H12N5O10P2", [33, 4, 98], "c", -3,"C10H12N5O10P2");
+var metabolite2 = new Metabolite("id_metabolite2", "Metabolite_2", [3, 24, 12]);
+
 console.log("~~~~~~~~~ Metabolite ~~~~~~~~~\n");
 
 console.log(metabolite1.getId());
@@ -63,3 +33,34 @@ for (let i =0; i<metabolites.length; i++){
 }
 console.log("Reaction1's metabolites : "+reaction1.getMetabolites()); // Doesn't work...
 console.log("Reaction1's upper_bound : "+reaction1.getUpper_bound());
+
+// Tests on Link
+console.log("~~~~~~~~~ Link ~~~~~~~~~\n");
+var link1 = new Link("91", metabolite2, reaction1);
+var link2 = new Link("92", reaction1, metabolite1);
+console.log(link1.getSource());
+console.log(link2.getTarget());
+
+// Tests on Pathway
+console.log("~~~~~~~~~ Pathway ~~~~~~~~~\n");
+var listOfMetabolites = [metabolite1];
+var listOfReactions = [reaction1];
+var listOfLinks = [link1, link2];
+var pathway1 = new Pathway('e_coli_core', '{"c": "cytosol","e": "extracellular space"}', '1', "PathwayName", listOfMetabolites, listOfReactions);
+console.log("Metabolites' array (1 metabolite) : ");
+console.log(pathway1.getMetabolitesArray());
+pathway1.addMetabolite(metabolite2);
+console.log("Metabolites' array (2 metabolites) : ");
+console.log(pathway1.getMetabolitesArray());
+console.log("Reactions' array (1 reaction) : ");
+console.log(pathway1.getReactionsArray());
+pathway1.removeReaction(reaction1);
+console.log("Reactions' array (empty) : ");;
+console.log(pathway1.getReactionsArray());
+console.log("Links' array (empty) : ");
+console.log(pathway1.getLinksArray());
+pathway1.setLinksArray(listOfLinks);
+console.log("Links' array (2 links) : ");
+console.log(pathway1.getLinksArray());
+
+
