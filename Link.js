@@ -21,11 +21,11 @@ export class Link {
     setId(id) {
         this.id = id;
     }
-    setSource(node) {
-        this.source = this.source;
+    setSource(source) {
+        this.source = source;
     }
-    setTarget(node) {
-        this.target == this.target;
+    setTarget(target) {
+        this.target = target;
     }
 
 }
