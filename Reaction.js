@@ -3,9 +3,10 @@ import { Node } from "./Node.js";
 
 export class Reaction extends Node{
 
-    constructor(id, name, coordinates, metabolites, lower_bound, upper_bound, gene_reaction_rule, subsystem, notes="", annotation=""){
+    constructor(id, name, coordinates, reagents, products, lower_bound, upper_bound, gene_reaction_rule, subsystem, notes="", annotation=""){
         super(id, name, coordinates, notes, annotation);
-        this.metabolites = metabolites;
+        this.reagents = reagents;
+        this.products = products
         this.lower_bound = lower_bound;
         this.upper_bound = upper_bound;
         this.gene_reaction_rule = gene_reaction_rule;
@@ -13,8 +14,11 @@ export class Reaction extends Node{
     }
     
     // Getters
-    getMetabolites(){
-        return this.metabolites;
+    getReagents(){
+        return this.reagents;
+    }
+    getProducts(){
+        return this.products;
     }
     getLower_bound(){
         return this.lower_bound;
@@ -30,8 +34,11 @@ export class Reaction extends Node{
     }
 
     // Setters
-    setMetabolites(metabolites){
-        this.metabolites = metabolites;
+    setReagents(reagents){
+        this.reagents = reagents;
+    }
+    setProducts(products){
+        this.products = products;
     }
     setLower_bound(lower_bound){
         this.lower_bound = lower_bound;
