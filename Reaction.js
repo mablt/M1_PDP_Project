@@ -6,7 +6,7 @@ export class Reaction extends Node{
     constructor(id, name, coordinates, reagents, products, lower_bound, upper_bound, gene_reaction_rule, subsystem, notes="", annotation=""){
         super(id, name, coordinates, notes, annotation);
         this.reagents = reagents;
-        this.products = products
+        this.products = products;
         this.lower_bound = lower_bound;
         this.upper_bound = upper_bound;
         this.gene_reaction_rule = gene_reaction_rule;
