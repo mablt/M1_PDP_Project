@@ -25,13 +25,18 @@ console.log("Metabolite1's annotation : "+metabolite1.getAnnotation());
 
 // Tests on Reaction
 console.log("~~~~~~~~~ Reaction ~~~~~~~~~\n");
-var reaction1 = new Reaction("PFK","Phosphofructokinase", [0,0,0], {"adp_c": 1.0, "atp_c": -1.0, "f6p_c": -1.0, "fdp_c": 1.0, "h_c": 1.0}, 0.0, 1000.0, "b3916 or b1723", "Glycolysis/Gluconeogenesis");
+var reaction1 = new Reaction("PFK","Phosphofructokinase", [0,0,0], {"atp_c": -1.0, "f6p_c": -1.0}, {"adp_c": 1.0, "h_c": 1.0,  "fdp_c": 1.0}, 0.0, 1000.0, "b3916 or b1723", "Glycolysis/Gluconeogenesis");
 console.log("Reaction1's id : "+reaction1.getId());
-var metabolites = reaction1.getMetabolites();
-for (let i =0; i<metabolites.length; i++){
-    console.log(metabolites);           // Doesn't work...
+var reagents = reaction1.getReagents();
+for (var r in reagents){
+    console.log(r);   
 }
-console.log("Reaction1's metabolites : "+reaction1.getMetabolites()); // Doesn't work...
+console.log("Reaction1's products : "+reaction1.getProducts());
+var products = reaction1.getProducts();
+for (var p in products){
+    console.log(p); 
+    console.log(products[p]);
+}
 console.log("Reaction1's upper_bound : "+reaction1.getUpper_bound());
 
 // Tests on Link
