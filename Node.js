@@ -4,8 +4,8 @@ export class Node{
         this.id = id;
         this.name = name;
         this.coordinates = coordinates;
-        this.notes = notes
-        this.annotation = annotation
+        this.notes = notes;
+        this.annotation = annotation;
     }
 
     // Getters
@@ -24,7 +24,7 @@ export class Node{
     }
 
     getAnnotation(){
-        return this.annotation
+        return this.annotation;
     }
 
     // Setters
