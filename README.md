@@ -1,6 +1,6 @@
 # Class files and test file for begining of the project
 This repository contains 5 files contains classes and 1 file contains test data for this classes.
-A HTML file to test in a browser are present.
+A HTML file to test in a browser is present.
 
 ### Installation
 
