@@ -1,4 +1,4 @@
-import { Relation } from "./Relation";
+import { Relation } from "./Relation.js";
 
 export class Reaction extends Relation{
     constructor(id,parent,lowerBound=null,upperBound=null,substystem=null){

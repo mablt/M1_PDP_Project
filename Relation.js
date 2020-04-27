@@ -1,4 +1,4 @@
-import { Element } from "./Element";
+import { Element } from "./Element.js";
 
 export class Relation extends Element{
     constructor(id,parent){

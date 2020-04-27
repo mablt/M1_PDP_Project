@@ -41,4 +41,16 @@ export class Element{
     setParent(parent){
         this.parent = parent;
     }
+
+    removePreviousElement(element){
+        var index = this.previousElements.indexOf(element);
+        if (index !== -1)
+            this.previousElements.splice(index, 1);
+    }
+
+    removeNextElement(element){
+        var index = this.nextElements.indexOf(element);
+        if (index !== -1)
+            this.nextElements.splice(index, 1);
+    }
 }
