@@ -2,7 +2,7 @@ import { Entity } from "./Entity.js";
 
 export class Compound extends Entity{
     
-    constructor(id, parent, name, compartment=null, charge=null, formula, notes="", annotation={}){
+    constructor(id, parent, name, compartment=null, charge=null, formula=null, notes="", annotation={}){
         super(id, parent);
         this.name = name;
         this.compartment = compartment;

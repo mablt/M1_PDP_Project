@@ -3,7 +3,11 @@ import { Element } from "./Element.js";
 export class Graph{
 
     constructor(){
-        elements = [];
+        this.elements = [];
+    }
+
+    getElements(){
+        return this.elements;
     }
 
     addElement(element){

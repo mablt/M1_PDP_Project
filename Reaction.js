@@ -1,8 +1,9 @@
 import { Relation } from "./Relation.js";
 
 export class Reaction extends Relation{
-    constructor(id,parent,lowerBound=null,upperBound=null,substystem=null){
+    constructor(id,parent, name, lowerBound=null,upperBound=null,substystem=null){
         super(id,parent);
+        this.name = name;
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
         this.substystem = substystem;
@@ -13,6 +14,10 @@ export class Reaction extends Relation{
     }
     
     // Getters
+    getName(){
+        return this.name;
+    }
+
     getLowerBound(){
         return this.lowerBound;
     }
@@ -33,6 +38,10 @@ export class Reaction extends Relation{
     }
 
     //Setters
+    setName(name){
+        this.name = name;
+    }
+
     setLowerBound(lowerBound){
         this.lowerBound = lowerBound;
     }

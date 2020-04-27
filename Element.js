@@ -1,10 +1,11 @@
 export class Element{
-    constructor(id, graph){
+    constructor(id, parent){
         this.id = id;
+        this.parent = parent;
         this.previousElements = [];
         this.nextElements = [];
         this.coordinates ={};
-        this.parent = parent;
+        
     }
 
     // Getters
@@ -35,7 +36,7 @@ export class Element{
         this.nextElements.push(element);
     }
     setCoordinates(x,y,z){
-        coordinates = {"x": x,"y":y, "z":z};
+        var coordinates = {"x": x,"y":y, "z":z};
         this.coordinates = coordinates;
     }
     setParent(parent){
