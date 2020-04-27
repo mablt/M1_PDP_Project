@@ -1,13 +1,8 @@
 # Class files and test file for begining of the project
 
-This repository contains 5 files contains classes and 1 file contains test data for this classes.
+This repository contains classes files and 1 file which contains test data for this classes.
 A HTML file to test in a browser is present.
 
-The classes have been implemented according to the following UML diagram :
-
-![UML diagram](./UML_PDP_V3.png)
-
-Some modifications are needed in order to respect this diagram.
 
 ### Installation
 
