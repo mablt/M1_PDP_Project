@@ -2,6 +2,8 @@
 import { Pathway } from "./Pathway.js";
 import { Compound } from "./Compound.js";
 import { Reaction } from "./Reaction.js";
+// import { json } from "./loadJSON.mjs";
+import { parseJSON } from "./parseJSON.js";
 
 console.log("\n\n############ Class test ############\n\n");
 
@@ -51,3 +53,26 @@ pathway1.addElement(compound2);
 pathway1.addElement(reaction1);
 
 console.log(pathway1.getElements());
+
+
+
+console.log("~~~~~~~~~ parseJSON test ~~~~~~~~~\n");
+
+fetch('./data.json')
+    .then (function(response){
+        return response.json();
+    })
+    .then(function(data){
+        console.log(data);
+        var pathwayCreatedByParseJSON = parseJSON(data);
+
+        console.log("\n\n\n PATHWAY CREATED \n\n");
+        console.log(pathwayCreatedByParseJSON);
+        
+    })
+    .catch(function(err){
+        console.log("ERROR");
+    });
+
+
+
