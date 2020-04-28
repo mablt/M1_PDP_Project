@@ -2072,5 +2072,11 @@
                 ]
             }
         }
-    ]
+    ],
+    "id": "e_coli_core",
+    "compartments": {
+        "c": "cytosol",
+        "e": "extracellular space"
+    },
+    "version": "1"
 }
