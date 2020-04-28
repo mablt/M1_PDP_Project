@@ -66,9 +66,11 @@ fetch('./data.json')
         console.log(data);
         var pathwayCreatedByParseJSON = parseJSON(data);
 
-        console.log("\n\n\n PATHWAY CREATED \n\n");
-        console.log(pathwayCreatedByParseJSON);
+        return pathwayCreatedByParseJSON;
         
+    })
+    .then(pathway => {
+        continue;
     })
     .catch(function(err){
         console.log("ERROR");
