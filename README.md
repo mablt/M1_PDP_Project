@@ -12,6 +12,10 @@ This repository contains class files and some tests.
 
   4. The graph is displayed in a HTML page.
 
+## Diagram of the class  
+
+![class diagrame](./UML_V4.png)
+
 ## Installation
 
 ### Import of the repository
