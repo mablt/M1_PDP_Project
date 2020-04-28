@@ -2,12 +2,21 @@ import { Element } from "./Element.js";
 
 export class Graph{
 
-    constructor(){
+    constructor(id){
+        this.id = id;
         this.elements = [];
     }
 
+    getId(){
+        return this.id;
+    }
+    
     getElements(){
         return this.elements;
+    }
+
+    setId(id){
+        this.id = id;
     }
 
     addElement(element){

@@ -1,8 +1,8 @@
 import { Relation } from "./Relation.js";
 
 export class Reaction extends Relation{
-    constructor(id,parent, name, lowerBound=null,upperBound=null,substystem=null){
-        super(id,parent);
+    constructor(id, parent, name, lowerBound=null, upperBound=null, substystem=null){
+        super(id, parent);
         this.name = name;
         this.lowerBound = lowerBound;
         this.upperBound = upperBound;
