@@ -1,0 +1,59 @@
+{ 
+    "metabolites": [
+        {
+            "id": "metabolite1",
+            "name": "METABOLITE 1",
+            "compartment": "c",
+            "charge": -3,
+            "formula": "C10H12N5O10P2",
+            "notes": {},
+            "annotation": {},
+            "coordinates" :{  "x": 1,
+                            "y": 1,
+                            "z": 1
+            }
+
+        },
+        {
+            "id": "metabolite2",
+            "name": "METABOLITE 2",
+            "compartment": "c",
+            "charge": -3,
+            "formula": "C10H12N5O10P2",
+            "notes": {},
+            "annotation": {},
+            "coordinates" :{    "x": 30,
+                                "y": 30,
+                                "z": 30
+}
+        },
+        {
+            "id": "metabolite3",
+            "name": "METABOLITE 3",
+            "compartment": "c",
+            "charge": -3,
+            "formula": "C10H12N5O10P2",
+            "notes": {},
+            "annotation": {}
+        }
+    ],
+    
+    "reactions": [
+        {
+            "id": "reaction1",
+            "name": "REaction 1",
+            "metabolites": {
+                "metabolite1": -1.0,
+                "metabolite2": -1.0,
+                "metabolite3": 1.0
+            }
+        }
+    ],
+
+    "id": "e_coli_core",
+    "compartments": {
+        "c": "cytosol",
+        "e": "extracellular space"
+    },
+    "version": "1"
+}
