@@ -1,8 +1,13 @@
 import xml.dom.minidom
 import json
+import os
+from tkinter import *
+from tkinter import filedialog
 
 
-
+'''
+Reads metabolites from the SBML file and returns a dictionnary
+'''
 def getMetabolites(doc):
     species = doc.getElementsByTagName("species")
     metabolites = []
@@ -16,7 +21,9 @@ def getMetabolites(doc):
         metabolites.append(metabolite)
     return metabolites
 
-
+'''
+Reads products from the SBML file and returns a dictionnary
+'''
 def getProducts(products_list):
     final_products = {}
     for prod in products_list:
@@ -25,6 +32,10 @@ def getProducts(products_list):
             final_products[p.getAttribute("species")]=float(p.getAttribute("stoichiometry"))
     return final_products
 
+
+'''
+Reads reactants from the SBML file and returns a dictionnary
+'''
 def getReactants(reactants_list):
     final_reactants = {}
     for react in reactants_list:
@@ -33,7 +44,14 @@ def getReactants(reactants_list):
             stoichio = - float(r.getAttribute("stoichiometry"))
             final_reactants[r.getAttribute("species")] = stoichio
     return final_reactants
-        
+
+
+'''
+Reads reactions from the SBML file 
+Calls functions getProducts() and getReactants() 
+to deal with stoichiometry
+Returns a dictionnary
+'''        
 def getReactions(doc):
     reacts = doc.getElementsByTagName("reaction")
     reactions = []
@@ -54,6 +72,10 @@ def getReactions(doc):
         reactions.append(reaction)
     return reactions
 
+'''
+Reads compartments from the SBML file and returns a dictionnary
+'''
+
 def getCompartments(doc):
     comparts= doc.getElementsByTagName("compartment")
     compartments = {}
@@ -61,7 +83,9 @@ def getCompartments(doc):
         compartments[comp.getAttribute("id")] = comp.getAttribute("name")
     return compartments
 
-
+'''
+Calls all reading functions and builds a json type variable
+'''
 def createJSON(doc):
     json ={} 
     metabolites = getMetabolites(doc)
@@ -75,10 +99,46 @@ def createJSON(doc):
 
     return json
 
+'''
+On click, allows the user to select a SBML file
+Creates a directory for the converted file (if it doesn't exist)
+Reads the SBML file and saves a JSON file in the directory.
+
+'''
+
+def Upload(event=None):
+    filename = filedialog.askopenfilename()
+    print('Selected:', filename)
+    doc = xml.dom.minidom.parse(filename)
+    json_file = createJSON(doc)
+    fileName = json_file["id"] + ".json"
+    path = "converted_files"
+    try:
+        os.mkdir(path)
+    except OSError:
+        print ("Creation of the directory %s failed, already exists")
+    file_to_open = "converted_files/"+fileName
+    with open (file_to_open,'w') as outfile:
+        json.dump(json_file,outfile)
+
+
+# -------  GRAPHIC PART --------#
+
+root = Tk()
+root.title ("Convertisseur SBML vers JSON")
+root.minsize(250,100)
+root.config(background = '#d2dbd7')
+main_frame = Frame(root)
+main_frame.pack()
+label = Label(main_frame,background = '#d2dbd7',text="Importez votre fichier SBML",font=("Helvetica",18))
+label.pack()
+choice_button = Button(root,text = "Choisir un fichier",command=Upload)
+choice_button.pack()
+
+
+root.mainloop()
+
+
 
 #MAIN
-doc = xml.dom.minidom.parse("e_coli_core.xml")
-json_file = createJSON(doc)
-fileName = json_file["id"] + ".json"
-with open (fileName,'w') as outfile:
-    json.dump(json_file,outfile)
+
