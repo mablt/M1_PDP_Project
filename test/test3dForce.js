@@ -7,11 +7,16 @@ function displayGraph(object){
       (document.getElementById('3d-graph'))
       .nodeAutoColorBy('group')
         .linkOpacity(0.5)
-        .graphData(object);
+        .graphData(object)
+        .onNodeDragEnd(node => {
+            node.fx = node.x;
+            node.fy = node.y;
+            node.fz = node.z;
+          });
 }
 
 
-fetch('./data.json')
+fetch('./dataTest.json')
     .then (function(response){
         return response.json();
     })
