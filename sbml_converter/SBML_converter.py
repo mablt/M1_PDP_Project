@@ -18,39 +18,35 @@ def getMetabolites(doc):
 
 
 def getProducts(products_list):
-    #products = products_list.getAttribute("spiecesReference")
     final_products = {}
     for prod in products_list:
-        stochio =prod.getAttribute("stoichiometry")
-        final_products[prod.getAttribute("species")] = stochio
+        products = prod.getElementsByTagName("speciesReference")
+        for p in products:
+            final_products[p.getAttribute("species")]=float(p.getAttribute("stoichiometry"))
     return final_products
 
 def getReactants(reactants_list):
-    for r in reactants_list:
-        react = r.getElementsByTagName("spiecesReference")
-        print (len(react))
-        for element in react:
-            print(element)
-        
-    # stochio = react.getAttribute("stoichiometry")*(-1)
-    # final_reactants[react.getAttribute("species")] = stochio
-    # print (reactants_list)
-    #return final_reactants
+    final_reactants = {}
+    for react in reactants_list:
+        reactants = react.getElementsByTagName("speciesReference")
+        for r in reactants:
+            stoichio = - float(r.getAttribute("stoichiometry"))
+            final_reactants[r.getAttribute("species")] = stoichio
+    return final_reactants
         
 def getReactions(doc):
     reacts = doc.getElementsByTagName("reaction")
     reactions = []
     for re in reacts:
         reaction = {}
-        products_list = re.getElementByTagName("listOfProducts")
-        reactants_list = re.getElementsByTagName("listOfReactants")
-        print (products_list.lenght)
+        products_list = re.getElementsByTagName("listOfProducts")
         products = getProducts(products_list)
-        # reactants = getReactants(reactants_list)
-        # mets = reactants
+        reactants_list = re.getElementsByTagName("listOfReactants")
+        reactants = getReactants(reactants_list)
+        reactants.update(products)
         reaction["id"] =  re.getAttribute("id")
         reaction["name"] = re.getAttribute("name")
-        # reaction["metabolites"] = mets
+        reaction["metabolites"] = reactants
         #reaction["lower_bound"]= re.getAttribute("fbc:lowerFluxBound")
         #reaction["upper_bound"]=re.getAttribute("fbc:upperFluxBound")
         #reaction["gene_reaction_rule"]=
