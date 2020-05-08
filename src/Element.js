@@ -4,7 +4,7 @@ export class Element{
         this.parent = parent;
         this.previousElements = [];
         this.nextElements = [];
-        this.coordinates ={};
+        this.coordinates = {};
         
     }
 
