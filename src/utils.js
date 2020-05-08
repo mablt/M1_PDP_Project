@@ -16,6 +16,9 @@ export function parseJSON(json){
     // Compounds objects creation
     for(var m of json.metabolites){
         var compound = new Compound(m.id, pathway, m.name, m.compartment, m.charge, m.formula);
+        if ("coordinates" in m) {
+            compound.setCoordinates(m.coordinates.x, m.coordinates.y, m.coordinates.z);
+        }
         // Add compound to the patwhay
         pathway.addElement(compound);
     }
@@ -41,6 +44,9 @@ export function parseJSON(json){
                 // Put the reaction as new previous compound
                 putElementToPreviousElementCompound(pathway, key, reaction.id);
             }
+        }
+        if ("coordinates" in r) {
+            compound.setCoordinates(r.coordinates.x, r.coordinates.y, r.coordinates.z);
         }
         // Add compound to the patwhay
         pathway.addElement(reaction);
@@ -95,14 +101,20 @@ export function create3dForceObject(pathway){
     var nodes_list = [];
     var links_list = [];
     for (var i of pathway.getElements()){ // Pour chaque élément de la liste
-        var elem ={};
+        var elem = {};
         elem.id = i.getId();
         elem.name = i.getName();
+        var coordinates = i.getCoordinates();
+        if ((coordinates.x != 0.0) && (coordinates.y != 0.0) && (coordinates.z != 0.0)) {
+            elem.fx = coordinates.x;
+            elem.fy = coordinates.y;
+            elem.fz = coordinates.z;
+        }
         
         if (i instanceof(Reaction)){ // Si c'est une réaction
             // On crée les liens
             for (var j of i.getPreviousElements()){
-                var link ={};
+                var link = {};
                 link.source = j.id;
                 link.target =  i.getId();
                 link.color="red";
@@ -128,5 +140,6 @@ export function create3dForceObject(pathway){
             nodes : nodes_list,
             links : links_list
         }
+        alert(object);
         return object;
 }
