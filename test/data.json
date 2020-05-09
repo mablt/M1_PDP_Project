@@ -2073,6 +2073,84 @@
             }
         }
     ],
+    "genes": [
+        {
+            "id": "b1241",
+            "name": "adhE",
+            "notes": {
+                "original_bigg_ids": [
+                    "b1241"
+                ]
+            },
+            "annotation": {
+                "asap": [
+                    "ABE-0004164"
+                ],
+                "ecogene": [
+                    "EG10031"
+                ],
+                "ncbigene": [
+                    "945837"
+                ],
+                "ncbigi": [
+                    "16129202"
+                ],
+                "refseq_locus_tag": [
+                    "b1241"
+                ],
+                "refseq_name": [
+                    "adhE"
+                ],
+                "refseq_synonym": [
+                    "JW1228",
+                    "ECK1235",
+                    "adhC",
+                    "ana"
+                ],
+                "sbo": "SBO:0000243",
+                "uniprot": [
+                    "P0A9Q7"
+                ]
+            }
+        },
+        {
+            "id": "b0351",
+            "name": "mhpF",
+            "notes": {
+                "original_bigg_ids": [
+                    "b0351"
+                ]
+            },
+            "annotation": {
+                "asap": [
+                    "ABE-0001207"
+                ],
+                "ecogene": [
+                    "EG13625"
+                ],
+                "ncbigene": [
+                    "945008"
+                ],
+                "ncbigi": [
+                    "16128336"
+                ],
+                "refseq_locus_tag": [
+                    "b0351"
+                ],
+                "refseq_name": [
+                    "mhpF"
+                ],
+                "refseq_synonym": [
+                    "JW0342",
+                    "ECK0348"
+                ],
+                "sbo": "SBO:0000243",
+                "uniprot": [
+                    "P77580"
+                ]
+            }
+        }
+    ],
     "id": "e_coli_core",
     "compartments": {
         "c": "cytosol",
