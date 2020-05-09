@@ -3,12 +3,53 @@
         <title>Document</title>
         <script src="//unpkg.com/3d-force-graph"></script>
         <script type="module" src="./test3dForce.js"></script>
+        <link href="upload.css" rel="stylesheet">
     </head>
   
     <body>
+
+      
     
         <h1>Tests of 3dforce library</h1>
+        <!-- <div> 
+            FILE :  <br>
+            <input type="file" id="files" name="myFiles" accept=".json" multiple> 
+            <button id="ok">Load Selected File</button>
+        </div>
+        <div id='data' style="display:none;"></div> -->
+        
+        <div id="uploads">
+            <div class="dropzone" id="dropzone"> Drop files here to upload</div>
+            <input type="file" id="files" name="myFiles" accept=".json" multiple>
+            <button id="ok"> Upload file(s) </button>
+        </div>
+        
         <div id="3d-graph"></div>
 
+
+
+        <script type="module"> 
+            import { loadFileAsText } from "./test3dForce.js";
+            document.getElementById('ok').addEventListener('click', loadFileAsText);
+            // document.getElementById('data').style.display = null;
+    
+            // function loadFileAsText(){
+            // var fileToLoad = document.getElementById("files").files[0];
+    
+            // var fileReader = new FileReader();
+            // fileReader.onload = function(fileLoadedEvent){
+            //     var textFromFileLoaded = fileLoadedEvent.target.result;
+            //     goGraph(textFromFileLoaded);
+            //     document.getElementById("data").innerHTML = textFromFileLoaded;
+            // };
+    
+            // fileReader.readAsText(fileToLoad, "UTF-8");
+            // }
+        </script>
+
+
+
+
     </body>
+
 </html>
