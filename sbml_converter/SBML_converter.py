@@ -100,42 +100,89 @@ def createJSON(doc):
     return json
 
 '''
+Checks SBML level
+'''
+def formatVerif(doc):
+    level = doc.getElementsByTagName('sbml')
+    level = level[0].getAttribute("level")
+    if level == "3":
+        return True
+    else:
+        return False
+
+
+'''
 On click, allows the user to select a SBML file
 Creates a directory for the converted file (if it doesn't exist)
 Reads the SBML file and saves a JSON file in the directory.
 
 '''
 
-def Upload(event=None):
-    filename = filedialog.askopenfilename()
-    print('Selected:', filename)
-    doc = xml.dom.minidom.parse(filename)
-    json_file = createJSON(doc)
-    fileName = json_file["id"] + ".json"
-    path = "converted_files"
-    try:
-        os.mkdir(path)
-    except OSError:
-        print ("Creation of the directory %s failed, already exists")
-    file_to_open = "converted_files/"+fileName
-    with open (file_to_open,'w') as outfile:
-        json.dump(json_file,outfile)
+
+#def Upload(event=None):
+    # filename = filedialog.askopenfilename()
+    # print('Selected:', filename)
+    # doc = xml.dom.minidom.parse(filename)
+    # fileFormat = formatVerif(doc)
+    # if (fileFormat):
+    #     json_file = createJSON(doc)
+    #     fileName = json_file["id"] + ".json"
+    #     path = "converted_files"
+    #     try:
+    #         os.mkdir(path)
+    #     except OSError:
+    #         print ("Creation of the directory %s failed, already exists")
+    #     file_to_open = "converted_files/"+fileName
+    #     with open (file_to_open,'w') as outfile:
+    #         json.dump(json_file,outfile)
+    #     return True
+    
+    # else:
+    #     print ("Format error")
+    #     return False
+    
+    
 
 
 # -------  GRAPHIC PART --------#
 
+class App(object):
+    def __init__(self,root):
+        self.root = root
+        self.textframe = Frame(self.root)
+        self.textframe.pack(fill="both", expand=True)
+        self.label1 = Label(self.textframe,text="Importez votre fichier SBML",font=("Helvetica",18))
+        self.label1.pack()
+        choice_button = Button(self.textframe, text = "Choisir un fichier",command=self.upload)
+        choice_button.pack()
+        self.label2 = Label(self.textframe,text='',font=("Helvetica",12) )
+        self.label2.pack()
+    def upload(self):
+        filename = filedialog.askopenfilename()
+        print('Selected:', filename)
+        doc = xml.dom.minidom.parse(filename)
+        fileFormat = formatVerif(doc)
+        if (fileFormat):
+            json_file = createJSON(doc)
+            fileName = json_file["id"] + ".json"
+            path = "converted_files"
+            try:
+                os.mkdir(path)
+            except OSError:
+                print ("Creation of the directory failed, already exists")
+            file_to_open = "converted_files/"+fileName
+            with open (file_to_open,'w') as outfile:
+                json.dump(json_file,outfile)
+                self.label2.config(text="Fichier converti, disponible dans le dossier converted_files")
+        
+        else:
+            print ("Format error")
+            self.label2.config(text= "Fichier invalide, verifier le level")
+
 root = Tk()
 root.title ("Convertisseur SBML vers JSON")
-root.minsize(250,100)
-root.config(background = '#d2dbd7')
-main_frame = Frame(root)
-main_frame.pack()
-label = Label(main_frame,background = '#d2dbd7',text="Importez votre fichier SBML",font=("Helvetica",18))
-label.pack()
-choice_button = Button(root,text = "Choisir un fichier",command=Upload)
-choice_button.pack()
-
-
+root.minsize(350,100)
+app = App(root)
 root.mainloop()
 
 
