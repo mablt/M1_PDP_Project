@@ -160,7 +160,10 @@ class App(object):
     def upload(self):
         filename = filedialog.askopenfilename()
         print('Selected:', filename)
-        doc = xml.dom.minidom.parse(filename)
+        try:
+            doc = xml.dom.minidom.parse(filename)
+        except Exception:
+            self.label2.config(text= "Fichier invalide, format xml uniquement.")
         fileFormat = formatVerif(doc)
         if (fileFormat):
             json_file = createJSON(doc)
@@ -177,7 +180,7 @@ class App(object):
         
         else:
             print ("Format error")
-            self.label2.config(text= "Fichier invalide, verifier le level")
+            self.label2.config(text= "Fichier invalide, format trop ancien \n Le convertisseur ne fonctionne qu'avec des fichier level 3")
 
 root = Tk()
 root.title ("Convertisseur SBML vers JSON")
