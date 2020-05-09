@@ -3,6 +3,16 @@
 import { Pathway } from "./Pathway.js";
 import { Compound } from "./Compound.js";
 import { Reaction } from "./Reaction.js";
+import { Gene } from "./Gene.js";
+
+/**
+ * Transform the JSON file data as string to JSON object
+ * 
+ * @param  {} jsonString JSON file data as string
+ */
+export function stringToJSON(jsonString){
+    return JSON.parse(jsonString);
+}
 
 /**
  * Parse the JSON object and instanciate the objects
@@ -51,11 +61,11 @@ export function parseJSON(json){
         // Add compound to the patwhay
         pathway.addElement(reaction);
     }
-    
-    // for(var g of json.genes){
-    //     var gene = new Gene(g.id, g.name);
-    //     pathway.addGene(gene);
-    // }
+    // Genes objects creation
+    for(var g of json.genes){
+        var gene = new Gene(g.id, g.name);
+        // pathway.addGene(gene);               // FUNCTION NOT INSTANCIED FOR THE MOMENT
+    }
     return pathway;
 }
 
@@ -105,7 +115,7 @@ export function create3dForceObject(pathway){
         elem.id = i.getId();
         elem.name = i.getName();
         var coordinates = i.getCoordinates();
-        if ((coordinates.x != 0.0) && (coordinates.y != 0.0) && (coordinates.z != 0.0)) {
+        if ((coordinates.x != undefined) && (coordinates.y != undefined) && (coordinates.z != undefined)) {
             elem.fx = coordinates.x;
             elem.fy = coordinates.y;
             elem.fz = coordinates.z;
@@ -140,6 +150,52 @@ export function create3dForceObject(pathway){
             nodes : nodes_list,
             links : links_list
         }
-        alert(object);
         return object;
+}
+
+
+export function createJSON(object3dForce){
+    for(node of object3dForce.nodes){
+        // If the node is a reaction
+        if(node.group === 1){
+            var reaction = {
+                "id": node.id,
+                "name": node.name,
+                "metabolites": {
+                    "adp_c": 1.0,
+                    "atp_c": -1.0,
+                    "f6p_c": -1.0,
+                    "fdp_c": 1.0,
+                    "h_c": 1.0
+                },
+                "lower_bound": node.lowerBound,
+                "upper_bound": node.upperBound,
+                "gene_reaction_rule": "b3916 or b1723",
+                "subsystem": "Glycolysis/Gluconeogenesis",
+                "notes": {
+                    "original_bigg_ids": [
+                        "PFK"
+                    ]
+                },
+                "annotation": {
+                    "bigg.reaction": [
+                        "PFK"
+                    ],
+                    "ec-code": [
+                        "2.7.1.11"
+                    ],
+                    "metanetx.reaction": [
+                        "MNXR102507"
+                    ],
+                    "rhea": [
+                        "16111",
+                        "16109",
+                        "16110",
+                        "16112"
+                    ],
+                    "sbo": "SBO:0000176"
+                }
+            }
+        }
+    }
 }
