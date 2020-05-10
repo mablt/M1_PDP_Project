@@ -2,7 +2,7 @@
     <head>
         <title>Document</title>
         <script src="//unpkg.com/3d-force-graph"></script>
-        <script type="module" src="./test3dForce.js"></script>
+        <script type="module" src="./../src/utils.js"></script>
         <link href="upload.css" rel="stylesheet">
     </head>
   
@@ -23,28 +23,32 @@
             <input type="file" id="files" name="myFiles" accept=".json" multiple>
             <button id="ok"> Upload file(s) </button>
         </div>
-        
+        <div>
+            <button id="saveGraph"> Save Graph </button>
+            Nom du fichier de sauvegarde : <input type="text" id="inputFileNameToSaveAs" > 
+        </div>
         <div id="3d-graph"></div>
 
 
 
         <script type="module"> 
-            import { loadFileAsText } from "./test3dForce.js";
-            document.getElementById('ok').addEventListener('click', loadFileAsText);
-            // document.getElementById('data').style.display = null;
-    
-            // function loadFileAsText(){
-            // var fileToLoad = document.getElementById("files").files[0];
-    
-            // var fileReader = new FileReader();
-            // fileReader.onload = function(fileLoadedEvent){
-            //     var textFromFileLoaded = fileLoadedEvent.target.result;
-            //     goGraph(textFromFileLoaded);
-            //     document.getElementById("data").innerHTML = textFromFileLoaded;
-            // };
-    
-            // fileReader.readAsText(fileToLoad, "UTF-8");
-            // }
+            // import { loadFileAsText } from "./test3dForce.js";
+            // import { loadFileAsText, saveTextAsFile } from "./../src/utils.js";
+            // const Graph = ForceGraph3D()
+            // (document.getElementById('3d-graph'))
+            // .nodeAutoColorBy('group')
+            //     .linkOpacity(0.5)
+            //     .graphData(object)
+            //     .onNodeDragEnd(node => {
+            //         node.fx = node.x;
+            //         node.fy = node.y;
+            //         node.fz = node.z;
+            //     });
+            // document.getElementById('ok').addEventListener('click', loadFileAsText);
+
+            // document.getElementById('saveGraph').addEventListener('click', saveTextAsFile)
+
+
         </script>
 
 
