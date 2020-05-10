@@ -209,17 +209,14 @@ def formatVerif(doc):
 class App(object):
     def __init__(self, root):
         self.root = root
-        self.textframe = Frame(self.root)
+        self.textframe = Frame(self.root, bg="#6ca7c9")
         self.textframe.pack(fill="both", expand=True)
         self.label1 = Label(
-            self.textframe, text="Importez votre fichier SBML", font=("Helvetica", 18)
-        )
+        self.textframe, text="Importez votre fichier SBML", font=("Helvetica", 18),bg="#6ca7c9")
         self.label1.pack()
-        choice_button = Button(
-            self.textframe, text="Choisir un fichier", command=self.upload
-        )
+        choice_button = Button(self.textframe, text="Choisir un fichier", font=("Helvetica", 15),command=self.upload)
         choice_button.pack()
-        self.label2 = Label(self.textframe, text="", font=("Helvetica", 12))
+        self.label2 = Label(self.textframe, text="", font=("Helvetica", 14),bg="#6ca7c9")
         self.label2.pack()
 
     """
@@ -260,7 +257,7 @@ class App(object):
 
 root = Tk()
 root.title("Convertisseur SBML vers JSON")
-root.minsize(350, 100)
+root.minsize(600, 300)
 app = App(root)
 root.mainloop()
 
