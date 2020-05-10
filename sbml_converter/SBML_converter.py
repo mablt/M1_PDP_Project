@@ -54,6 +54,66 @@ def getReactants(reactants_list):
             final_reactants[r.getAttribute("species")] = stoichio
     return final_reactants
 
+'''
+Returns a list of the elements which are int list1 but not in list2
+'''
+def difference(list1,list2):
+    return(list(set(list1)-set(list2)))
+
+"""
+Reads gene reaction rule from the SBML file and returns a string
+"""
+
+def getGeneReactionRules(reaction):
+    geneReactionRule = ''
+    genes = reaction.getElementsByTagName('fbc:geneProductRef')
+    if (len(genes))== 0:
+        return geneReactionRule
+    elif (len(genes))== 1:
+        geneReactionRule = genes[0].getAttribute("fbc:geneProduct")
+    else:
+        ors = reaction.getElementsByTagName("fbc:or")
+        if len(ors)>0: 
+            for i in range(len(ors)):
+                ands = ors[i].getElementsByTagName("fbc:and")
+                if len(ands)>0:  
+                    for a in ands:
+                        aGeneList = a.getElementsByTagName("fbc:geneProductRef")
+                        for j in range(len(aGeneList)):
+                            if j == 0 :
+                                geneReactionRule = geneReactionRule + " ( " + aGeneList[j].getAttribute("fbc:geneProduct")
+                            elif j == (len(aGeneList)-1):
+                                geneReactionRule = geneReactionRule + " and " + aGeneList[j].getAttribute("fbc:geneProduct") + ")"
+                            else : 
+                                geneReactionRule = geneReactionRule + " and " + aGeneList[j].getAttribute("fbc:geneProduct")
+                        if i<(len(ors)-1):
+                            geneReactionRule = geneReactionRule + " or "
+                    oGeneList = ors[i].getElementsByTagName("fbc:geneProductRef")
+                    oGeneList = difference(oGeneList,aGeneList)
+                    for j in range(len(oGeneList)):
+                        if geneReactionRule == "":
+                            geneReactionRule = geneReactionRule + oGeneList[j].getAttribute("fbc:geneProduct")
+                        else : 
+                            geneReactionRule = geneReactionRule + " or " + oGeneList[j].getAttribute("fbc:geneProduct")
+                else : 
+                    oGeneList = ors[i].getElementsByTagName("fbc:geneProductRef")
+                    for j in range(len(oGeneList)):
+                        if geneReactionRule == "":
+                            geneReactionRule = geneReactionRule + oGeneList[j].getAttribute("fbc:geneProduct")
+                        else : 
+                            geneReactionRule = geneReactionRule + " or " + oGeneList[j].getAttribute("fbc:geneProduct")
+        else : 
+            ands = reaction.getElementsByTagName("fbc:and")
+            for i in range(len(ands)):
+                geneList = ands[i].getElementsByTagName("fbc:geneProductRef")
+                for j in range (len(geneList)):
+                    if geneReactionRule == "":
+                            geneReactionRule = geneReactionRule + geneList[j].getAttribute("fbc:geneProduct")
+                    else : 
+                        geneReactionRule = geneReactionRule + " and " + geneList[j].getAttribute("fbc:geneProduct")
+
+    
+    return geneReactionRule
 
 """
 Reads reactions from the SBML file 
@@ -78,7 +138,7 @@ def getReactions(doc):
         reaction["metabolites"] = reactants
         # reaction["lower_bound"]= re.getAttribute("fbc:lowerFluxBound")
         # reaction["upper_bound"]=re.getAttribute("fbc:upperFluxBound")
-        # reaction["gene_reaction_rule"]=
+        reaction["gene_reaction_rule"]= getGeneReactionRules(re)
         # reaction["subsystem"]=
         reactions.append(reaction)
     return reactions
@@ -95,7 +155,7 @@ def getGenes(doc):
     genes = []
     for g in allGenes:
         gene = {}
-        gene["id"] = g.getAttribute("fbc:label")
+        gene["id"] = g.getAttribute("fbc:id")
         gene["name"] = g.getAttribute("fbc:name")
         genes.append(gene)
     return genes
