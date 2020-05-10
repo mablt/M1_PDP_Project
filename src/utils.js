@@ -37,10 +37,10 @@ export function parseJSON(json){
         var reaction = new Reaction(r.id, pathway, r.name, r.lower_bound, r.upper_bound, r.subsystem);
         for(var key in r.metabolites){
             var value = r.metabolites[key];
-            var data =  {"id" : key,
-                         "quantity" : value};
+            var data =  {"id" : key};
             // If the metabolites is a reagent
             if(value < 0){
+                data.quantity = Math.abs(value);
                 // Add the metabolite to previous element
                 reaction.addPreviousElement(data);
                 // Put the reaction as new next compound
@@ -48,6 +48,7 @@ export function parseJSON(json){
             }
             // If the metabolites is a products
             else{
+                data.quantity = value;
                 // Add the metabolite to next element
                 reaction.addNextElement(data);
 
@@ -111,9 +112,10 @@ export function create3dForceObject(pathway){
     var nodes_list = [];
     var links_list = [];
     for (var i of pathway.getElements()){ // Pour chaque élément de la liste
-        var elem = {};
-        elem.id = i.getId();
-        elem.name = i.getName();
+        var elem = i;
+        // var elem = {};
+        // elem.id = i.getId();
+        // elem.name = i.getName();
         var coordinates = i.getCoordinates();
         if ((coordinates.x != undefined) && (coordinates.y != undefined) && (coordinates.z != undefined)) {
             elem.fx = coordinates.x;
@@ -150,52 +152,178 @@ export function create3dForceObject(pathway){
             nodes : nodes_list,
             links : links_list
         }
+        console.log(object);
         return object;
 }
 
+// export function create3dForceObject(pathway){
+//     var nodes_list = [];
+//     var links_list = [];
+//     for (var i of pathway.getElements()){ // Pour chaque élément de la liste
+//         var elem = {};
+//         elem.id = i.getId();
+//         elem.name = i.getName();
+//         var coordinates = i.getCoordinates();
+//         if ((coordinates.x != undefined) && (coordinates.y != undefined) && (coordinates.z != undefined)) {
+//             elem.fx = coordinates.x;
+//             elem.fy = coordinates.y;
+//             elem.fz = coordinates.z;
+//         }
+        
+//         if (i instanceof(Reaction)){ // Si c'est une réaction
+//             // On crée les liens
+//             for (var j of i.getPreviousElements()){
+//                 var link = {};
+//                 link.source = j.id;
+//                 link.target =  i.getId();
+//                 link.color="red";
+//                 console.log(j.id)
+//                 links_list.push(link); 
+//             }   
+//             for (var j of i.getNextElements()){
+//                 var link ={};
+//                 link.source = i.getId();
+//                 link.target = j.id;
+//                 link.color = "blue";
+//                 links_list.push(link); 
+//             }
+//             elem.group = 1
+//         }  
+//         else{
+//             elem.group = 2;
+//         }
+//         nodes_list.push(elem); // On crée le noeud   
+        
+//     }
+//         var object={
+//             nodes : nodes_list,
+//             links : links_list
+//         }
+//         return object;
+// }
+
+
+// Read and parse the JSON file to display the graph
+export function jsonFileToGraph(data){
+    var jsonObject = stringToJSON(data);
+    var pathwayCreatedByParseJSON = parseJSON(jsonObject);
+    var object = create3dForceObject(pathwayCreatedByParseJSON);
+    displayGraph(object);
+    console.log("=================");
+    console.log(createJSON(object));
+}
+
+
+export function displayGraph(object){
+    window.Graph = ForceGraph3D();
+    window.Graph(document.getElementById('3d-graph'))
+      .nodeAutoColorBy('group')
+        .linkOpacity(0.5)
+        .graphData(object)
+        .onNodeDragEnd(node => {
+            node.fx = node.x;
+            node.fy = node.y;
+            node.fz = node.z;
+          });
+}
+
+export function loadFileAsText(){
+    var fileToLoad = document.getElementById("files").files[0];
+    var fileReader = new FileReader();
+    fileReader.onload = function(fileLoadedEvent){
+        var textFromFileLoaded = fileLoadedEvent.target.result;
+        // Create the graph
+        jsonFileToGraph(textFromFileLoaded);
+    };
+    fileReader.readAsText(fileToLoad, "UTF-8");
+}
+
+export function get3dForceObject(){
+    console.log("++++++++++++++++");
+    var ForceObject = window.Graph.graphData();
+    return ForceObject;
+}
+
+export function saveTextAsFile()
+{
+    var ForceObject = get3dForceObject();
+    var textToWrite = createJSON(ForceObject);
+    console.log(">>>>>>>>>>");
+    console.log(textToWrite);
+    var textFileAsBlob = new Blob([textToWrite], {type:'application/json'});
+    var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+      var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.webkitURL != null)
+    {
+        // Chrome allows the link to be clicked
+        // without actually adding it to the DOM.
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else
+    {
+        // Firefox requires the link to be added to the DOM
+        // before it can be clicked.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+}
 
 export function createJSON(object3dForce){
-    for(node of object3dForce.nodes){
+    var json = {
+        metabolites : [],
+        reactions : [],
+        genes : []
+    };
+    for(var node of object3dForce.nodes){
         // If the node is a reaction
         if(node.group === 1){
             var reaction = {
                 "id": node.id,
                 "name": node.name,
-                "metabolites": {
-                    "adp_c": 1.0,
-                    "atp_c": -1.0,
-                    "f6p_c": -1.0,
-                    "fdp_c": 1.0,
-                    "h_c": 1.0
-                },
                 "lower_bound": node.lowerBound,
                 "upper_bound": node.upperBound,
-                "gene_reaction_rule": "b3916 or b1723",
-                "subsystem": "Glycolysis/Gluconeogenesis",
-                "notes": {
-                    "original_bigg_ids": [
-                        "PFK"
-                    ]
-                },
-                "annotation": {
-                    "bigg.reaction": [
-                        "PFK"
-                    ],
-                    "ec-code": [
-                        "2.7.1.11"
-                    ],
-                    "metanetx.reaction": [
-                        "MNXR102507"
-                    ],
-                    "rhea": [
-                        "16111",
-                        "16109",
-                        "16110",
-                        "16112"
-                    ],
-                    "sbo": "SBO:0000176"
-                }
+                // "gene_reaction_rule": node., // PAS PRIS EN COMPTE DANS REACTION PR LE MOMENT
+                "subsystem": node.subsystem,
+                "notes": node.notes,
+                "annotation": node.annotation, 
+                "metabolites" : {}
+            };
+            for (var element of node.previousElements) {
+                reaction.metabolites[element.id] = -(element.quantity);
             }
+            for (var element of node.nextElements) {
+                reaction.metabolites[element.id] = element.quantity;
+            }
+            json.reactions.push(reaction);
         }
+        else {
+            var metabolite = {
+                "id": node.id,
+                "name": node.name,
+                "compartment": node.compartment,
+                "charge": node.charge,
+                "formula": node.formula,
+                "notes": node.notes,
+                "annotation": node.annotation
+            };
+            json.metabolites.push(metabolite);
+        }
+
+        // GESTION DES GENES ???????????????????????????????????????
+
+
+
     }
+    return JSON.stringify(json);
 }
+
+
+document.getElementById('ok').addEventListener('click', loadFileAsText);
+
+document.getElementById('saveGraph').addEventListener('click', saveTextAsFile)
