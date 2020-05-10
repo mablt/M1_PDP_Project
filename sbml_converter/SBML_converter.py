@@ -136,10 +136,10 @@ def getReactions(doc):
         reaction["id"] = re.getAttribute("id")
         reaction["name"] = re.getAttribute("name")
         reaction["metabolites"] = reactants
-        # reaction["lower_bound"]= re.getAttribute("fbc:lowerFluxBound")
-        # reaction["upper_bound"]=re.getAttribute("fbc:upperFluxBound")
+        reaction["lower_bound"]= -1000
+        reaction["upper_bound"]= +1000
         reaction["gene_reaction_rule"]= getGeneReactionRules(re)
-        # reaction["subsystem"]=
+        reaction["subsystem"]= ""
         reactions.append(reaction)
     return reactions
 
