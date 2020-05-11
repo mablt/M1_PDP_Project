@@ -195,6 +195,7 @@ export function create3dForceObject(map){
             nodes_list.push(elem); // On crée le noeud   
             
         }
+        count += 1;
     }
         var object={
             nodes : nodes_list,
