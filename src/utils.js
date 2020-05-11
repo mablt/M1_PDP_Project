@@ -219,7 +219,7 @@ export function jsonFileToGraph(data) {
 
 export function displayGraph(object) {
     window.GRAPH = ForceGraph3D();
-    window.GRAPH(document.getElementById('3d-graph'))
+    window.GRAPH(document.getElementById('graph-3d'))
         .nodeAutoColorBy('group')
         .linkOpacity(0.5)
         .graphData(object)
