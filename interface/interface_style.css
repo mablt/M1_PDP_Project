@@ -2,7 +2,7 @@ html, body {
 	height: 100%;
 	margin: 0; padding: 0;
 }
-#sidebar, #p3d-graph{
+#sidebar, #graph-3d{
     padding:1px 0;
     height: inherit;
     }
@@ -45,7 +45,7 @@ footer{
     padding-bottom: 6%;
 }
 
-#p3d-graph{
+#graph-3d{
     margin-left:20%;
 	background-color:black;
 	width:80%;
