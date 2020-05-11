@@ -159,52 +159,49 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
 //     return object;
 // }
 
-export function create3dForceObject(pathway) {
+export function create3dForceObject(map){
     var nodes_list = [];
     var links_list = [];
-    for (var i of pathway.getElements()) { // Pour chaque élément de la liste
-        var elem = {};
-        elem.id = i.getId();
-        elem.name = i.getName();
-        var coordinates = i.getCoordinates();
-        if ((coordinates.x != undefined) && (coordinates.y != undefined) && (coordinates.z != undefined)) {
-            elem.fx = coordinates.x;
-            elem.fy = coordinates.y;
-            elem.fz = coordinates.z;
-        }
-
-        if (i instanceof (Reaction)) { // Si c'est une réaction
-            // On crée les liens
-            for (var j of i.getPreviousElements()) {
-                var link = {};
-                link.source = j.id;
-                link.target = i.getId();
-                link.color = "red";
-                console.log(j.id)
-                links_list.push(link);
+    var count = 0;
+    for (var pathway of map.getElements()){
+        for (var i of pathway.getElements()){ // Pour chaque élément de la liste
+            var elem ={};
+            elem.id = i.getId() + "_" + String(count);
+            console.log(elem.id);
+            elem.name = i.getName();
+            
+            if (i instanceof(Reaction)){ // Si c'est une réaction
+                // On crée les liens
+                for (var j of i.getPreviousElements()){
+                    var link ={};
+                    link.source = j.id;
+                    link.target =  i.getId();
+                    link.color="red";
+                    console.log(j.id)
+                    links_list.push(link); 
+                }   
+                for (var j of i.getNextElements()){
+                    var link ={};
+                    link.source = i.getId();
+                    link.target = j.id;
+                    link.color = "blue";
+                    links_list.push(link); 
+                }
+                elem.group = 1;
+            }  
+            else{
+                elem.group = 2;
             }
-            for (var j of i.getNextElements()) {
-                var link = {};
-                link.source = i.getId();
-                link.target = j.id;
-                link.color = "blue";
-                links_list.push(link);
-            }
-            elem.group = 1
+            nodes_list.push(elem); // On crée le noeud   
+            
         }
-        else {
-            elem.group = 2;
-        }
-        nodes_list.push(elem); // On crée le noeud   
-
     }
-    var object = {
-        nodes: nodes_list,
-        links: links_list
-    }
-    return object;
+        var object={
+            nodes : nodes_list,
+            links : links_list
+        };
+        return object;
 }
-
 
 // Read and parse the JSON file to display the graph
 export function jsonFileToGraph(data) {
