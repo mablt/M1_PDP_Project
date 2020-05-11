@@ -4,7 +4,7 @@ import { parseJSON, create3dForceObject, stringToJSON } from "./../src/utils.js"
 
 function displayGraph(object){
     const Graph = ForceGraph3D()
-      (document.getElementById('3d-graph'))
+      (document.getElementById('graph-3d'))
       .nodeAutoColorBy('group')
         .linkOpacity(0.5)
         .graphData(object)
