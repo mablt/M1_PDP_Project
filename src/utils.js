@@ -3,18 +3,23 @@ import { Pathway } from "./Pathway.js";
 import { Compound } from "./Compound.js";
 import { Reaction } from "./Reaction.js";
 import { Gene } from "./Gene.js";
+import { Map } from "./Map.js";
 
 // Metabolites to duplicate list
 window.METABOLITES_LIST = ["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]
 
 /**
- * Transform the JSON file data as string to JSON object
+ * Transform each JSON file data as string from the list to JSON object
  * 
- * @param  {} jsonString JSON file data as string
+ * @param  {} fileDataList List of JSON file data as string
  */
-export function stringToJSON(jsonString) {
-    window.JSON_OBJECT = JSON.parse(jsonString);
-    return window.JSON_OBJECT;
+export function stringToJSON(fileDataList) {
+    window.JSON_OBJECT = [];
+    console.log(fileDataList.length);
+    for (const fileData of fileDataList) {
+        console.log(JSON.parse(fileData));
+        window.JSON_OBJECT.push(JSON.parse(fileData));
+    }
 }
 
 /**
@@ -23,54 +28,58 @@ export function stringToJSON(jsonString) {
  * @param  {} json JSON object contains data from the JSON file
  * @return Pathway object which contains the elements
  */
-export function parseJSON(json) {
-    // Patwhay object creation
-    var pathway = new Pathway(json.id, "NAME", json.compartments, json.version);
-    // Compounds objects creation
-    for (var m of json.metabolites) {
-        var compound = new Compound(m.id, pathway, m.name, m.compartment, m.charge, m.formula);
-        if ("coordinates" in m) {
-            compound.setCoordinates(m.coordinates.x, m.coordinates.y, m.coordinates.z);
-        }
-        // Add compound to the patwhay
-        pathway.addElement(compound);
-    }
-    // Reactions objects creation
-    for (var r of json.reactions) {
-        var reaction = new Reaction(r.id, pathway, r.name, r.lower_bound, r.upper_bound, r.subsystem);
-        for (var key in r.metabolites) {
-            var value = r.metabolites[key];
-            var data = { "id": key };
-            // If the metabolites is a reagent
-            if (value < 0) {
-                data.quantity = Math.abs(value);
-                // Add the metabolite to previous element
-                reaction.addPreviousElement(data);
-                // Put the reaction as new next compound
-                putElementToNextElementCompound(pathway, key, reaction.id);
+export function parseJSON(JSONList) {
+    var map = new Map();
+    for (const json of JSONList) {
+        // Patwhay object creation
+        var pathway = new Pathway(json.id, "NAME", json.compartments, json.version);
+        // Compounds objects creation
+        for (var m of json.metabolites) {
+            var compound = new Compound(m.id, pathway, m.name, m.compartment, m.charge, m.formula);
+            if ("coordinates" in m) {
+                compound.setCoordinates(m.coordinates.x, m.coordinates.y, m.coordinates.z);
             }
-            // If the metabolites is a products
-            else {
-                data.quantity = value;
-                // Add the metabolite to next element
-                reaction.addNextElement(data);
+            // Add compound to the patwhay
+            pathway.addElement(compound);
+        }
+        // Reactions objects creation
+        for (var r of json.reactions) {
+            var reaction = new Reaction(r.id, pathway, r.name, r.lower_bound, r.upper_bound, r.subsystem);
+            for (var key in r.metabolites) {
+                var value = r.metabolites[key];
+                var data = { "id": key };
+                // If the metabolites is a reagent
+                if (value < 0) {
+                    data.quantity = Math.abs(value);
+                    // Add the metabolite to previous element
+                    reaction.addPreviousElement(data);
+                    // Put the reaction as new next compound
+                    putElementToNextElementCompound(pathway, key, reaction.id);
+                }
+                // If the metabolites is a products
+                else {
+                    data.quantity = value;
+                    // Add the metabolite to next element
+                    reaction.addNextElement(data);
 
-                // Put the reaction as new previous compound
-                putElementToPreviousElementCompound(pathway, key, reaction.id);
+                    // Put the reaction as new previous compound
+                    putElementToPreviousElementCompound(pathway, key, reaction.id);
+                }
             }
+            if ("coordinates" in r) {
+                compound.setCoordinates(r.coordinates.x, r.coordinates.y, r.coordinates.z);
+            }
+            // Add compound to the patwhay
+            pathway.addElement(reaction);
         }
-        if ("coordinates" in r) {
-            compound.setCoordinates(r.coordinates.x, r.coordinates.y, r.coordinates.z);
+        // Genes objects creation
+        for (var g of json.genes) {
+            var gene = new Gene(g.id, g.name);
+            // pathway.addElement(gene);               // BESOIN DE LE STOCKER DANS LE GRAPH ?????
         }
-        // Add compound to the patwhay
-        pathway.addElement(reaction);
+        map.addGraph(pathway);
     }
-    // Genes objects creation
-    for (var g of json.genes) {
-        var gene = new Gene(g.id, g.name);
-        // pathway.addElement(gene);               // BESOIN DE LE STOCKER DANS LE GRAPH ?????
-    }
-    return pathway;
+    return map;
 }
 
 
@@ -174,16 +183,16 @@ export function create3dForceObject(map){
                 // On crée les liens
                 for (var j of i.getPreviousElements()){
                     var link ={};
-                    link.source = j.id;
-                    link.target =  i.getId();
+                    link.source = j.id+ "_" + String(count);
+                    link.target =  i.getId()+ "_" + String(count);
                     link.color="red";
                     console.log(j.id)
                     links_list.push(link); 
                 }   
                 for (var j of i.getNextElements()){
                     var link ={};
-                    link.source = i.getId();
-                    link.target = j.id;
+                    link.source = i.getId()+ "_" + String(count);
+                    link.target = j.id+ "_" + String(count);
                     link.color = "blue";
                     links_list.push(link); 
                 }
@@ -201,14 +210,15 @@ export function create3dForceObject(map){
             nodes : nodes_list,
             links : links_list
         };
+        console.log(object)
         return object;
 }
 
 // Read and parse the JSON file to display the graph
-export function jsonFileToGraph(data) {
-    var jsonObject = stringToJSON(data);
-    var pathwayCreatedByParseJSON = parseJSON(jsonObject);
-    var object = create3dForceObject(pathwayCreatedByParseJSON);
+export function jsonFileToGraph(fileDataList) {
+    stringToJSON(fileDataList);
+    var mapCreatedByParseJSON = parseJSON(window.JSON_OBJECT);
+    var object = create3dForceObject(mapCreatedByParseJSON);
     displayGraph(object);
     console.log("=================");
     console.log(createJSON(object));
@@ -228,16 +238,47 @@ export function displayGraph(object) {
         });
 }
 
+
+// ANCIENNE FONCTION
+// export function loadFileAsText() {
+
+//     var fileToLoad = document.getElementById("files").files[0];
+//     var fileReader = new FileReader();
+//     fileReader.onload = function (fileLoadedEvent) {
+//         var textFromFileLoaded = fileLoadedEvent.target.result;
+//         // Create the graph
+//         console.log(textFromFileLoaded);
+//         jsonFileToGraph([textFromFileLoaded]);
+//     };
+//     fileReader.readAsText(fileToLoad, "UTF-8");
+// }
+
+//MARCHE PAS 
 export function loadFileAsText() {
-    var fileToLoad = document.getElementById("files").files[0];
+    var textFiles = [];
+    var filesToLoad = document.getElementById("files").files;
     var fileReader = new FileReader();
-    fileReader.onload = function (fileLoadedEvent) {
-        var textFromFileLoaded = fileLoadedEvent.target.result;
-        // Create the graph
-        jsonFileToGraph(textFromFileLoaded);
-    };
-    fileReader.readAsText(fileToLoad, "UTF-8");
+    function readFile(index) {
+        if( index >= filesToLoad.length ) return;
+        var file = filesToLoad[index];
+        fileReader.onload = function(fileLoadedEvent) {   
+        var content = fileLoadedEvent.target.result;
+        textFiles.push(content);
+        readFile(index+1);
+        };
+        fileReader.readAsText(file, "UTF-8");
+        
+    }
+    readFile(0);
+    console.log(textFiles);
+    var a = String(textFiles[0]);
+    console.log("......" + a);
+    jsonFileToGraph(textFiles);
+
 }
+
+
+
 
 export function get3dForceObject() {
     console.log("++++++++++++++++");
@@ -277,8 +318,9 @@ export function createJSON(object3dForce) {
     for (var node of object3dForce.nodes) {
         // If the node is a reaction
         if (node.group === 1) {
+            var nodeId =node.id.substring(0,node.id.length-2);
             for (var reaction of window.JSON_OBJECT.reactions) {
-                if (reaction.id === node.id) {
+                if (reaction.id === nodeId) {
                     if (!("coordinates" in reaction)) {
 
                         reaction.coordinates = {};
@@ -297,7 +339,8 @@ export function createJSON(object3dForce) {
         }
         else {
             for (var metabolite of window.JSON_OBJECT.metabolites) {
-                if (metabolite.id === node.id) {
+                var nodeId =node.id.substring(0,node.id.length-2);
+                if (metabolite.id === nodeId) {
                     if (!("coordinates" in metabolite)) {
 
                         metabolite.coordinates = {};
