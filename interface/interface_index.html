@@ -5,6 +5,7 @@
     <meta name="description" content="test interface" />
     <meta name="author" content="M1 bioinformatics bordeaux univerty" />
     <link href="interface_style.css" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
     <script src="//unpkg.com/3d-force-graph"></script>
     <script type="module" src="./../src/utils.js"></script>
@@ -14,10 +15,13 @@
 
 <body>
     <h1>3D visualization of metabolic pathways</h1>
+    <input type="checkbox" id="check">
+    <label for="check">
+        <i class="fas fa-bars" id="btn"></i>
+        <i class="fas fa-times" id="cancel"></i>
+    </label>
 
-    <div id="sidebar">
-        <div class="bord">
-        </div>
+    <div class="sidebar">
         <div class="bord">
             <div id="uploads">
                 <div class="dropzone" id="dropzone"> Drop files here to upload</div>
@@ -36,13 +40,12 @@
             </div>
         </div>
     </div>
-
-    <div id="graph-3d" >
-        
-    </div> 
-    <footer>
-        <p>zoom in/ zoom out etc</p>
-    </footer>
+    <div id="graph">
+        <div id="graph-3d" ></div> 
+        <footer>
+            <p>zoom in/ zoom out etc</p>
+        </footer>
+    </div>
     
 </body>
 </html>
