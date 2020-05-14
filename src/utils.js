@@ -185,7 +185,7 @@ export function create3dForceObject(map){
                     var link ={};
                     link.source = j.id+ "_" + String(count);
                     link.target =  i.getId()+ "_" + String(count);
-                    link.color="red";
+                    link.color="white";
                     console.log(j.id)
                     links_list.push(link); 
                 }   
@@ -193,7 +193,7 @@ export function create3dForceObject(map){
                     var link ={};
                     link.source = i.getId()+ "_" + String(count);
                     link.target = j.id+ "_" + String(count);
-                    link.color = "blue";
+                    link.color = "white";
                     links_list.push(link); 
                 }
                 elem.group = 1;
