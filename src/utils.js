@@ -411,7 +411,7 @@ export function createJSON(object3dForce) {
     }
     var jsonList = [];
     for (const json of window.JSON_OBJECT) {
-        jsonList.push(JSON.stringify(json));
+        jsonList.push(JSON.stringify(json, null, 1));
     }
     
     return jsonList;
