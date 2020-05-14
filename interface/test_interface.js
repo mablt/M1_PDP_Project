@@ -4,8 +4,10 @@ function displayGraph(object){
   const Graph = ForceGraph3D()
     (document.getElementById('p3d-graph'))
     .nodeAutoColorBy('group')
-      .linkOpacity(0.5)
       .graphData(object)
+        .linkDirectionalArrowLength(3.5)
+        .linkDirectionalArrowRelPos(1)
+        .linkCurvature(0.25)
       .onNodeDragEnd(node => {
           node.fx = node.x;
           node.fy = node.y;
