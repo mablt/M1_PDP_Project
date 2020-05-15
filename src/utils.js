@@ -76,7 +76,7 @@ export function parseJSON() {
         // Genes objects creation
         for (var g of json.genes) {
             var gene = new Gene(g.id, g.name);
-            pathway.addElement(gene);               // BESOIN DE LE STOCKER DANS LE GRAPH ????? A DISCUTER
+            // pathway.addElement(gene);               // BESOIN DE LE STOCKER DANS LE GRAPH ????? A DISCUTER
         }
         map.addGraph(pathway);
     }
@@ -124,7 +124,6 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
 export function create3dForceObject(map) {
     var nodes_list = [];
     var links_list = [];
-    var count = 0;
     for (var pathway of map.getElements()) {
         for (var i of pathway.getElements()) { // Pour chaque élément de la liste
             var elem = {};
@@ -158,8 +157,9 @@ export function create3dForceObject(map) {
             }
             nodes_list.push(elem); // On crée le noeud   
 
+        console.log('LENGTH : '+nodes_list.length);
+
         }
-        count += 1;
     }
     var object = {
         nodes: nodes_list,
@@ -268,9 +268,9 @@ function createFile() {
         downloadLink.click();
     }
 
-    
 
-    
+
+
 }
 
 export function modifyJSON(object3dForce) {
@@ -303,7 +303,7 @@ export function modifyJSON(object3dForce) {
         }
         else {
             for (var metabolite of window.JSON_OBJECT[fileName].metabolites) {
-                var nodeId = node.id.substring(0, node.id.length - 2);
+                // var nodeId = node.id.substring(0, node.id.length - 2);
                 if (metabolite.id === nodeId) {
                     if (!("coordinates" in metabolite)) {
 
