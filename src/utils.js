@@ -5,28 +5,20 @@ import { Reaction } from "./Reaction.js";
 import { Gene } from "./Gene.js";
 import { Map } from "./Map.js";
 
-// Import for test
-// import 
+// Global variables
+var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
 
-// Metabolites to duplicate list
-window.METABOLITES_LIST = []
-// ["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]
-window.METABOLITES_LIST.push("AAA");
-window.METABOLITES_LIST.push("zzzzz");
-console.log("::::::");
-console.log(typeof window.METABOLITES_LIST);
+
 /**
  * Transform each JSON file data as string from the list to JSON object
  * 
  * @param  {} fileDataList List of JSON file data as string
  */
-export function stringToJSON(fileDataList) {
-    window.JSON_OBJECT = [];
-    console.log(typeof window.JSON_OBJECT);
-    console.log(fileDataList.length);
-    for (const fileData of fileDataList) {
-        console.log(JSON.parse(fileData));
-        window.JSON_OBJECT.push(JSON.parse(fileData));
+export function stringToJSON() {
+    for (const nameFile in window.JSON_OBJECT) {
+        var data = window.JSON_OBJECT[nameFile];
+        var json = JSON.parse(data);
+        window.JSON_OBJECT[nameFile] = json;
     }
 }
 
@@ -36,11 +28,12 @@ export function stringToJSON(fileDataList) {
  * @param  {} json JSON object contains data from the JSON file
  * @return Pathway object which contains the elements
  */
-export function parseJSON(JSONList) {
+export function parseJSON() {
     var map = new Map();
-    for (const json of JSONList) {
+    for (const nameFile in window.JSON_OBJECT) {
+        var json = window.JSON_OBJECT[nameFile];
         // Patwhay object creation
-        var pathway = new Pathway(json.id, "NAME", json.compartments, json.version);
+        var pathway = new Pathway(json.id, nameFile, json.compartments, json.version);
         // Compounds objects creation
         for (var m of json.metabolites) {
             var compound = new Compound(m.id, pathway, m.name, m.compartment, m.charge, m.formula);
@@ -83,7 +76,7 @@ export function parseJSON(JSONList) {
         // Genes objects creation
         for (var g of json.genes) {
             var gene = new Gene(g.id, g.name);
-            // pathway.addElement(gene);               // BESOIN DE LE STOCKER DANS LE GRAPH ?????
+            pathway.addElement(gene);               // BESOIN DE LE STOCKER DANS LE GRAPH ????? A DISCUTER
         }
         map.addGraph(pathway);
     }
@@ -128,6 +121,214 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
  * @param  {Pathway} pathway Pathway object which contains the data
  * @return {} 3D-Force object which contains nodes and links data
  */
+export function create3dForceObject(map) {
+    var nodes_list = [];
+    var links_list = [];
+    var count = 0;
+    for (var pathway of map.getElements()) {
+        for (var i of pathway.getElements()) { // Pour chaque élément de la liste
+            var elem = {};
+            console.log();
+            elem.id = i.getId() + '___' + pathway.getName();
+            console.log(elem.id);
+            elem.name = i.getName();
+
+            if (i instanceof (Reaction)) { // Si c'est une réaction
+                // On crée les liens
+                for (var j of i.getPreviousElements()) {
+                    var link = {};
+                    link.source = j.id + '___' + pathway.getName();
+                    // link.target =  i.getId()+ "_" + String(count);
+                    link.target = i.getId() + '___' + pathway.getName();
+                    link.color = "white";
+                    console.log(j.id)
+                    links_list.push(link);
+                }
+                for (var j of i.getNextElements()) {
+                    var link = {};
+                    link.source = i.getId() + '___' + pathway.getName();
+                    link.target = j.id + '___' + pathway.getName();
+                    link.color = "white";
+                    links_list.push(link);
+                }
+                elem.group = 1;
+            }
+            else {
+                elem.group = 2;
+            }
+            nodes_list.push(elem); // On crée le noeud   
+
+        }
+        count += 1;
+    }
+    var object = {
+        nodes: nodes_list,
+        links: links_list
+    };
+    return object;
+}
+
+// Read and parse the JSON file to display the graph
+export function jsonFileToGraph() {
+    stringToJSON();
+    var mapCreatedByParseJSON = parseJSON();
+    var object = create3dForceObject(mapCreatedByParseJSON);
+    displayGraph(object);
+}
+
+
+export function displayGraph(object) {
+    window.GRAPH = ForceGraph3D();
+    window.GRAPH(document.getElementById('graph-3d'))
+        .nodeAutoColorBy('group')
+        .linkOpacity(0.5)
+        .graphData(object)
+        .onNodeDragEnd(node => {
+            node.fx = node.x;
+            node.fy = node.y;
+            node.fz = node.z;
+        });
+}
+
+
+
+
+//FONCTIONNE
+export function loadFileAsText() {
+    var textFiles = [];
+    console.log("------" + typeof textFiles);
+    window.JSON_OBJECT = {};
+    var filesToLoad = document.getElementById("files").files;
+    var fileReader = new FileReader();
+    function readFile(index) {
+        if (index >= filesToLoad.length) {
+            jsonFileToGraph();
+            return;
+        }
+
+        var file = filesToLoad[index];
+        var fileName = file.name;
+        var re = /(\w+)\.json/;
+
+        var fileNameWithoutExtension = fileName.replace(re, '$1');
+        console.log(fileNameWithoutExtension);
+        // window.JSON_OBJECT[fileNameWithoutExtension] = "";
+        console.log("aaaaaasjdkfbsdjfskdf");
+        console.log(window.JSON_OBJECT);
+        fileReader.onload = function (fileLoadedEvent) {
+            var content = fileLoadedEvent.target.result;
+            textFiles.push(content);
+            window.JSON_OBJECT[fileNameWithoutExtension] = content;
+            readFile(index + 1);
+        };
+        fileReader.readAsText(file, "UTF-8");
+
+    }
+    readFile(0);
+}
+
+
+
+
+export function get3dForceObject() {
+    console.log("++++++++++++++++");
+    var ForceObject = window.GRAPH.graphData();
+    return ForceObject;
+}
+
+export function saveGraphToJSON() {
+    var ForceObject = get3dForceObject();
+    modifyJSON(ForceObject);
+    createFile();
+}
+
+function createFile() {
+    for (const fileName in window.JSON_OBJECT) {
+        var json = window.JSON_OBJECT[fileName];
+        var jsonAsText = JSON.stringify(json, null, 1);
+        var textFileAsBlob = new Blob([jsonAsText], { type: 'application/json' });
+        // var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
+        var downloadLink = document.createElement("a");
+        downloadLink.download = fileName + '_' + SAVE_GRAPH_EXTENSION + '.json';
+        downloadLink.innerHTML = "Download File";
+        if (window.webkitURL != null) {
+            // Chrome allows the link to be clicked
+            // without actually adding it to the DOM.
+            downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+        }
+        else {
+            // Firefox requires the link to be added to the DOM
+            // before it can be clicked.
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+            downloadLink.onclick = destroyClickedElement;
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+        }
+
+        downloadLink.click();
+    }
+
+    
+
+    
+}
+
+export function modifyJSON(object3dForce) {
+    for (var node of object3dForce.nodes) {
+        // Recuperer  l'index de l'object correspondant au node !!!!A REFORMULER ET TRADUIRE
+        var re = /(\w+)___(\w+)/;
+
+        var fileName = node.id.replace(re, '$2');
+        // If the node is a reaction
+        if (node.group === 1) {
+
+            var nodeId = node.id.replace(re, '$1');
+            for (var reaction of window.JSON_OBJECT[fileName].reactions) {
+                if (reaction.id === nodeId) {
+                    if (!("coordinates" in reaction)) {
+
+                        reaction.coordinates = {};
+                    }
+                    reaction.coordinates.x = node.x;
+                    reaction.coordinates.y = node.y;
+                    reaction.coordinates.z = node.z;
+
+                    // else{
+                    //     reaction.coordinates = {};
+                    // }
+                }
+            }
+            // window.JSON_OBJECT.reactions[node.id].
+
+        }
+        else {
+            for (var metabolite of window.JSON_OBJECT[fileName].metabolites) {
+                var nodeId = node.id.substring(0, node.id.length - 2);
+                if (metabolite.id === nodeId) {
+                    if (!("coordinates" in metabolite)) {
+
+                        metabolite.coordinates = {};
+                    }
+                    metabolite.coordinates.x = node.x;
+                    metabolite.coordinates.y = node.y;
+                    metabolite.coordinates.z = node.z;
+                }
+            }
+        }
+    }
+}
+
+
+document.getElementById('ok').addEventListener('click', loadFileAsText);
+
+document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON)
+
+
+
+// ------------------------------------ ANCIENNES FONCTIONS AU CAS OU ---------------------------
+
+
+
 // export function create3dForceObject(pathway) {
 //     var nodes_list = [];
 //     var links_list = [];
@@ -176,75 +377,6 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
 //     return object;
 // }
 
-export function create3dForceObject(map){
-    var nodes_list = [];
-    var links_list = [];
-    var count = 0;
-    for (var pathway of map.getElements()){
-        for (var i of pathway.getElements()){ // Pour chaque élément de la liste
-            var elem ={};
-            elem.id = i.getId() + "_" + String(count);
-            console.log(elem.id);
-            elem.name = i.getName();
-            
-            if (i instanceof(Reaction)){ // Si c'est une réaction
-                // On crée les liens
-                for (var j of i.getPreviousElements()){
-                    var link ={};
-                    link.source = j.id+ "_" + String(count);
-                    link.target =  i.getId()+ "_" + String(count);
-                    link.color="white";
-                    console.log(j.id)
-                    links_list.push(link); 
-                }   
-                for (var j of i.getNextElements()){
-                    var link ={};
-                    link.source = i.getId()+ "_" + String(count);
-                    link.target = j.id+ "_" + String(count);
-                    link.color = "white";
-                    links_list.push(link); 
-                }
-                elem.group = 1;
-            }  
-            else{
-                elem.group = 2;
-            }
-            nodes_list.push(elem); // On crée le noeud   
-            
-        }
-        count += 1;
-    }
-        var object={
-            nodes : nodes_list,
-            links : links_list
-        };
-        console.log(object)
-        return object;
-}
-
-// Read and parse the JSON file to display the graph
-export function jsonFileToGraph(fileDataList) {
-    stringToJSON(fileDataList);
-    var mapCreatedByParseJSON = parseJSON(window.JSON_OBJECT);
-    var object = create3dForceObject(mapCreatedByParseJSON);
-    displayGraph(object);
-    console.log("=================");
-    console.log(createJSON(object));
-}
-
-
-export function displayGraph(object) {
-    window.GRAPH = ForceGraph3D();
-    window.GRAPH(document.getElementById('graph-3d'))
-        .nodeAutoColorBy('group')
-        .linkOpacity(0.5)
-        .graphData(object)
-        .onNodeDragEnd(node => {
-            node.fx = node.x;
-            node.fy = node.y;
-            node.fz = node.z;
-        });
-}
 
 
 // ANCIENNE FONCTION
@@ -260,164 +392,3 @@ export function displayGraph(object) {
 //     };
 //     fileReader.readAsText(fileToLoad, "UTF-8");
 // }
-
-//MARCHE PAS 
-export function loadFileAsText() {
-    var textFiles = [];
-    console.log("------"+ typeof textFiles);
-
-    var filesToLoad = document.getElementById("files").files;
-    var fileReader = new FileReader();
-    function readFile(index) {
-        if( index >= filesToLoad.length ) {
-            jsonFileToGraph(textFiles);
-            return;
-        }  
-        var file = filesToLoad[index];
-        fileReader.onload = function(fileLoadedEvent) {   
-            var content = fileLoadedEvent.target.result;
-            textFiles.push(content);
-            readFile(index+1);
-        };
-        fileReader.readAsText(file, "UTF-8");
-        
-    }
-    readFile(0);
-    // textFiles.push("content");
-    // console.log(textFiles);
-    // // var a = textFiles[0];
-    // console.log("......\n" );
-    // console.log(String(textFiles[0]));
-    // jsonFileToGraph(textFiles);
-
-}
-
-
-
-
-export function get3dForceObject() {
-    console.log("++++++++++++++++");
-    var ForceObject = window.GRAPH.graphData();
-    return ForceObject;
-}
-
-export function saveGraphToJSON() {
-    var ForceObject = get3dForceObject();
-    var listOfJSON = createJSON(ForceObject);
-    console.log(">>>>>>>>>>");
-    console.log(listOfJSON);
-    for (const jsonAsText of listOfJSON) {
-        var fileName = "OOOOOO";
-        fileName += ".json";
-        createFile(fileName, jsonAsText);
-    }
-    // var textFileAsBlob = new Blob([listOfJSON], { type: 'application/json' });
-    // var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
-    // var downloadLink = document.createElement("a");
-    // downloadLink.download = fileNameToSaveAs;
-    // downloadLink.innerHTML = "Download File";
-    // if (window.webkitURL != null) {
-    //     // Chrome allows the link to be clicked
-    //     // without actually adding it to the DOM.
-    //     downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-    // }
-    // else {
-    //     // Firefox requires the link to be added to the DOM
-    //     // before it can be clicked.
-    //     downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-    //     downloadLink.onclick = destroyClickedElement;
-    //     downloadLink.style.display = "none";
-    //     document.body.appendChild(downloadLink);
-    // }
-
-    // downloadLink.click();
-}
-
-function createFile(fileName, jsonAsText){
-    var textFileAsBlob = new Blob([jsonAsText], { type: 'application/json' });
-    // var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
-    var downloadLink = document.createElement("a");
-    downloadLink.download = fileName;
-    downloadLink.innerHTML = "Download File";
-    if (window.webkitURL != null) {
-        // Chrome allows the link to be clicked
-        // without actually adding it to the DOM.
-        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-    }
-    else {
-        // Firefox requires the link to be added to the DOM
-        // before it can be clicked.
-        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        downloadLink.onclick = destroyClickedElement;
-        downloadLink.style.display = "none";
-        document.body.appendChild(downloadLink);
-    }
-
-    downloadLink.click();
-}
-
-export function createJSON(object3dForce) {
-    console.log("CREATE JSON");
-    for (var node of object3dForce.nodes) {
-        // Recupoerer  l'index de l'object correspondant au node !!!!A REFORMULER ET TRADUIRE
-        var objectNumber = node.id.substr(-1);
-        console.log(objectNumber);
-        // If the node is a reaction
-        if (node.group === 1) {
-            
-            var nodeId = node.id.substring(0,node.id.length-2);
-            for (var reaction of window.JSON_OBJECT[objectNumber].reactions) {
-                if (reaction.id === nodeId) {
-                    if (!("coordinates" in reaction)) {
-
-                        reaction.coordinates = {};
-                    }
-                    reaction.coordinates.x = node.x;
-                    reaction.coordinates.y = node.y;
-                    reaction.coordinates.z = node.z;
-
-                    // else{
-                    //     reaction.coordinates = {};
-                    // }
-                }
-            }
-            // window.JSON_OBJECT.reactions[node.id].
-
-        }
-        else {
-            for (var metabolite of window.JSON_OBJECT[objectNumber].metabolites) {
-                var nodeId =node.id.substring(0,node.id.length-2);
-                if (metabolite.id === nodeId) {
-                    if (!("coordinates" in metabolite)) {
-
-                        metabolite.coordinates = {};
-                    }
-                    metabolite.coordinates.x = node.x;
-                    metabolite.coordinates.y = node.y;
-                    metabolite.coordinates.z = node.z;
-                }
-            }
-            // console.log(window.JSON_OBJECT.metabolites);
-            // window.OBJECT.metabolites[node.id].coordinates.x = node.x;
-            // window.OBJECT.metabolites[node.id].coordinates.y = node.y;
-            // window.OBJECT.metabolites[node.id].coordinates.z = node.z;
-
-        }
-
-        // GESTION DES GENES ???????????????????????????????????????
-
-
-
-    }
-    var jsonList = [];
-    for (const json of window.JSON_OBJECT) {
-        jsonList.push(JSON.stringify(json, null, 1));
-    }
-    
-    return jsonList;
-}
-
-
-document.getElementById('ok').addEventListener('click', loadFileAsText);
-
-document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON)
