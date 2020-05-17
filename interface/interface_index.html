@@ -9,6 +9,7 @@
 
     <script src="//unpkg.com/3d-force-graph"></script>
     <script type="module" src="./../src/utils.js"></script>
+    <!--<script type="module" src="./test_interface.js"></script>-->
 
     <title> test interface </title>
 </head>
@@ -26,8 +27,17 @@
             <div id="uploads">
                 <div class="dropzone" id="dropzone"> Drop files here to upload</div>
                 <input type="file" id="files" name="myFiles" accept=".json" multiple>
-                <button id="ok"> Upload file(s) </button>
             </div>
+        </div>
+        <div class="bord">
+            <p class="name">Duplicate</p>
+            <label class="cofact"><input type ="checkbox" id="all" name="all"value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'> All</label>
+            <label class="cofact"><input type ="checkbox" id="h" value="h"> H+</label>
+            <label class="cofact"><input type ="checkbox" id="co2" value="co2"> CO2</label>
+            <label class="cofact"><input type ="checkbox" id="h2o" value="h2o"> H2O</label>
+            <label class="cofact"><input type ="checkbox" id="atp" value="atp"> ATP</label>
+            <label class="cofact"><input type ="checkbox" id="adp" value="adp"> ADP</label>
+            <button id="ok"> Upload file(s) </button>
         </div>
         <div class="bord">
             <p class="name">informations</p>

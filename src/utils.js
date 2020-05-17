@@ -4,6 +4,7 @@ import { Compound } from "./Compound.js";
 import { Reaction } from "./Reaction.js";
 import { Gene } from "./Gene.js";
 import { Map } from "./Map.js";
+import { Cofact } from "./Cofacteur.js";
 
 // Global variables
 var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
@@ -112,7 +113,129 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
         }
     }
 }
+//add for duplication ; initCofact, getElementById, duplicreate3dForceObject
+export function initCofact(list,pathway){
+    var cofact_list=[];
+    for (var elt in list){
+        var elements=pathway.getElements();
+        var element=getElementById(elements,list[elt]);
+        if (element===false){
+            var cofact= new Cofact(list[elt],0,list[elt]);
+        }
+        else{
+            var cofact= new Cofact(list[elt],0,element.getName());
+        }
+        cofact_list.push(cofact);
+    }
+    return cofact_list;
+}
 
+export function getElementById(list,id){
+    for (var elt in list){
+        if (list[elt].id===id){
+            return list[elt];
+        }
+    }
+    return false;
+}
+
+/**
+ * Create the 3D-Force object required to display the graph with the 3D-Force Graph library
+ * 
+ * @param  {Pathway} pathway Pathway object which contains the data
+ * @return {} 3D-Force object which contains nodes and links data
+ */
+export function duplicreate3dForceObject(map) {
+    var nodes_list = [];
+    var links_list = [];
+    var cofact_list=getCofactList();
+    for (var pathway of map.getElements()) {
+        var cofacts=initCofact(cofact_list,pathway);// list d'objet cofact{id: , nb: , name: }
+        for (var i of pathway.getElements()) { // Pour chaque élément de la liste
+            if (!(cofact_list.includes(i.getId()))) {
+                var elem = {};
+                elem.id = i.getId() + '___' + pathway.getName();
+                elem.name = i.getName();
+                /*
+                var coordinates = i.getCoordinates();
+                if ((coordinates.x != undefined) && (coordinates.y != undefined) && (coordinates.z != undefined)) {
+                    elem.fx = coordinates.x;
+                    elem.fy = coordinates.y;
+                    elem.fz = coordinates.z;
+                }*/
+
+                if (i instanceof (Reaction)) { // Si c'est une réaction
+                    // On crée les liens
+                    for (var j of i.getPreviousElements()) {
+                        var link = {};
+                        if (cofact_list.includes(j.id)){
+                            var cofacteur= getElementById(cofacts,j.id);
+                            var val=cofacteur.nb;
+                            var ind=val;
+                            var duplicat_id= j.id+"#"+String(ind)+ '___' + pathway.getName();
+                            val++;
+                            cofacteur.setNb(val);
+                            link.source = duplicat_id;
+                        }
+                        else{
+                            link.source = j.id + '___' + pathway.getName();
+                        }
+                        link.target = i.getId() + '___' + pathway.getName();
+                        link.color = "white";
+                        links_list.push(link);
+                    }
+                    for (var j of i.getNextElements()) {
+                        var link = {};
+                        if (cofact_list.includes(j.id)){
+                            var cofacteur= getElementById(cofacts,j.id);
+                            var val=cofacteur.nb;
+                            var ind=val;
+                            var duplicat_id= j.id +"#"+String(ind)+ '___' + pathway.getName();
+                            val++;
+                            cofacteur.setNb(val);
+                            link.target = duplicat_id;
+                        }
+                        else {
+                            link.target = j.id + '___' + pathway.getName();
+                        }
+                        link.source = i.getId() + '___' + pathway.getName();
+                        link.color = "white";
+                        links_list.push(link);
+                    }
+                    elem.group = 1;
+                }
+                else {
+                    elem.group = 2;
+                }
+                nodes_list.push(elem); // On crée le noeud   
+                console.log('LENGTH : '+nodes_list.length);
+          
+            }
+        }
+
+            //ici on créer tous les elements correspondant aux cofacteurs//
+        for (var cofacteur of cofacts){
+            for (var i =0; i<cofacteur.nb;i++){
+                var elem = {};
+                elem.id = cofacteur.id+"#"+String(i)+ '___' + pathway.getName();
+                elem.name = cofacteur.name;
+                elem.group = 2;//cofacteur= entity not reaction or create 3 groups
+                //console.log(elem);
+                nodes_list.push(elem);
+                        
+                //no coordinate
+            }
+        }
+    }
+            
+    var object = {
+        nodes: nodes_list,
+        links: links_list
+    };
+    console.log("object",object)
+    return object;
+    
+}
 
 
 /**
@@ -172,7 +295,9 @@ export function create3dForceObject(map) {
 export function jsonFileToGraph() {
     stringToJSON();
     var mapCreatedByParseJSON = parseJSON();
-    var object = create3dForceObject(mapCreatedByParseJSON);
+    // with duplication or not
+    //var object = create3dForceObject(mapCreatedByParseJSON);
+    var object = duplicreate3dForceObject(mapCreatedByParseJSON);
     displayGraph(object);
 }
 
@@ -317,11 +442,49 @@ export function modifyJSON(object3dForce) {
         }
     }
 }
-
+function getCofactList(){
+    //var allcofact = document.querySelector('input[value="all"]');
+    var cofact_list=[];
+    if(document.querySelector('input[id="all"]').checked) {
+      document.querySelector('input[id="h"]').checked
+      document.querySelector('input[id="h2o"]').checked
+      document.querySelector('input[id="co2"]').checked
+      document.querySelector('input[id="atp"]').checked
+      document.querySelector('input[id="adp"]').checked
+      cofact_list=["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"];
+  
+    }
+    else {
+      if (document.querySelector('input[id="h"]').checked){
+        cofact_list.push("h_e");
+        cofact_list.push("h_c");
+      }
+      if (document.querySelector('input[id="h2o"]').checked){
+        cofact_list.push("h2o_e");
+        cofact_list.push("h2o_c");
+      }
+      if (document.querySelector('input[id="co2"]').checked){
+        cofact_list.push("co2_e");
+        cofact_list.push("co2_c");
+      }
+      if (document.querySelector('input[id="atp"]').checked){
+        cofact_list.push("atp_e");
+        cofact_list.push("atp_c");
+      }
+      if (document.querySelector('input[id="adp"]').checked){
+        cofact_list.push("adp_e");
+        cofact_list.push("adp_c");
+      }
+    }
+    console.log(cofact_list);
+    return cofact_list;
+  }
 
 document.getElementById('ok').addEventListener('click', loadFileAsText);
 
-document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON)
+document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
+
+//document.getElementById('cofact').addEventListener('click',loadFileAsText);
 
 
 
