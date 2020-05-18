@@ -35,6 +35,11 @@ footer{
     width: 100%;
 }*/
 
+
+#uploads {
+    margin-left: -50px;
+}
+
 .dropzone {
     width: 300px;
     height: 100px;
@@ -43,6 +48,7 @@ footer{
     line-height: 100px;
     text-align: 100px;
     text-align: center;
+    margin-left: 10px;
 }
 
 .dropzone.dragover {
