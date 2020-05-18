@@ -1,8 +1,8 @@
 import { Graph } from "./Graph.js";
 
 export class Pathway extends Graph{
-    constructor(name = "", compartments = {}, version = ""){
-        super();
+    constructor(id, name = "", compartments = {}, version = ""){
+        super(id);
         this.name = name;
         this.compartments = compartments;
         this.version = version;
