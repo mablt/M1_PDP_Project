@@ -264,7 +264,7 @@ export function create3dForceObject(map) {
                     link.source = j.id + '___' + pathway.getName();
                     // link.target =  i.getId()+ "_" + String(count);
                     link.target = i.getId() + '___' + pathway.getName();
-                    link.color = "white";
+                    link.color = "grey";
                     link.value = 2;
                     console.log(j.id);
                     links_list.push(link);
@@ -273,7 +273,7 @@ export function create3dForceObject(map) {
                     var link = {};
                     link.source = i.getId() + '___' + pathway.getName();
                     link.target = j.id + '___' + pathway.getName();
-                    link.color = "white";
+                    link.color = "grey";
                     link.value = 2;
                     links_list.push(link);
                     console.log("link : ",link);
