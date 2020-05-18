@@ -15,6 +15,17 @@ export class Map{
         return this.graphs;
     }
 
+    getGraphById(id){
+        var graphs=this.getElements()
+        for (var graph of graphs){
+            if (graph.id===id){
+                return graph;
+            }
+        }
+        console.log("graph id", id, "not found in graphs list.");
+        return false;
+    }
+
     setId(id){
         this.id = id;
     }

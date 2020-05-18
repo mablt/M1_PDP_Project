@@ -156,6 +156,7 @@ export function duplicreate3dForceObject(map) {
                 var elem = {};
                 elem.id = i.getId() + '___' + pathway.getName();
                 elem.name = i.getName();
+                elem.graph_id = pathway.id
                 /*
                 var coordinates = i.getCoordinates();
                 if ((coordinates.x != undefined) && (coordinates.y != undefined) && (coordinates.z != undefined)) {
@@ -303,7 +304,7 @@ export function jsonFileToGraph() {
     // with duplication or not
     //var object = create3dForceObject(mapCreatedByParseJSON);
     var object = duplicreate3dForceObject(mapCreatedByParseJSON);
-    displayGraph(object);
+    displayGraph(object,mapCreatedByParseJSON);
 }
 
 // QUE DES SPHERES
@@ -346,7 +347,7 @@ export function arrowlink(graph){
     graph
     .linkDirectionalArrowLength(3.5)
     .linkDirectionalArrowRelPos(1)
-    .linkCurvature(0.25);
+    .linkCurvature(0);
 }
 
 export function particuleLink(graph){
@@ -356,7 +357,7 @@ export function particuleLink(graph){
 }
 
 // CUBE ET SPHERES 
-export function displayGraph(object) {
+export function displayGraph(object,map) {
     
     window.GRAPH = ForceGraph3D();
     window.GRAPH(document.getElementById('graph-3d'))
@@ -373,14 +374,23 @@ export function displayGraph(object) {
             
         .graphData(object)
         .onNodeClick(node => {
+            var graph= map.getGraphById(node.graph_id);
+            console.log("graph du node",graph,);
+            var element= graph.getElementsByName(node.name);
+            console.log("element du node",element);
+            document.getElementById("selected-node-name").innerHTML=" name : " + element.name;
+            document.getElementById("selected-node-id").innerHTML="id : " + element.id ;
+            document.getElementById("selected-node-pathway").innerHTML="pathway : " + element.parent.name ;
+/*
             if (node.group===2) {
 
-                //console.log("id: ",node.id, "name: ", node.name, "type: ", "Metabolite",)
+                console.log("id: ",element.id, "name: ", node.name, "type: ", "Metabolite",)
             }
             if (node.group===1) {
 
-                //console.log("id: ",node.id, "name: ", node.name, "type: ", "réaction",)
+                console.log("id: ",node.id, "name: ", node.name, "type: ", "réaction",)
             }
+            */
           })
         .onNodeDragEnd(node => {
             node.fx = node.x;
@@ -546,11 +556,13 @@ function getCofactList(){
     //var allcofact = document.querySelector('input[value="all"]');
     var cofact_list=[];
     if(document.querySelector('input[id="all"]').checked) {
+        /*
       document.querySelector('input[id="h"]').checked
       document.querySelector('input[id="h2o"]').checked
       document.querySelector('input[id="co2"]').checked
       document.querySelector('input[id="atp"]').checked
       document.querySelector('input[id="adp"]').checked
+      */
       cofact_list=["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"];
   
     }

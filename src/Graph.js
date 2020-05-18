@@ -15,6 +15,18 @@ export class Graph{
         return this.elements;
     }
 
+    getElementsByName(name){
+        var elements=this.getElements();
+        for (var elt of elements){
+            console.log("elt de graph.getElementsByName(name)",elt);
+            if (elt.name===name){
+                return elt;
+            }
+        }
+        console.log("element name", name, "not found in elements list.");
+        return false;
+    }
+
     setId(id){
         this.id = id;
     }
