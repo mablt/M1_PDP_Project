@@ -33,8 +33,10 @@ export function parseJSON() {
     var map = new Map();
     for (const nameFile in window.JSON_OBJECT) {
         var json = window.JSON_OBJECT[nameFile];
+        
         // Patwhay object creation
         var pathway = new Pathway(json.id, nameFile, json.compartments, json.version);
+        console.log("PATWHAY ::::", pathway.id);
         // Compounds objects creation
         for (var m of json.metabolites) {
             var compound = new Compound(m.id, pathway, m.name, m.compartment, m.charge, m.formula);
@@ -149,14 +151,15 @@ export function duplicreate3dForceObject(map) {
     var nodes_list = [];
     var links_list = [];
     var cofact_list=getCofactList();
-    for (var pathway of map.getElements()) {
+    for (var pathway of map.getGraphs()) {
         var cofacts=initCofact(cofact_list,pathway);// list d'objet cofact{id: , nb: , name: }
         for (var i of pathway.getElements()) { // Pour chaque élément de la liste
             if (!(cofact_list.includes(i.getId()))) {
                 var elem = {};
                 elem.id = i.getId() + '___' + pathway.getName();
                 elem.name = i.getName();
-                elem.graph_id = pathway.id
+                console.log("GRAPH ID DS CREATE 3D", pathway.id);
+                elem.graph_id = pathway.id;
                 /*
                 var coordinates = i.getCoordinates();
                 if ((coordinates.x != undefined) && (coordinates.y != undefined) && (coordinates.z != undefined)) {
@@ -211,7 +214,6 @@ export function duplicreate3dForceObject(map) {
                     elem.group = 2;
                 }
                 nodes_list.push(elem); // On crée le noeud   
-                console.log('LENGTH : '+nodes_list.length);
           
             }
         }
@@ -286,7 +288,6 @@ export function create3dForceObject(map) {
             }
             nodes_list.push(elem); // On crée le noeud   
 
-        console.log('LENGTH : '+nodes_list.length);
 
         }
     }
@@ -374,7 +375,9 @@ export function displayGraph(object,map) {
             
         .graphData(object)
         .onNodeClick(node => {
-            var graph= map.getGraphById(node.graph_id);
+            console.log("AAAAAAAAAAAAAA", node);
+
+            var graph = map.getGraphById(node.graph_id);
             console.log("graph du node",graph,);
             var element= graph.getElementsByName(node.name);
             console.log("element du node",element);

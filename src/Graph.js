@@ -18,7 +18,7 @@ export class Graph{
     getElementsByName(name){
         var elements=this.getElements();
         for (var elt of elements){
-            console.log("elt de graph.getElementsByName(name)",elt);
+            // console.log("elt de graph.getElementsByName(name)",elt);
             if (elt.name===name){
                 return elt;
             }
