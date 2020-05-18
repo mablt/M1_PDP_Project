@@ -182,6 +182,7 @@ export function duplicreate3dForceObject(map) {
                         }
                         link.target = i.getId() + '___' + pathway.getName();
                         link.color = "white";
+                        link.value = 2;
                         links_list.push(link);
                     }
                     for (var j of i.getNextElements()) {
@@ -200,6 +201,7 @@ export function duplicreate3dForceObject(map) {
                         }
                         link.source = i.getId() + '___' + pathway.getName();
                         link.color = "white";
+                        link.value = 1;
                         links_list.push(link);
                     }
                     elem.group = 1;
@@ -232,7 +234,7 @@ export function duplicreate3dForceObject(map) {
         nodes: nodes_list,
         links: links_list
     };
-    console.log("object",object)
+    console.log("object",object);
     return object;
     
 }
@@ -263,7 +265,8 @@ export function create3dForceObject(map) {
                     // link.target =  i.getId()+ "_" + String(count);
                     link.target = i.getId() + '___' + pathway.getName();
                     link.color = "white";
-                    console.log(j.id)
+                    link.value = 2;
+                    console.log(j.id);
                     links_list.push(link);
                 }
                 for (var j of i.getNextElements()) {
@@ -271,7 +274,9 @@ export function create3dForceObject(map) {
                     link.source = i.getId() + '___' + pathway.getName();
                     link.target = j.id + '___' + pathway.getName();
                     link.color = "white";
+                    link.value = 2;
                     links_list.push(link);
+                    console.log("link : ",link);
                 }
                 elem.group = 1;
             }
@@ -301,18 +306,56 @@ export function jsonFileToGraph() {
     displayGraph(object);
 }
 
+// QUE DES SPHERES
+// export function displayGraph(object) {
+//     window.GRAPH = ForceGraph3D();
+//     window.GRAPH(document.getElementById('graph-3d'))
+//         .nodeAutoColorBy('group')
+//         .linkOpacity(0.5)
+//         .graphData(object)
+//         .onNodeDragEnd(node => {
+//             node.fx = node.x;
+//             node.fy = node.y;
+//             node.fz = node.z;
+//         });
+// }
 
-export function displayGraph(object) {
-    window.GRAPH = ForceGraph3D();
-    window.GRAPH(document.getElementById('graph-3d'))
-        .nodeAutoColorBy('group')
-        .linkOpacity(0.5)
+// // HEXAGONES ET SPHERES
+// export function displayGraph(object) {
+//     window.GRAPH = ForceGraph3D();
+//     window.GRAPH(document.getElementById('graph-3d'))
+//         .nodeThreeObject(({group}) => new THREE.Mesh(
+//             [
+//                 new THREE.SphereGeometry(5),
+//                 new THREE.TorusGeometry(10, 2)
+//             ][group%2]))
+//         .linkDirectionalParticles("value")
+//         .linkDirectionalParticleSpeed(d => d.value * 0.001)
+//         .graphData(object)
+//         .onNodeDragEnd(node => {
+//             node.fx = node.x;
+//             node.fy = node.y;
+//             node.fz = node.z;
+            
+//         });
+        
+// }
+
+
+function displayGraph(object) {
+
+    const Graph = ForceGraph3D()
+        (document.getElementById('graph-3d'))
+        //.nodeAutoColorBy('group')
+        .nodeThreeObject(({ group }) => new THREE.Mesh(
+            [
+                new THREE.SphereGeometry(3),
+                new THREE.BoxGeometry(3, 2),
+            ][group % 2]))
         .graphData(object)
-        .onNodeDragEnd(node => {
-            node.fx = node.x;
-            node.fy = node.y;
-            node.fz = node.z;
-        });
+        .linkDirectionalArrowLength(3.5)
+        .linkDirectionalArrowRelPos(1)
+        .linkCurvature(0.25);
 }
 
 
