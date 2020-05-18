@@ -342,22 +342,79 @@ export function jsonFileToGraph() {
 // }
 
 
-export function displayGraph(object) {
-
-    const Graph = ForceGraph3D()
-        (document.getElementById('graph-3d'))
-        //.nodeAutoColorBy('group')
-        .nodeThreeObject(({ group }) => new THREE.Mesh(
-            [
-                new THREE.SphereGeometry(3),
-                new THREE.BoxGeometry(3, 2),
-            ][group % 2]))
-        .graphData(object)
-        .linkDirectionalArrowLength(3.5)
-        .linkDirectionalArrowRelPos(1)
-        .linkCurvature(0.25);
+export function arrowlink(graph){
+    graph
+    .linkDirectionalArrowLength(3.5)
+    .linkDirectionalArrowRelPos(1)
+    .linkCurvature(0.25);
 }
 
+export function particuleLink(graph){
+    graph
+    .linkDirectionalParticles("value")
+    .linkDirectionalParticleSpeed(d => d.value * 0.001)
+}
+
+// CUBE ET SPHERES 
+export function displayGraph(object) {
+    
+    window.GRAPH = ForceGraph3D();
+    window.GRAPH(document.getElementById('graph-3d'))
+    
+        .nodeThreeObject(({group}) => new THREE.Mesh(
+            [
+                new THREE.SphereGeometry(3),
+                new THREE.BoxGeometry(10, 10, 10)
+            ][group%2],
+            [
+                new THREE.MeshBasicMaterial( { color: "#3EAF1D" } ),
+                new THREE.MeshBasicMaterial( { color: "#DA2B48" } )
+            ][group%2]))
+            
+        .graphData(object)
+        .onNodeClick(node => {
+            if (node.group===2) {
+
+                //console.log("id: ",node.id, "name: ", node.name, "type: ", "Metabolite",)
+            }
+            if (node.group===1) {
+
+                //console.log("id: ",node.id, "name: ", node.name, "type: ", "réaction",)
+            }
+          })
+        .onNodeDragEnd(node => {
+            node.fx = node.x;
+            node.fy = node.y;
+            node.fz = node.z;
+            
+        });
+        console.log("link value", document.getElementById("link-select").value);
+        if (document.getElementById("link-select").value==="arrow"){
+            arrowlink(window.GRAPH(document.getElementById('graph-3d')));
+        }
+        if (document.getElementById("link-select").value==="particle"){
+            particuleLink(window.GRAPH(document.getElementById('graph-3d')));
+        }
+        //nodeStyle(window.GRAPH(document.getElementById('graph-3d')));
+        
+        
+}
+
+// export function displayGraph(object) {
+
+//     const Graph = ForceGraph3D()
+//         (document.getElementById('graph-3d'))
+//         //.nodeAutoColorBy('group')
+//         .nodeThreeObject(({ group }) => new THREE.Mesh(
+//             [
+//                 new THREE.SphereGeometry(3),
+//                 new THREE.BoxGeometry(3, 2),
+//             ][group % 2]))
+//         .graphData(object)
+//         .linkDirectionalArrowLength(3.5)
+//         .linkDirectionalArrowRelPos(1)
+//         .linkCurvature(0.25);
+// }
 
 
 

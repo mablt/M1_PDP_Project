@@ -31,14 +31,24 @@
             </div>
         </div>
         <div class="bord">
-            <p class="name">Duplicate</p>
-            <label class="cofact"><input type ="checkbox" id="all" name="all"value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'> All</label>
-            <label class="cofact"><input type ="checkbox" id="h" value="h"> H+</label>
-            <label class="cofact"><input type ="checkbox" id="co2" value="co2"> CO2</label>
-            <label class="cofact"><input type ="checkbox" id="h2o" value="h2o"> H2O</label>
-            <label class="cofact"><input type ="checkbox" id="atp" value="atp"> ATP</label>
-            <label class="cofact"><input type ="checkbox" id="adp" value="adp"> ADP</label>
-            <button id="ok"> Upload file(s) </button>
+            <div id ="duplicate">
+                <p class="name">Duplicate</p>
+                <label class="cofact"><input type ="checkbox" id="all" name="all"value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'> All</label>
+                <label class="cofact"><input type ="checkbox" id="h" value="h"> H+</label>
+                <label class="cofact"><input type ="checkbox" id="co2" value="co2"> CO2</label>
+                <label class="cofact"><input type ="checkbox" id="h2o" value="h2o"> H2O</label>
+                <label class="cofact"><input type ="checkbox" id="atp" value="atp"> ATP</label>
+                <label class="cofact"><input type ="checkbox" id="adp" value="adp"> ADP</label>
+                <button id="ok"> Upload file(s) </button>
+            </div>
+            <div id="link">
+                <label for="link-select">Choose link style:</label>
+
+                <select name="link-style" id="link-select">
+                    <option value="arrow" selected>Arrow</option>
+                    <option value="particle">Oriented particle</option>
+                </select>
+            </div>
         </div>
         <div class="bord">
             <p class="name">informations</p>
