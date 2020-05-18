@@ -41,7 +41,7 @@ footer{
 }
 
 .dropzone {
-    width: 300px;
+    width: 200px;
     height: 100px;
     border: 2px dashed rgb(89, 167, 167);
     color: #ccc;
