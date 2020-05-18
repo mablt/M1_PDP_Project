@@ -342,7 +342,7 @@ export function jsonFileToGraph() {
 // }
 
 
-function displayGraph(object) {
+export function displayGraph(object) {
 
     const Graph = ForceGraph3D()
         (document.getElementById('graph-3d'))
