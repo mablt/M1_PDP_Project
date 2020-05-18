@@ -343,19 +343,31 @@ export function jsonFileToGraph() {
 
 
 export function displayGraph(object) {
-
-    const Graph = ForceGraph3D()
-        (document.getElementById('graph-3d'))
-        //.nodeAutoColorBy('group')
-        .nodeThreeObject(({ group }) => new THREE.Mesh(
+    window.GRAPH = ForceGraph3D();
+    window.GRAPH(document.getElementById('graph-3d'))
+        .nodeAutoColorBy('group')
+        //.nodeColor(d => d.type == "OK" ? '#4caf50' : '#f44336')
+        .nodeThreeObject(({ group, color }) => new THREE.Mesh(
             [
                 new THREE.SphereGeometry(3),
-                new THREE.BoxGeometry(3, 2),
-            ][group % 2]))
-        .graphData(object)
+                new THREE.BoxGeometry(10, 10, 10),
+            ][group % 2],
+            new THREE.MeshLambertMaterial({
+                color: color,
+                transparent: true,
+                opacity: 0.75
+            })
+        ))
+
+    .graphData(object)
         .linkDirectionalArrowLength(3.5)
         .linkDirectionalArrowRelPos(1)
-        .linkCurvature(0.25);
+        .linkCurvature(0.25)
+        .onNodeDragEnd(node => {
+            node.fx = node.x;
+            node.fy = node.y;
+            node.fz = node.z;
+        });
 }
 
 
