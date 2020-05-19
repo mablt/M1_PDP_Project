@@ -382,7 +382,11 @@ export function particuleLink(graph) {
         .linkDirectionalParticleSpeed(d => d.value * 0.001);
 }
 
-
+/**
+ * Allow the choice of the node geometry between TorusKnot, Sphere and Box.
+ * @param {} value corresponds to the choice of geometry we want to apply to our nodes 
+ * @param {} sizeproportion is useful in order to display bigger reaction nodes compared to the metabolites one
+ */
 export function formNode(value, sizeproportion) {
     var size = 3 + sizeproportion;
     if (value === "torusknot") {
