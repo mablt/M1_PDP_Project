@@ -90,9 +90,9 @@ export function parseJSON() {
 
 
 /**
- * @param  {} pathway Pathway object which is created during the parsing
- * @param  {} idCompoundToSearch Id of the compound where the reaction id will be added in previous elements
- * @param  {} idElementToAdd Id of the reaction to add
+ * @param  {Pathway} pathway Pathway object which is created during the parsing
+ * @param  {String} idCompoundToSearch Id of the compound where the reaction id will be added in previous elements
+ * @param  {String} idElementToAdd Id of the reaction to add
  */
 function putElementToPreviousElementCompound(pathway, idCompoundToSearch, idElementToAdd) {
     for (var element of pathway.getElements()) {
@@ -104,9 +104,9 @@ function putElementToPreviousElementCompound(pathway, idCompoundToSearch, idElem
 
 
 /**
- * @param  {} patwhay Pathway object which is created during the parsing
- * @param  {} idCompoundToSearch Id of the compound where the reaction id will be added in next elements
- * @param  {} idElementToAdd Id of the reaction to add
+ * @param  {Pathway} patwhay Pathway object which is created during the parsing
+ * @param  {String} idCompoundToSearch Id of the compound where the reaction id will be added in next elements
+ * @param  {String} idElementToAdd Id of the reaction to add
  */
 function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementToAdd) {
     for (var element of patwhay.getElements()) {
@@ -116,6 +116,11 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
     }
 }
 //add for duplication ; initCofact, getElementById, duplicreate3dForceObject
+/**
+ * 
+ * @param {*} list 
+ * @param {*} pathway 
+ */
 export function initCofact(list,pathway){
     var cofact_list=[];
     for (var elt in list){
@@ -132,6 +137,17 @@ export function initCofact(list,pathway){
     return cofact_list;
 }
 
+
+/**
+ * Returns an element corresponding to an id if it's found
+ * else, returns false
+ * 
+ * @param {} list List containing elements of a pathway
+ * @param {String} id String corresponding to an element's id
+ * @return Element object or "false"(boolean)
+ * 
+ */
+
 export function getElementById(list,id){
     for (var elt in list){
         if (list[elt].id===id){
@@ -144,7 +160,7 @@ export function getElementById(list,id){
 /**
  * Create the 3D-Force object required to display the graph with the 3D-Force Graph library
  * 
- * @param  {Pathway} pathway Pathway object which contains the data
+ * @param  {Map} map Map object which contains the pathways
  * @return {} 3D-Force object which contains nodes and links data
  */
 export function duplicreate3dForceObject(map) {
@@ -246,7 +262,7 @@ export function duplicreate3dForceObject(map) {
 /**
  * Create the 3D-Force object required to display the graph with the 3D-Force Graph library
  * 
- * @param  {Pathway} pathway Pathway object which contains the data
+ * @param  {Map} map Map object which contains the pathways
  * @return {} 3D-Force object which contains nodes and links data
  */
 export function create3dForceObject(map) {
@@ -298,7 +314,9 @@ export function create3dForceObject(map) {
     return object;
 }
 
-// Read and parse the JSON file to display the graph
+/**
+ * Reads and parses JSON file, to display the graph
+ */
 export function jsonFileToGraph() {
     stringToJSON();
     var mapCreatedByParseJSON = parseJSON();
@@ -343,7 +361,10 @@ export function jsonFileToGraph() {
         
 // }
 
-
+/**
+ * Sets links to arrows
+ * @param {} graph 3D-Force graph object
+ */
 export function arrowlink(graph){
     graph
     .linkDirectionalArrowLength(3.5)
@@ -351,13 +372,21 @@ export function arrowlink(graph){
     .linkCurvature(0);
 }
 
+/**
+ * Adds directional particles to links
+ * @param {} graph 3D-Force graph object
+ */
 export function particuleLink(graph){
     graph
     .linkDirectionalParticles("value")
     .linkDirectionalParticleSpeed(d => d.value * 0.001)
 }
 
-// CUBE ET SPHERES 
+/**
+ * Displays graphs and loads elements information on click
+ * @param {} object 3D-Force object which contains nodes and links data
+ * @param {Map} map Map object which contains the pathways data
+ */
 export function displayGraph(object,map) {
     
     window.GRAPH = ForceGraph3D();
@@ -431,7 +460,9 @@ export function displayGraph(object,map) {
 
 
 
-//FONCTIONNE
+/**
+ * Loads files selected by the user and calls conversion function
+ */
 export function loadFileAsText() {
     var textFiles = [];
     console.log("------" + typeof textFiles);
@@ -467,12 +498,19 @@ export function loadFileAsText() {
 
 
 
-
+/**
+ * Gets ans returns currently displayed graph
+ * @return {} ForceObject 3D Force Graph object which contains data
+ */
 export function get3dForceObject() {
     console.log("++++++++++++++++");
     var ForceObject = window.GRAPH.graphData();
     return ForceObject;
 }
+
+/**
+ * Calls functions to save displayed graph as a new JSON file
+ */
 
 export function saveGraphToJSON() {
     var ForceObject = get3dForceObject();
@@ -480,6 +518,9 @@ export function saveGraphToJSON() {
     createFile();
 }
 
+/**
+ * 
+ */
 function createFile() {
     for (const fileName in window.JSON_OBJECT) {
         var json = window.JSON_OBJECT[fileName];
@@ -510,7 +551,10 @@ function createFile() {
 
 
 }
-
+/**
+ * 
+ * @param {} object3dForce 
+ */
 export function modifyJSON(object3dForce) {
     for (var node of object3dForce.nodes) {
         // Recuperer  l'index de l'object correspondant au node !!!!A REFORMULER ET TRADUIRE
@@ -555,6 +599,11 @@ export function modifyJSON(object3dForce) {
         }
     }
 }
+
+/**
+ * 
+ */
+
 function getCofactList(){
     //var allcofact = document.querySelector('input[value="all"]');
     var cofact_list=[];
