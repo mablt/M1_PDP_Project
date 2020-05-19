@@ -384,14 +384,15 @@ export function particuleLink(graph) {
 
 
 export function formNode(value, sizeproportion) {
+    var size = 3 + sizeproportion;
     if (value === "torusknot") {
-        return new THREE.TorusKnotGeometry(3 + sizeproportion, 1);
+        return new THREE.TorusKnotGeometry(size, 1);
     }
     if (value === "sphere") {
-        return new THREE.SphereGeometry(3 + sizeproportion);
+        return new THREE.SphereGeometry(size);
     }
     if (value === "box") {
-        return new THREE.BoxGeometry(3 + sizeproportion, 3 + sizeproportion, 3 + sizeproportion);
+        return new THREE.BoxGeometry(size, size, size);
     }
 }
 
