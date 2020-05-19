@@ -2,6 +2,7 @@ html, body {
 	height: 100%;
     margin: 0; padding: 0;
     color: floralwhite;
+    background-color: black;
 }
 .sidebar, #graph-3d{
     padding:1px 0;
@@ -22,6 +23,7 @@ h1{
     color: white;
     background-color: rgb(26, 48, 48);
 }
+/*
 footer{
     background:darkslategrey;
     position:absolute;
@@ -36,8 +38,14 @@ footer{
 }*/
 
 
-#uploads {
-    margin-left: -50px;
+#uploads,#options,#info,#save {
+    margin-left: 5px;
+    font-size: 11px;
+    /*display: none;*/
+}
+#duplicate,#link{
+    font-size: 11px;
+
 }
 
 .dropzone {
@@ -84,6 +92,7 @@ footer{
 }
 
 .bord{
+    display: none;
     border: 2px solid rgb(0, 24, 24);
     padding-left: 3em;
     padding-right: 3em;
@@ -145,3 +154,82 @@ footer{
     margin-left: 20%;
     width: 80%;
 }
+.scene-nav-info {
+    bottom: 50px;
+    width: 100%;
+    text-align: center;
+    color: slategrey;
+    opacity: 0.7;
+    font-size: 10px;
+  }
+
+a{
+    color: whitesmoke;
+    text-decoration-line: underline;
+    border-right: 5px solid transparent;
+    display: block;
+}
+
+a:hover{
+    color: rgb(115, 196, 196);
+    text-decoration-line: underline;
+    border-right-color: rgb(89, 167, 167);
+    background-color: rgb(62, 82, 126,0.1);
+}
+
+nav ul {
+    user-select: none;
+    box-sizing : border-box;
+    height: 100%;
+    padding: 0px;
+}
+
+nav ul li {
+    width: 100%;
+    line-height: 200%;
+    display: block;
+    list-style: none;
+    border-bottom: 2px solid rgba(89, 167, 167,0.3);
+}
+
+nav ul li a{
+    position: relative;
+    display: block;
+    padding-left: 10%;
+    height: 100%;
+}
+
+nav ul li a:hover{
+    display: block;
+    padding-left: 20%;
+}
+
+nav ul li a span{
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-25%);
+    text-align: center;
+    padding-left: 10%;
+}
+
+nav ul li a:hover span{
+
+    transform: translateY(-25%) rotate(-180deg);
+    right: 5px;
+}
+#uploadbar{
+    width: 100%;
+    height: 100%;
+    background-color: blanchedalmond;
+}
+#uploads:checked {
+    cursor: pointer;
+    display: block;
+
+}
+/*
+nav ul li .uploads.show{
+    display: block;
+
+}*/

@@ -22,53 +22,91 @@
         <i class="fas fa-bars" id="btn"></i>
         <i class="fas fa-times" id="cancel"></i>
     </label>
-
+    
     <div class="sidebar">
-        <div class="bord">
-            <div id="uploads">
-                <div class="dropzone" id="dropzone"> Drop files here to upload</div>
-                <input type="file" id="files" name="myFiles" accept=".json" multiple>
-            </div>
-        </div>
-        <div class="bord">
-            <div id ="duplicate">
-                <p class="name">Duplicate</p>
-                <label class="cofact"><input type ="checkbox" id="all" name="all"value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'> All</label>
-                <label class="cofact"><input type ="checkbox" id="h" value="h"> H+</label>
-                <label class="cofact"><input type ="checkbox" id="co2" value="co2"> CO2</label>
-                <label class="cofact"><input type ="checkbox" id="h2o" value="h2o"> H2O</label>
-                <label class="cofact"><input type ="checkbox" id="atp" value="atp"> ATP</label>
-                <label class="cofact"><input type ="checkbox" id="adp" value="adp"> ADP</label>
-                <button id="ok"> Upload file(s) </button>
-            </div>
-            <div id="link">
-                <label for="link-select">Choose link style:</label>
+        <nav>
+        <ul>
+            <li>
+            <a href = "#uploads" class = "uploadbar">Upload <span class = "fas fa-caret-down first"></span></a>
+            <!--<div class="bord">-->
+                <div id="uploads">
+                    <div class="dropzone" id="dropzone"> Drop files here to upload</div>
+                    <input type="file" id="files" name="myFiles" accept=".json" multiple>
+                    <button id="ok"> Upload file(s) </button>
+                </div>
+            <!--</div>-->
+            </li>
+            <li>
+            <a id = "optionbar">Options <span class = "fas fa-caret-down"></span></a>
+            <!--<div class="bord">-->
+                <div id = "options">
+                <div id ="duplicate">
+                    <p class="name">Duplicate</p>
+                    <label class="cofact"><input type ="checkbox" id="all" name="all"value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'> All</label>
+                    <label class="cofact"><input type ="checkbox" id="h" value="h"> H+</label>
+                    <label class="cofact"><input type ="checkbox" id="co2" value="co2"> CO2</label>
+                    <label class="cofact"><input type ="checkbox" id="h2o" value="h2o"> H2O</label>
+                    <label class="cofact"><input type ="checkbox" id="atp" value="atp"> ATP</label>
+                    <label class="cofact"><input type ="checkbox" id="adp" value="adp"> ADP</label>
+                </div>
 
-                <select name="link-style" id="link-select">
-                    <option value="arrow" selected>Arrow</option>
-                    <option value="particle">Oriented particle</option>
-                </select>
+                <div id="link">
+                    <label for="link-select">Choose link style:</label>
+                    <select name="link-style" id="link-select">
+                        <option value="arrow" selected>Arrow</option>
+                        <option value="particle">Oriented particle</option>
+                    </select>
+                    <button id="change"> Apply changes </button>
+                </div>
+                </div>
+            </li>
+            <!--</div>-->
+            <li>
+            <a id = "infobar">Informations <span class = "fas fa-caret-down"></span></a>
+            <div id = "info">
+            <!--<div class="bord">-->
+                <p><span id="selected-node-name">Click on a node to display information</span> </p>
+                <p><span id="selected-node-id"></span> </p>
+                <p><span id="selected-node-pathway"></span> </p>
             </div>
-        </div>
-        <div class="bord">
-            <p class="name">informations</p>
-            <p><span id="selected-node-name"></span> </p>
-            <p><span id="selected-node-id"></span> </p>
-            <p><span id="selected-node-pathway"></span> </p>
-        </div>
-        <div class="bord">
-            <div>
-                Nom du fichier de sauvegarde : <input type="text" id="inputFileNameToSaveAs" > 
-                <button id="saveGraph"> Save Graph </button>
-                
+            <!--</div>-->
+            </li>
+            <li>
+            <a id = "savebar">Save graph as JSON file <span class = "fas fa-caret-down"></span></a>
+            <!--<div class="bord">-->
+            <div id = "save">
+                <div>
+                    Nom du fichier de sauvegarde : <input type="text" id="inputFileNameToSaveAs" > 
+                    <button id="saveGraph"> Save Graph </button>
+                </div>
             </div>
+            <!--</div>-->
+        </li>
+        </ul>
         </div>
     </div>
+    </nav>
+    <!--<script>
+        $('.uploadbar').click(function(){
+            $('nav ul li .uploads').toggleClass("show");
+        });
+    </script>-->
     <div id="graph">
-        <div id="graph-3d" ></div> 
-        <footer>
+        <div id="graph-3d" >
+            <div style="position: relative;">
+                <div>
+                    <div style="position: relative; width: 905px; height: 953px;">
+                        <div class="scene-nav-info">Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan</div>
+                        <div class="scene-tooltip" style="top: 278px; left: 888px; transform: translate(-98.1215%, 21px);"></div>
+                        <!--<canvas width="905" height="953" class="" style="width: 905px; height: 953px;"></canvas>-->
+                    </div>
+                </div>
+                <div class="graph-info-msg"></div>
+            </div>
+        </div> 
+        <!--<footer>
             <p>zoom in/ zoom out etc</p>
-        </footer>
+        </footer>-->
     </div>
     
 </body>

@@ -593,6 +593,7 @@ function getCofactList(){
   }
 
 document.getElementById('ok').addEventListener('click', loadFileAsText);
+document.getElementById('change').addEventListener('click', loadFileAsText);
 
 document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
 
