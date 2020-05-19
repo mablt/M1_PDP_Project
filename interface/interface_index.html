@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="description" content="test interface" />
     <meta name="author" content="M1 bioinformatics bordeaux univerty" />
     <link href="interface_style.css" rel="stylesheet">
@@ -10,7 +10,7 @@
     <script src="//unpkg.com/3d-force-graph"></script>
     <script src="//unpkg.com/three"></script>
     <script type="module" src="./../src/utils.js"></script>
-    
+
     <title> metabolic mapping </title>
 </head>
 
@@ -21,62 +21,102 @@
         <i class="fas fa-bars" id="btn"></i>
         <i class="fas fa-times" id="cancel"></i>
     </label>
-    
+
     <div class="sidebar">
         <nav>
-        <ul>
-            <li>
-            <a href = "#" id = "uploadbar">Upload <span class = "fas fa-caret-down first"></span></a>
-                <div id="uploads">
-                    <div class="dropzone" id="dropzone"> Drop files here to upload</div>
-                    <input type="file" id="files" name="myFiles" accept=".json" multiple>
-                    <button id="ok"> Upload file(s) </button>
-                </div>
-            </li>
-            <li>
-            <a href = "#" id = "optionbar">Options <span class = "fas fa-caret-down"></span></a>
-                <div id = "options">
-                <div id ="duplicate">
-                    <p class="name">Duplicate</p>
-                    <label class="cofact"><input type ="checkbox" id="all" name="all"value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'> All</label>
-                    <label class="cofact"><input type ="checkbox" id="h" value="h"> H+</label>
-                    <label class="cofact"><input type ="checkbox" id="co2" value="co2"> CO2</label>
-                    <label class="cofact"><input type ="checkbox" id="h2o" value="h2o"> H2O</label>
-                    <label class="cofact"><input type ="checkbox" id="atp" value="atp"> ATP</label>
-                    <label class="cofact"><input type ="checkbox" id="adp" value="adp"> ADP</label>
-                </div>
+            <ul>
+                <li>
+                    <a href="#" id="uploadbar">Upload <span class = "fas fa-caret-down first"></span></a>
+                    <div id="uploads">
+                        <div class="dropzone" id="dropzone"> Drop files here to upload</div>
+                        <input type="file" id="files" name="myFiles" accept=".json" multiple>
+                        <button id="ok"> Upload file(s) </button>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" id="optionbar">Options <span class = "fas fa-caret-down"></span></a>
+                    <div id="options">
+                        <div id="duplicate">
+                            <p class="name">Duplicate</p>
+                            <label class="cofact"><input type ="checkbox" id="all" name="all"value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'> All</label>
+                            <label class="cofact"><input type ="checkbox" id="h" value="h"> H+</label>
+                            <label class="cofact"><input type ="checkbox" id="co2" value="co2"> CO2</label>
+                            <label class="cofact"><input type ="checkbox" id="h2o" value="h2o"> H2O</label>
+                            <label class="cofact"><input type ="checkbox" id="atp" value="atp"> ATP</label>
+                            <label class="cofact"><input type ="checkbox" id="adp" value="adp"> ADP</label>
+                        </div>
 
-                <div id="link">
-                    <label for="link-select">Choose link style:</label>
-                    <select name="link-style" id="link-select">
+                        <div id="link">
+                            <label for="link-select">Choose link style:</label>
+                            <select name="link-style" id="link-select">
                         <option value="arrow" selected>Arrow</option>
                         <option value="particle">Oriented particle</option>
                     </select>
-                    <button id="change"> Apply changes </button>
-                </div>
-                </div>
-            </li>
-            <li>
-            <a href = "#" id = "infobar">Informations <span class = "fas fa-caret-down"></span></a>
-            <div id = "info">
-                <p><span id="selected-node-name">Click on a node to display information</span> </p>
-                <p><span id="selected-node-id"></span> </p>
-                <p><span id="selected-node-pathway"></span> </p>
+
+                        </div>
+
+                        <div id="nodeR">
+                            <label for="nodeRgeometry-select">Choose node geometry for reaction : </label>
+                            <select name="nodeRgeometry-style" id="nodeRgeometry-select">
+                        <option value="sphere" selected>sphere</option>
+                        <option value="box">box</option>
+                        <option value="torusknot" selected>torusknot</option>
+                    </select>
+                            <div id="nodeM">
+                                <label for="nodeMgeometry-select">Choose node geometry for metabolites : </label>
+                                <select name="nodeMgeometry-style" id="nodeMgeometry-select">
+                                    <option value="sphere" selected>sphere</option>
+                                    <option value="box">box</option>
+                                    <option value="torusknot" selected>torusknot</option>
+                    
+                </select>
+
+
+                            </div>
+                        </div>
+
+                        <div id="colorR">
+                            <label for="nodeRcolor-select"> Choose reactions color : </label>
+                            <select name="nodeR-style" id="nodeRcolor-select">
+                            <option value="#4CB62D" selected>green</option>
+                            <option value="#BF2B2B">red</option>
+                            <option value="#2D91B6" selected>blue</option>
+                        </select>
+
+                        </div>
+
+                        <div id="colorM">
+                            <label for="nodeMcolor-select"> Choose metabolites color : </label>
+                            <select name="nodeM-style" id="nodeMcolor-select">
+                            <option value="#4CB62D" selected>green</option>
+                            <option value="#BF2B2B">red</option>
+                            <option value="#2D91B6" selected>blue</option>
+                        </select>
+                            <button id="change"> Apply changes </button>
+                        </div>
+                </li>
+                <li>
+                    <a href="#" id="infobar">Informations <span class = "fas fa-caret-down"></span></a>
+                    <div id="info">
+                        <p><span id="selected-node-name">Click on a node to display information</span> </p>
+                        <p><span id="selected-node-id"></span> </p>
+                        <p><span id="selected-node-pathway"></span> </p>
+                    </div>
+                </li>
+                <li>
+                    <a href="#" id="savebar">Save graph as JSON file <span class = "fas fa-caret-down"></span></a>
+                    <div id="save">
+                        <div>
+                            Nom du fichier de sauvegarde : <input type="text" id="inputFileNameToSaveAs">
+                            <button id="saveGraph"> Save Graph </button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             </div>
-            </li>
-            <li>
-            <a href = "#" id = "savebar">Save graph as JSON file <span class = "fas fa-caret-down"></span></a>
-            <div id = "save">
-                <div>
-                    Nom du fichier de sauvegarde : <input type="text" id="inputFileNameToSaveAs" > 
-                    <button id="saveGraph"> Save Graph </button>
-                </div>
-            </div>
-        </li>
-        </ul>
-        </div>
     </div>
-    </nav><script language="JavaScript">
+    </nav>
+    <script language="JavaScript">
         let uploadbar = document.getElementById("uploadbar");
         let uploads = document.getElementById("uploads");
         let optionbar = document.getElementById("optionbar");
@@ -86,29 +126,28 @@
         let savebar = document.getElementById("savebar");
         let save = document.getElementById("save");
 
-        function displayblock(clickelement,displayelement){
+        function displayblock(clickelement, displayelement) {
             clickelement.addEventListener("click", () => {
-            if(getComputedStyle(displayelement).display != "none"){
-                displayelement.style.display = "none";
-            } 
-            else {
-                displayelement.style.display = "block";
-            }
-        })}
+                if (getComputedStyle(displayelement).display != "none") {
+                    displayelement.style.display = "none";
+                } else {
+                    displayelement.style.display = "block";
+                }
+            })
+        }
 
-        displayblock(uploadbar,uploads);
-        displayblock(optionbar,options);
-        displayblock(infobar,info);
-        displayblock(savebar,save);
-
-
+        displayblock(uploadbar, uploads);
+        displayblock(optionbar, options);
+        displayblock(infobar, info);
+        displayblock(savebar, save);
     </script>
     <div id="graph">
-        <div id="graph-3d" >
+        <div id="graph-3d">
             <footer>
                 <p>Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan</p>
             </footer>
-    </div>
-    
+        </div>
+
 </body>
+
 </html>
