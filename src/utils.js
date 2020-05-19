@@ -33,7 +33,7 @@ export function parseJSON() {
     var map = new Map();
     for (const nameFile in window.JSON_OBJECT) {
         var json = window.JSON_OBJECT[nameFile];
-        
+
         // Patwhay object creation
         var pathway = new Pathway(json.id, nameFile, json.compartments, json.version);
         console.log("PATWHAY ::::", pathway.id);
@@ -121,16 +121,16 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
  * @param {*} list 
  * @param {*} pathway 
  */
-export function initCofact(list,pathway){
-    var cofact_list=[];
-    for (var elt in list){
-        var elements=pathway.getElements();
-        var element=getElementById(elements,list[elt]);
-        if (element===false){
-            var cofact= new Cofact(list[elt],0,list[elt]);
+export function initCofact(list, pathway) {
+    var cofact_list = [];
+    for (var elt in list) {
+        var elements = pathway.getElements();
+        var element = getElementById(elements, list[elt]);
+        if (element === false) {
+            var cofact = new Cofact(list[elt], 0, list[elt]);
         }
-        else{
-            var cofact= new Cofact(list[elt],0,element.getName());
+        else {
+            var cofact = new Cofact(list[elt], 0, element.getName());
         }
         cofact_list.push(cofact);
     }
@@ -148,9 +148,9 @@ export function initCofact(list,pathway){
  * 
  */
 
-export function getElementById(list,id){
-    for (var elt in list){
-        if (list[elt].id===id){
+export function getElementById(list, id) {
+    for (var elt in list) {
+        if (list[elt].id === id) {
             return list[elt];
         }
     }
@@ -166,9 +166,9 @@ export function getElementById(list,id){
 export function duplicreate3dForceObject(map) {
     var nodes_list = [];
     var links_list = [];
-    var cofact_list=getCofactList();
+    var cofact_list = getCofactList();
     for (var pathway of map.getGraphs()) {
-        var cofacts=initCofact(cofact_list,pathway);// list d'objet cofact{id: , nb: , name: }
+        var cofacts = initCofact(cofact_list, pathway);// list d'objet cofact{id: , nb: , name: }
         for (var i of pathway.getElements()) { // Pour chaque élément de la liste
             if (!(cofact_list.includes(i.getId()))) {
                 var elem = {};
@@ -188,16 +188,16 @@ export function duplicreate3dForceObject(map) {
                     // On crée les liens
                     for (var j of i.getPreviousElements()) {
                         var link = {};
-                        if (cofact_list.includes(j.id)){
-                            var cofacteur= getElementById(cofacts,j.id);
-                            var val=cofacteur.nb;
-                            var ind=val;
-                            var duplicat_id= j.id+"#"+String(ind)+ '___' + pathway.getName();
+                        if (cofact_list.includes(j.id)) {
+                            var cofacteur = getElementById(cofacts, j.id);
+                            var val = cofacteur.nb;
+                            var ind = val;
+                            var duplicat_id = j.id + "#" + String(ind) + '___' + pathway.getName();
                             val++;
                             cofacteur.setNb(val);
                             link.source = duplicat_id;
                         }
-                        else{
+                        else {
                             link.source = j.id + '___' + pathway.getName();
                         }
                         link.target = i.getId() + '___' + pathway.getName();
@@ -207,11 +207,11 @@ export function duplicreate3dForceObject(map) {
                     }
                     for (var j of i.getNextElements()) {
                         var link = {};
-                        if (cofact_list.includes(j.id)){
-                            var cofacteur= getElementById(cofacts,j.id);
-                            var val=cofacteur.nb;
-                            var ind=val;
-                            var duplicat_id= j.id +"#"+String(ind)+ '___' + pathway.getName();
+                        if (cofact_list.includes(j.id)) {
+                            var cofacteur = getElementById(cofacts, j.id);
+                            var val = cofacteur.nb;
+                            var ind = val;
+                            var duplicat_id = j.id + "#" + String(ind) + '___' + pathway.getName();
                             val++;
                             cofacteur.setNb(val);
                             link.target = duplicat_id;
@@ -230,32 +230,32 @@ export function duplicreate3dForceObject(map) {
                     elem.group = 2;
                 }
                 nodes_list.push(elem); // On crée le noeud   
-          
+
             }
         }
 
-            //ici on créer tous les elements correspondant aux cofacteurs//
-        for (var cofacteur of cofacts){
-            for (var i =0; i<cofacteur.nb;i++){
+        //ici on créer tous les elements correspondant aux cofacteurs//
+        for (var cofacteur of cofacts) {
+            for (var i = 0; i < cofacteur.nb; i++) {
                 var elem = {};
-                elem.id = cofacteur.id+"#"+String(i)+ '___' + pathway.getName();
+                elem.id = cofacteur.id + "#" + String(i) + '___' + pathway.getName();
                 elem.name = cofacteur.name;
                 elem.group = 2;//cofacteur= entity not reaction or create 3 groups
                 //console.log(elem);
                 nodes_list.push(elem);
-                        
+
                 //no coordinate
             }
         }
     }
-            
+
     var object = {
         nodes: nodes_list,
         links: links_list
     };
-    console.log("object",object);
+    console.log("object", object);
     return object;
-    
+
 }
 
 
@@ -295,7 +295,7 @@ export function create3dForceObject(map) {
                     link.color = "grey";
                     link.value = 2;
                     links_list.push(link);
-                    console.log("link : ",link);
+                    console.log("link : ", link);
                 }
                 elem.group = 1;
             }
@@ -323,7 +323,7 @@ export function jsonFileToGraph() {
     // with duplication or not
     //var object = create3dForceObject(mapCreatedByParseJSON);
     var object = duplicreate3dForceObject(mapCreatedByParseJSON);
-    displayGraph(object,mapCreatedByParseJSON);
+    displayGraph(object, mapCreatedByParseJSON);
 }
 
 // QUE DES SPHERES
@@ -356,30 +356,30 @@ export function jsonFileToGraph() {
 //             node.fx = node.x;
 //             node.fy = node.y;
 //             node.fz = node.z;
-            
+
 //         });
-        
+
 // }
 
 /**
  * Sets links to arrows
  * @param {} graph 3D-Force graph object
  */
-export function arrowlink(graph){
+export function arrowlink(graph) {
     graph
-    .linkDirectionalArrowLength(3.5)
-    .linkDirectionalArrowRelPos(1)
-    .linkCurvature(0);
+        .linkDirectionalArrowLength(3.5)
+        .linkDirectionalArrowRelPos(1)
+        .linkCurvature(0);
 }
 
 /**
  * Adds directional particles to links
  * @param {} graph 3D-Force graph object
  */
-export function particuleLink(graph){
+export function particuleLink(graph) {
     graph
-    .linkDirectionalParticles("value")
-    .linkDirectionalParticleSpeed(d => d.value * 0.001);
+        .linkDirectionalParticles("value")
+        .linkDirectionalParticleSpeed(d => d.value * 0.001);
 }
 
 /**
@@ -387,59 +387,59 @@ export function particuleLink(graph){
  * @param {} object 3D-Force object which contains nodes and links data
  * @param {Map} map Map object which contains the pathways data
  */
-export function displayGraph(object,map) {
-    
+export function displayGraph(object, map) {
+
     window.GRAPH = ForceGraph3D();
     window.GRAPH(document.getElementById('graph-3d'))
-    
-        .nodeThreeObject(({group}) => new THREE.Mesh(
+
+        .nodeThreeObject(({ group }) => new THREE.Mesh(
             [
                 new THREE.SphereGeometry(3),
                 new THREE.BoxGeometry(10, 10, 10)
-            ][group%2],
+            ][group % 2],
             [
-                new THREE.MeshBasicMaterial( { color: "#3EAF1D" } ),
-                new THREE.MeshBasicMaterial( { color: "#DA2B48" } )
-            ][group%2]))
-            
+                new THREE.MeshBasicMaterial({ color: "#3EAF1D" }),
+                new THREE.MeshBasicMaterial({ color: "#DA2B48" })
+            ][group % 2]))
+
         .graphData(object)
         .onNodeClick(node => {
             console.log("AAAAAAAAAAAAAA", node);
 
             var graph = map.getGraphById(node.graph_id);
-            console.log("graph du node",graph,);
-            var element= graph.getElementsByName(node.name);
-            console.log("element du node",element);
-            document.getElementById("selected-node-name").innerHTML=" name : " + element.name;
-            document.getElementById("selected-node-id").innerHTML="id : " + element.id ;
-            document.getElementById("selected-node-pathway").innerHTML="pathway : " + element.parent.name ;
-/*
-            if (node.group===2) {
-
-                console.log("id: ",element.id, "name: ", node.name, "type: ", "Metabolite",)
-            }
-            if (node.group===1) {
-
-                console.log("id: ",node.id, "name: ", node.name, "type: ", "réaction",)
-            }
-            */
-          })
+            console.log("graph du node", graph);
+            var element = graph.getElementsByName(node.name);
+            console.log("element du node", element);
+            document.getElementById("selected-node-name").innerHTML = " name : " + element.name;
+            document.getElementById("selected-node-id").innerHTML = "id : " + element.id;
+            document.getElementById("selected-node-pathway").innerHTML = "pathway : " + element.parent.name;
+            /*
+                        if (node.group===2) {
+            
+                            console.log("id: ",element.id, "name: ", node.name, "type: ", "Metabolite",)
+                        }
+                        if (node.group===1) {
+            
+                            console.log("id: ",node.id, "name: ", node.name, "type: ", "réaction",)
+                        }
+                        */
+        })
         .onNodeDragEnd(node => {
             node.fx = node.x;
             node.fy = node.y;
             node.fz = node.z;
-            
+
         });
-        console.log("link value", document.getElementById("link-select").value);
-        if (document.getElementById("link-select").value==="arrow"){
-            arrowlink(window.GRAPH(document.getElementById('graph-3d')));
-        }
-        if (document.getElementById("link-select").value==="particle"){
-            particuleLink(window.GRAPH(document.getElementById('graph-3d')));
-        }
-        //nodeStyle(window.GRAPH(document.getElementById('graph-3d')));
-        
-        
+    console.log("link value", document.getElementById("link-select").value);
+    if (document.getElementById("link-select").value === "arrow") {
+        arrowlink(window.GRAPH(document.getElementById('graph-3d')));
+    }
+    if (document.getElementById("link-select").value === "particle") {
+        particuleLink(window.GRAPH(document.getElementById('graph-3d')));
+    }
+    //nodeStyle(window.GRAPH(document.getElementById('graph-3d')));
+
+
 }
 
 // export function displayGraph(object) {
@@ -514,30 +514,27 @@ export function get3dForceObject() {
 
 export function saveGraphToJSON() {
     var ForceObject = get3dForceObject();
-    modifyJSON(ForceObject);
+    modify3DForceGraph(ForceObject);
     createFile();
 }
 
 /**
- * 
+ * Create JSON file(s) with modifications from the graph
  */
 function createFile() {
     for (const fileName in window.JSON_OBJECT) {
         var json = window.JSON_OBJECT[fileName];
         var jsonAsText = JSON.stringify(json, null, 1);
         var textFileAsBlob = new Blob([jsonAsText], { type: 'application/json' });
-        // var fileNameToSaveAs = document.getElementById("inputFileNameToSaveAs").value;
         var downloadLink = document.createElement("a");
         downloadLink.download = fileName + '_' + SAVE_GRAPH_EXTENSION + '.json';
         downloadLink.innerHTML = "Download File";
         if (window.webkitURL != null) {
-            // Chrome allows the link to be clicked
-            // without actually adding it to the DOM.
+            // Chrome allows the link to be clicked without actually adding it to the DOM.
             downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
         }
         else {
-            // Firefox requires the link to be added to the DOM
-            // before it can be clicked.
+            // Firefox requires the link to be added to the DOM before it can be clicked.
             downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
             downloadLink.onclick = destroyClickedElement;
             downloadLink.style.display = "none";
@@ -546,51 +543,44 @@ function createFile() {
 
         downloadLink.click();
     }
-
-
-
-
 }
-/**
- * 
- * @param {} object3dForce 
- */
-export function modifyJSON(object3dForce) {
-    for (var node of object3dForce.nodes) {
-        // Recuperer  l'index de l'object correspondant au node !!!!A REFORMULER ET TRADUIRE
-        var re = /(\w+)___(\w+)/;
 
+
+/**
+ * Modify the coordinates in the 3D Force Graph object with the coordinates of the graph 
+ * 
+ * @param {} object3dForce 3D Force Graph object
+ */
+export function modify3DForceGraph(object3dForce) {
+    for (var node of object3dForce.nodes) {
+        // Get the file name corresponding to the node
+        var re = /(\w+)___(\w+)/;
         var fileName = node.id.replace(re, '$2');
         // If the node is a reaction
         if (node.group === 1) {
-
             var nodeId = node.id.replace(re, '$1');
             for (var reaction of window.JSON_OBJECT[fileName].reactions) {
                 if (reaction.id === nodeId) {
+                    // If the initial JSON does not contains coordinates objet, add it
                     if (!("coordinates" in reaction)) {
-
                         reaction.coordinates = {};
                     }
+                    // Modify the coordinates
                     reaction.coordinates.x = node.x;
                     reaction.coordinates.y = node.y;
                     reaction.coordinates.z = node.z;
-
-                    // else{
-                    //     reaction.coordinates = {};
-                    // }
                 }
             }
-            // window.JSON_OBJECT.reactions[node.id].
-
         }
+        // If it is a metabolite
         else {
             for (var metabolite of window.JSON_OBJECT[fileName].metabolites) {
-                // var nodeId = node.id.substring(0, node.id.length - 2);
                 if (metabolite.id === nodeId) {
+                    // If the initial JSON does not contains coordinates objet, add it
                     if (!("coordinates" in metabolite)) {
-
                         metabolite.coordinates = {};
                     }
+                    // Modify the coordinates
                     metabolite.coordinates.x = node.x;
                     metabolite.coordinates.y = node.y;
                     metabolite.coordinates.z = node.z;
@@ -604,10 +594,10 @@ export function modifyJSON(object3dForce) {
  * 
  */
 
-function getCofactList(){
+function getCofactList() {
     //var allcofact = document.querySelector('input[value="all"]');
-    var cofact_list=[];
-    if(document.querySelector('input[id="all"]').checked) {
+    var cofact_list = [];
+    if (document.querySelector('input[id="all"]').checked) {
         /*
       document.querySelector('input[id="h"]').checked
       document.querySelector('input[id="h2o"]').checked
@@ -615,34 +605,34 @@ function getCofactList(){
       document.querySelector('input[id="atp"]').checked
       document.querySelector('input[id="adp"]').checked
       */
-      cofact_list=["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"];
-  
+        cofact_list = ["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"];
+
     }
     else {
-      if (document.querySelector('input[id="h"]').checked){
-        cofact_list.push("h_e");
-        cofact_list.push("h_c");
-      }
-      if (document.querySelector('input[id="h2o"]').checked){
-        cofact_list.push("h2o_e");
-        cofact_list.push("h2o_c");
-      }
-      if (document.querySelector('input[id="co2"]').checked){
-        cofact_list.push("co2_e");
-        cofact_list.push("co2_c");
-      }
-      if (document.querySelector('input[id="atp"]').checked){
-        cofact_list.push("atp_e");
-        cofact_list.push("atp_c");
-      }
-      if (document.querySelector('input[id="adp"]').checked){
-        cofact_list.push("adp_e");
-        cofact_list.push("adp_c");
-      }
+        if (document.querySelector('input[id="h"]').checked) {
+            cofact_list.push("h_e");
+            cofact_list.push("h_c");
+        }
+        if (document.querySelector('input[id="h2o"]').checked) {
+            cofact_list.push("h2o_e");
+            cofact_list.push("h2o_c");
+        }
+        if (document.querySelector('input[id="co2"]').checked) {
+            cofact_list.push("co2_e");
+            cofact_list.push("co2_c");
+        }
+        if (document.querySelector('input[id="atp"]').checked) {
+            cofact_list.push("atp_e");
+            cofact_list.push("atp_c");
+        }
+        if (document.querySelector('input[id="adp"]').checked) {
+            cofact_list.push("adp_e");
+            cofact_list.push("adp_c");
+        }
     }
     console.log(cofact_list);
     return cofact_list;
-  }
+}
 
 document.getElementById('ok').addEventListener('click', loadFileAsText);
 document.getElementById('change').addEventListener('click', loadFileAsText);
