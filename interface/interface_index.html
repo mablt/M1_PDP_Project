@@ -10,9 +10,8 @@
     <script src="//unpkg.com/3d-force-graph"></script>
     <script src="//unpkg.com/three"></script>
     <script type="module" src="./../src/utils.js"></script>
-    <!--<script type="module" src="./test_interface.js"></script>-->
-
-    <title> test interface </title>
+    
+    <title> metabolic mapping </title>
 </head>
 
 <body>
@@ -27,18 +26,15 @@
         <nav>
         <ul>
             <li>
-            <a href = "#uploads" class = "uploadbar">Upload <span class = "fas fa-caret-down first"></span></a>
-            <!--<div class="bord">-->
+            <a href = "#" id = "uploadbar">Upload <span class = "fas fa-caret-down first"></span></a>
                 <div id="uploads">
                     <div class="dropzone" id="dropzone"> Drop files here to upload</div>
                     <input type="file" id="files" name="myFiles" accept=".json" multiple>
                     <button id="ok"> Upload file(s) </button>
                 </div>
-            <!--</div>-->
             </li>
             <li>
-            <a id = "optionbar">Options <span class = "fas fa-caret-down"></span></a>
-            <!--<div class="bord">-->
+            <a href = "#" id = "optionbar">Options <span class = "fas fa-caret-down"></span></a>
                 <div id = "options">
                 <div id ="duplicate">
                     <p class="name">Duplicate</p>
@@ -60,53 +56,58 @@
                 </div>
                 </div>
             </li>
-            <!--</div>-->
             <li>
-            <a id = "infobar">Informations <span class = "fas fa-caret-down"></span></a>
+            <a href = "#" id = "infobar">Informations <span class = "fas fa-caret-down"></span></a>
             <div id = "info">
-            <!--<div class="bord">-->
                 <p><span id="selected-node-name">Click on a node to display information</span> </p>
                 <p><span id="selected-node-id"></span> </p>
                 <p><span id="selected-node-pathway"></span> </p>
             </div>
-            <!--</div>-->
             </li>
             <li>
-            <a id = "savebar">Save graph as JSON file <span class = "fas fa-caret-down"></span></a>
-            <!--<div class="bord">-->
+            <a href = "#" id = "savebar">Save graph as JSON file <span class = "fas fa-caret-down"></span></a>
             <div id = "save">
                 <div>
                     Nom du fichier de sauvegarde : <input type="text" id="inputFileNameToSaveAs" > 
                     <button id="saveGraph"> Save Graph </button>
                 </div>
             </div>
-            <!--</div>-->
         </li>
         </ul>
         </div>
     </div>
-    </nav>
-    <!--<script>
-        $('.uploadbar').click(function(){
-            $('nav ul li .uploads').toggleClass("show");
-        });
-    </script>-->
+    </nav><script language="JavaScript">
+        let uploadbar = document.getElementById("uploadbar");
+        let uploads = document.getElementById("uploads");
+        let optionbar = document.getElementById("optionbar");
+        let options = document.getElementById("options");
+        let infobar = document.getElementById("infobar");
+        let info = document.getElementById("info");
+        let savebar = document.getElementById("savebar");
+        let save = document.getElementById("save");
+
+        function displayblock(clickelement,displayelement){
+            clickelement.addEventListener("click", () => {
+            if(getComputedStyle(displayelement).display != "none"){
+                displayelement.style.display = "none";
+            } 
+            else {
+                displayelement.style.display = "block";
+            }
+        })}
+
+        displayblock(uploadbar,uploads);
+        displayblock(optionbar,options);
+        displayblock(infobar,info);
+        displayblock(savebar,save);
+
+
+    </script>
     <div id="graph">
         <div id="graph-3d" >
-            <div style="position: relative;">
-                <div>
-                    <div style="position: relative; width: 905px; height: 953px;">
-                        <div class="scene-nav-info">Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan</div>
-                        <div class="scene-tooltip" style="top: 278px; left: 888px; transform: translate(-98.1215%, 21px);"></div>
-                        <!--<canvas width="905" height="953" class="" style="width: 905px; height: 953px;"></canvas>-->
-                    </div>
-                </div>
-                <div class="graph-info-msg"></div>
-            </div>
-        </div> 
-        <!--<footer>
-            <p>zoom in/ zoom out etc</p>
-        </footer>-->
+            <footer>
+                <p>Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan</p>
+            </footer>
     </div>
     
 </body>
