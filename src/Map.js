@@ -11,14 +11,13 @@ export class Map{
         return this.id;
     }
     
-    getElements(){
+    getGraphs(){
         return this.graphs;
     }
 
     getGraphById(id){
-        var graphs=this.getElements()
-        for (var graph of graphs){
-            if (graph.id===id){
+        for (var graph of this.graphs){
+            if (graph.getId()===id){
                 return graph;
             }
         }
