@@ -11,7 +11,7 @@ var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
 
 
 /**
- * Transform each JSON file data as string from the list to JSON object
+ * Transforms each JSON file data as string from the list to JSON object
  * 
  * @param  {} fileDataList List of JSON file data as string
  */
@@ -24,7 +24,7 @@ export function stringToJSON() {
 }
 
 /**
- * Parse the JSON object and instanciate the objects
+ * Parse the JSON object and instanciates the objects
  * 
  * @param  {} json JSON object contains data from the JSON file
  * @return Pathway object which contains the elements
@@ -43,7 +43,7 @@ export function parseJSON() {
             if ("coordinates" in m) {
                 compound.setCoordinates(m.coordinates.x, m.coordinates.y, m.coordinates.z);
             }
-            // Add compound to the patwhay
+            // Adds compound to the patwhay
             pathway.addElement(compound);
         }
         // Reactions objects creation
@@ -52,28 +52,28 @@ export function parseJSON() {
             for (var key in r.metabolites) {
                 var value = r.metabolites[key];
                 var data = { "id": key };
-                // If the metabolites is a reagent
+                // If the metabolite is a reactant
                 if (value < 0) {
                     data.quantity = Math.abs(value);
-                    // Add the metabolite to previous element
+                    // Adds the metabolite to previousElements list
                     reaction.addPreviousElement(data);
-                    // Put the reaction as new next compound
+                    // Puts the reaction as new next compound
                     putElementToNextElementCompound(pathway, key, reaction.id);
                 }
-                // If the metabolites is a products
+                // If the metabolite is a product
                 else {
                     data.quantity = value;
-                    // Add the metabolite to next element
+                    // Adds the metabolite to nextElements lit
                     reaction.addNextElement(data);
 
-                    // Put the reaction as new previous compound
+                    // Puts the reaction as new previous compound
                     putElementToPreviousElementCompound(pathway, key, reaction.id);
                 }
             }
             if ("coordinates" in r) {
                 compound.setCoordinates(r.coordinates.x, r.coordinates.y, r.coordinates.z);
             }
-            // Add compound to the patwhay
+            // Adds compound to the patwhay
             pathway.addElement(reaction);
         }
         // Genes objects creation
@@ -158,7 +158,7 @@ export function getElementById(list,id){
 }
 
 /**
- * Create the 3D-Force object required to display the graph with the 3D-Force Graph library
+ * Creates the 3D-Force object required to display the graph with the 3D-Force Graph library
  * 
  * @param  {Map} map Map object which contains the pathways
  * @return {} 3D-Force object which contains nodes and links data
@@ -260,7 +260,7 @@ export function duplicreate3dForceObject(map) {
 
 
 /**
- * Create the 3D-Force object required to display the graph with the 3D-Force Graph library
+ * Creates the 3D-Force object required to display the graph with 3D-Force Graph library
  * 
  * @param  {Map} map Map object which contains the pathways
  * @return {} 3D-Force object which contains nodes and links data
@@ -379,7 +379,7 @@ export function arrowlink(graph){
 export function particuleLink(graph){
     graph
     .linkDirectionalParticles("value")
-    .linkDirectionalParticleSpeed(d => d.value * 0.001)
+    .linkDirectionalParticleSpeed(d => d.value * 0.001);
 }
 
 /**
