@@ -34,7 +34,7 @@ export function parseJSON() {
     for (const nameFile in window.JSON_OBJECT) {
         var json = window.JSON_OBJECT[nameFile];
 
-        // Patwhay object creation
+        // Pathways objects creation
         var pathway = new Pathway(json.id, nameFile, json.compartments, json.version);
         console.log("PATWHAY ::::", pathway.id);
         // Compounds objects creation
@@ -115,7 +115,7 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
         }
     }
 }
-//add for duplication ; initCofact, getElementById, duplicreate3dForceObject
+//Adds for duplication ; initCofact, getElementById, duplicreate3dForceObject
 /**
  * 
  * @param {*} list 
@@ -168,8 +168,10 @@ export function duplicreate3dForceObject(map) {
     var links_list = [];
     var cofact_list = getCofactList();
     for (var pathway of map.getGraphs()) {
-        var cofacts = initCofact(cofact_list, pathway);// list d'objet cofact{id: , nb: , name: }
-        for (var i of pathway.getElements()) { // Pour chaque élément de la liste
+        // var cofacts is a list of cofactor objects {id: , nb: , name: }
+        var cofacts = initCofact(cofact_list, pathway);
+        // for each element of the list :
+        for (var i of pathway.getElements()) { 
             if (!(cofact_list.includes(i.getId()))) {
                 var elem = {};
                 elem.id = i.getId() + '___' + pathway.getName();
@@ -184,8 +186,9 @@ export function duplicreate3dForceObject(map) {
                     elem.fz = coordinates.z;
                 }*/
 
-                if (i instanceof (Reaction)) { // Si c'est une réaction
-                    // On crée les liens
+                // if it's a reaction :
+                if (i instanceof (Reaction)) { 
+                    // we create links
                     for (var j of i.getPreviousElements()) {
                         var link = {};
                         if (cofact_list.includes(j.id)) {
@@ -229,18 +232,19 @@ export function duplicreate3dForceObject(map) {
                 else {
                     elem.group = 2;
                 }
-                nodes_list.push(elem); // On crée le noeud   
+                // we create nodes
+                nodes_list.push(elem);   
 
             }
         }
 
-        //ici on créer tous les elements correspondant aux cofacteurs//
+        // Here, we create all the elements corresponding to cofactors 
         for (var cofacteur of cofacts) {
             for (var i = 0; i < cofacteur.nb; i++) {
                 var elem = {};
                 elem.id = cofacteur.id + "#" + String(i) + '___' + pathway.getName();
                 elem.name = cofacteur.name;
-                elem.group = 2;//cofacteur= entity not reaction or create 3 groups
+                elem.group = 2;//cofacteur = entity not reaction or create 3 groups
                 //console.log(elem);
                 nodes_list.push(elem);
 
@@ -269,15 +273,17 @@ export function create3dForceObject(map) {
     var nodes_list = [];
     var links_list = [];
     for (var pathway of map.getElements()) {
-        for (var i of pathway.getElements()) { // Pour chaque élément de la liste
+        // for each element of the list
+        for (var i of pathway.getElements()) { 
             var elem = {};
             console.log();
             elem.id = i.getId() + '___' + pathway.getName();
             console.log(elem.id);
             elem.name = i.getName();
 
-            if (i instanceof (Reaction)) { // Si c'est une réaction
-                // On crée les liens
+            // if it's a reaction :
+            if (i instanceof (Reaction)) { 
+                // we create links
                 for (var j of i.getPreviousElements()) {
                     var link = {};
                     link.source = j.id + '___' + pathway.getName();
@@ -302,7 +308,8 @@ export function create3dForceObject(map) {
             else {
                 elem.group = 2;
             }
-            nodes_list.push(elem); // On crée le noeud   
+            // we create nodes
+            nodes_list.push(elem);  
 
 
         }
@@ -362,7 +369,7 @@ export function jsonFileToGraph() {
 // }
 
 /**
- * Sets links to arrows
+ * Sets links to arrows with chosen characteristics
  * @param {} graph 3D-Force graph object
  */
 export function arrowlink(graph) {
@@ -383,9 +390,9 @@ export function particuleLink(graph) {
 }
 
 /**
- * Allow the choice of the node geometry between TorusKnot, Sphere and Box.
+ * Allows the choice of the node geometry between TorusKnot, Sphere and Box.
  * @param {} value corresponds to the choice of geometry we want to apply to our nodes 
- * @param {} sizeproportion is useful in order to display bigger reaction nodes compared to the metabolites one
+ * @param {} sizeproportion is useful in order to display bigger reaction nodes compared to the metabolites ones
  */
 export function formNode(value, sizeproportion) {
     var size = 3 + sizeproportion;
