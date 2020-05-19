@@ -446,14 +446,6 @@ export function displayGraph(object, map) {
     }
     //nodeStyle(window.GRAPH(document.getElementById('graph-3d')));
 
-    // different conditions to choose a geometry of the metabolites and reactions
-    if (document.getElementById("nodeRgeometry-select").value === "box" && document.getElementById("nodeMgeometry-select").value === "box") {
-        nodeMRboxgeometry(window.GRAPH(document.getElementById('graph-3d')));
-    }
-    if (document.getElementById("nodeRgeometry-select").value === "box" && document.getElementById("nodeMgeometry-select").value === "sphere") {
-        nodeRboxMspheregeometry(window.GRAPH(document.getElementById('graph-3d')));
-    }
-
 }
 
 // export function displayGraph(object) {
