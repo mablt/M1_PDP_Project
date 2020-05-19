@@ -382,47 +382,48 @@ export function particuleLink(graph) {
         .linkDirectionalParticleSpeed(d => d.value * 0.001);
 }
 
+
+export function formNode(value, sizeproportion) {
+    if (value === "torusknot") {
+        return new THREE.TorusKnotGeometry(3 + sizeproportion, 1);
+    }
+    if (value === "sphere") {
+        return new THREE.SphereGeometry(3 + sizeproportion);
+    }
+    if (value === "box") {
+        return new THREE.BoxGeometry(3 + sizeproportion, 3 + sizeproportion, 3 + sizeproportion);
+    }
+}
+
+
 /**
  * Displays graphs and loads elements information on click
  * @param {} object 3D-Force object which contains nodes and links data
  * @param {Map} map Map object which contains the pathways data
  */
-export function displayGraph(object, map) {
 
+export function displayGraph(object, map) {
     window.GRAPH = ForceGraph3D();
     window.GRAPH(document.getElementById('graph-3d'))
-
         .nodeThreeObject(({ group }) => new THREE.Mesh(
             [
-                new THREE.SphereGeometry(3),
-                new THREE.BoxGeometry(10, 10, 10)
-            ][group % 2],
-            [
-                new THREE.MeshBasicMaterial({ color: "#3EAF1D" }),
-                new THREE.MeshBasicMaterial({ color: "#DA2B48" })
+                formNode(document.getElementById("nodeMgeometry-select").value, 6),
+                formNode(document.getElementById("nodeRgeometry-select").value, 0)
+            ][group % 2], [
+                new THREE.MeshBasicMaterial({ color: document.getElementById("nodeMcolor-select").value }),
+                new THREE.MeshBasicMaterial({ color: document.getElementById("nodeRcolor-select").value })
             ][group % 2]))
-
         .graphData(object)
         .onNodeClick(node => {
             console.log("AAAAAAAAAAAAAA", node);
 
             var graph = map.getGraphById(node.graph_id);
-            console.log("graph du node", graph);
+            console.log("graph du node", graph, );
             var element = graph.getElementsByName(node.name);
             console.log("element du node", element);
             document.getElementById("selected-node-name").innerHTML = " name : " + element.name;
             document.getElementById("selected-node-id").innerHTML = "id : " + element.id;
             document.getElementById("selected-node-pathway").innerHTML = "pathway : " + element.parent.name;
-            /*
-                        if (node.group===2) {
-            
-                            console.log("id: ",element.id, "name: ", node.name, "type: ", "Metabolite",)
-                        }
-                        if (node.group===1) {
-            
-                            console.log("id: ",node.id, "name: ", node.name, "type: ", "réaction",)
-                        }
-                        */
         })
         .onNodeDragEnd(node => {
             node.fx = node.x;
@@ -430,6 +431,7 @@ export function displayGraph(object, map) {
             node.fz = node.z;
 
         });
+
     console.log("link value", document.getElementById("link-select").value);
     if (document.getElementById("link-select").value === "arrow") {
         arrowlink(window.GRAPH(document.getElementById('graph-3d')));
@@ -439,6 +441,13 @@ export function displayGraph(object, map) {
     }
     //nodeStyle(window.GRAPH(document.getElementById('graph-3d')));
 
+    // different conditions to choose a geometry of the metabolites and reactions
+    if (document.getElementById("nodeRgeometry-select").value === "box" && document.getElementById("nodeMgeometry-select").value === "box") {
+        nodeMRboxgeometry(window.GRAPH(document.getElementById('graph-3d')));
+    }
+    if (document.getElementById("nodeRgeometry-select").value === "box" && document.getElementById("nodeMgeometry-select").value === "sphere") {
+        nodeRboxMspheregeometry(window.GRAPH(document.getElementById('graph-3d')));
+    }
 
 }
 
