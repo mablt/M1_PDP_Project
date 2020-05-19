@@ -36,7 +36,7 @@ export function parseJSON() {
 
         // Pathways objects creation
         var pathway = new Pathway(json.id, nameFile, json.compartments, json.version);
-        console.log("PATWHAY ::::", pathway.id);
+        //console.log("PATWHAY ::::", pathway.id);
         // Compounds objects creation
         for (var m of json.metabolites) {
             var compound = new Compound(m.id, pathway, m.name, m.compartment, m.charge, m.formula);
@@ -52,7 +52,7 @@ export function parseJSON() {
             for (var key in r.metabolites) {
                 var value = r.metabolites[key];
                 var data = { "id": key };
-                // If the metabolite is a reactant
+                // If the metabolite is a reactant :
                 if (value < 0) {
                     data.quantity = Math.abs(value);
                     // Adds the metabolite to previousElements list
@@ -60,7 +60,7 @@ export function parseJSON() {
                     // Puts the reaction as new next compound
                     putElementToNextElementCompound(pathway, key, reaction.id);
                 }
-                // If the metabolite is a product
+                // If the metabolite is a product :
                 else {
                     data.quantity = value;
                     // Adds the metabolite to nextElements lit
@@ -170,13 +170,13 @@ export function duplicreate3dForceObject(map) {
     for (var pathway of map.getGraphs()) {
         // var cofacts is a list of cofactor objects {id: , nb: , name: }
         var cofacts = initCofact(cofact_list, pathway);
-        // for each element of the list :
+        // For each element of the list :
         for (var i of pathway.getElements()) { 
             if (!(cofact_list.includes(i.getId()))) {
                 var elem = {};
                 elem.id = i.getId() + '___' + pathway.getName();
                 elem.name = i.getName();
-                console.log("GRAPH ID DS CREATE 3D", pathway.id);
+                //console.log("GRAPH ID DS CREATE 3D", pathway.id);
                 elem.graph_id = pathway.id;
                 /*
                 var coordinates = i.getCoordinates();
@@ -186,9 +186,9 @@ export function duplicreate3dForceObject(map) {
                     elem.fz = coordinates.z;
                 }*/
 
-                // if it's a reaction :
+                // If it's a reaction :
                 if (i instanceof (Reaction)) { 
-                    // we create links
+                    // We create links
                     for (var j of i.getPreviousElements()) {
                         var link = {};
                         if (cofact_list.includes(j.id)) {
@@ -232,7 +232,7 @@ export function duplicreate3dForceObject(map) {
                 else {
                     elem.group = 2;
                 }
-                // we create nodes
+                // We create nodes
                 nodes_list.push(elem);   
 
             }
@@ -244,11 +244,11 @@ export function duplicreate3dForceObject(map) {
                 var elem = {};
                 elem.id = cofacteur.id + "#" + String(i) + '___' + pathway.getName();
                 elem.name = cofacteur.name;
-                elem.group = 2;//cofacteur = entity not reaction or create 3 groups
+                elem.group = 2; // cofacteur = entity not reaction or create 3 groups
                 //console.log(elem);
                 nodes_list.push(elem);
 
-                //no coordinate
+                // No coordinates
             }
         }
     }
@@ -257,7 +257,7 @@ export function duplicreate3dForceObject(map) {
         nodes: nodes_list,
         links: links_list
     };
-    console.log("object", object);
+    //console.log("object", object);
     return object;
 
 }
@@ -273,17 +273,17 @@ export function create3dForceObject(map) {
     var nodes_list = [];
     var links_list = [];
     for (var pathway of map.getElements()) {
-        // for each element of the list
+        // For each element of the list : 
         for (var i of pathway.getElements()) { 
             var elem = {};
-            console.log();
+            //console.log();
             elem.id = i.getId() + '___' + pathway.getName();
-            console.log(elem.id);
+            //console.log(elem.id);
             elem.name = i.getName();
 
-            // if it's a reaction :
+            // If it's a reaction :
             if (i instanceof (Reaction)) { 
-                // we create links
+                // We create links
                 for (var j of i.getPreviousElements()) {
                     var link = {};
                     link.source = j.id + '___' + pathway.getName();
@@ -308,7 +308,7 @@ export function create3dForceObject(map) {
             else {
                 elem.group = 2;
             }
-            // we create nodes
+            // We create nodes
             nodes_list.push(elem);  
 
 
@@ -327,46 +327,11 @@ export function create3dForceObject(map) {
 export function jsonFileToGraph() {
     stringToJSON();
     var mapCreatedByParseJSON = parseJSON();
-    // with duplication or not
-    //var object = create3dForceObject(mapCreatedByParseJSON);
+    // With duplication or not
+    // var object = create3dForceObject(mapCreatedByParseJSON);
     var object = duplicreate3dForceObject(mapCreatedByParseJSON);
     displayGraph(object, mapCreatedByParseJSON);
 }
-
-// QUE DES SPHERES
-// export function displayGraph(object) {
-//     window.GRAPH = ForceGraph3D();
-//     window.GRAPH(document.getElementById('graph-3d'))
-//         .nodeAutoColorBy('group')
-//         .linkOpacity(0.5)
-//         .graphData(object)
-//         .onNodeDragEnd(node => {
-//             node.fx = node.x;
-//             node.fy = node.y;
-//             node.fz = node.z;
-//         });
-// }
-
-// // HEXAGONES ET SPHERES
-// export function displayGraph(object) {
-//     window.GRAPH = ForceGraph3D();
-//     window.GRAPH(document.getElementById('graph-3d'))
-//         .nodeThreeObject(({group}) => new THREE.Mesh(
-//             [
-//                 new THREE.SphereGeometry(5),
-//                 new THREE.TorusGeometry(10, 2)
-//             ][group%2]))
-//         .linkDirectionalParticles("value")
-//         .linkDirectionalParticleSpeed(d => d.value * 0.001)
-//         .graphData(object)
-//         .onNodeDragEnd(node => {
-//             node.fx = node.x;
-//             node.fy = node.y;
-//             node.fz = node.z;
-
-//         });
-
-// }
 
 /**
  * Sets links to arrows with chosen characteristics
@@ -427,12 +392,12 @@ export function displayGraph(object, map) {
             ][group % 2]))
         .graphData(object)
         .onNodeClick(node => {
-            console.log("AAAAAAAAAAAAAA", node);
+            //console.log("AAAAAAAAAAAAAA", node);
 
             var graph = map.getGraphById(node.graph_id);
-            console.log("graph du node", graph, );
+            //console.log("graph du node", graph, );
             var element = graph.getElementsByName(node.name);
-            console.log("element du node", element);
+            //console.log("element du node", element);
             document.getElementById("selected-node-name").innerHTML = " name : " + element.name;
             document.getElementById("selected-node-id").innerHTML = "id : " + element.id;
             document.getElementById("selected-node-pathway").innerHTML = "pathway : " + element.parent.name;
@@ -444,7 +409,7 @@ export function displayGraph(object, map) {
 
         });
 
-    console.log("link value", document.getElementById("link-select").value);
+    //console.log("link value", document.getElementById("link-select").value);
     if (document.getElementById("link-select").value === "arrow") {
         arrowlink(window.GRAPH(document.getElementById('graph-3d')));
     }
@@ -455,22 +420,6 @@ export function displayGraph(object, map) {
 
 }
 
-// export function displayGraph(object) {
-
-//     const Graph = ForceGraph3D()
-//         (document.getElementById('graph-3d'))
-//         //.nodeAutoColorBy('group')
-//         .nodeThreeObject(({ group }) => new THREE.Mesh(
-//             [
-//                 new THREE.SphereGeometry(3),
-//                 new THREE.BoxGeometry(3, 2),
-//             ][group % 2]))
-//         .graphData(object)
-//         .linkDirectionalArrowLength(3.5)
-//         .linkDirectionalArrowRelPos(1)
-//         .linkCurvature(0.25);
-// }
-
 
 
 /**
@@ -478,7 +427,7 @@ export function displayGraph(object, map) {
  */
 export function loadFileAsText() {
     var textFiles = [];
-    console.log("------" + typeof textFiles);
+    //console.log("------" + typeof textFiles);
     window.JSON_OBJECT = {};
     var filesToLoad = document.getElementById("files").files;
     var fileReader = new FileReader();
@@ -493,10 +442,10 @@ export function loadFileAsText() {
         var re = /(\w+)\.json/;
 
         var fileNameWithoutExtension = fileName.replace(re, '$1');
-        console.log(fileNameWithoutExtension);
+        //console.log(fileNameWithoutExtension);
         // window.JSON_OBJECT[fileNameWithoutExtension] = "";
-        console.log("aaaaaasjdkfbsdjfskdf");
-        console.log(window.JSON_OBJECT);
+        //console.log("aaaaaasjdkfbsdjfskdf");
+        //console.log(window.JSON_OBJECT);
         fileReader.onload = function (fileLoadedEvent) {
             var content = fileLoadedEvent.target.result;
             textFiles.push(content);
@@ -516,7 +465,7 @@ export function loadFileAsText() {
  * @return {} ForceObject 3D Force Graph object which contains data
  */
 export function get3dForceObject() {
-    console.log("++++++++++++++++");
+    //console.log("++++++++++++++++");
     var ForceObject = window.GRAPH.graphData();
     return ForceObject;
 }
@@ -543,11 +492,11 @@ function createFile() {
         downloadLink.download = fileName + '_' + SAVE_GRAPH_EXTENSION + '.json';
         downloadLink.innerHTML = "Download File";
         if (window.webkitURL != null) {
-            // Chrome allows the link to be clicked without actually adding it to the DOM.
+            // Chrome allows links to be clicked without actually adding it to the DOM.
             downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
         }
         else {
-            // Firefox requires the link to be added to the DOM before it can be clicked.
+            // Firefox requires links to be added to the DOM before it can be clicked.
             downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
             downloadLink.onclick = destroyClickedElement;
             downloadLink.style.display = "none";
@@ -574,18 +523,18 @@ export function modify3DForceGraph(object3dForce) {
             var nodeId = node.id.replace(re, '$1');
             for (var reaction of window.JSON_OBJECT[fileName].reactions) {
                 if (reaction.id === nodeId) {
-                    // If the initial JSON does not contains coordinates objet, add it
+                    // If the initial JSON does not contain the coordinates of the object, it adds it
                     if (!("coordinates" in reaction)) {
                         reaction.coordinates = {};
                     }
-                    // Modify the coordinates
+                    // Modifies coordinates
                     reaction.coordinates.x = node.x;
                     reaction.coordinates.y = node.y;
                     reaction.coordinates.z = node.z;
                 }
             }
         }
-        // If it is a metabolite
+        // If it's a metabolite :
         else {
             for (var metabolite of window.JSON_OBJECT[fileName].metabolites) {
                 if (metabolite.id === nodeId) {
@@ -593,7 +542,7 @@ export function modify3DForceGraph(object3dForce) {
                     if (!("coordinates" in metabolite)) {
                         metabolite.coordinates = {};
                     }
-                    // Modify the coordinates
+                    // Modifies coordinates
                     metabolite.coordinates.x = node.x;
                     metabolite.coordinates.y = node.y;
                     metabolite.coordinates.z = node.z;
@@ -608,7 +557,7 @@ export function modify3DForceGraph(object3dForce) {
  */
 
 function getCofactList() {
-    //var allcofact = document.querySelector('input[value="all"]');
+    // var allcofact = document.querySelector('input[value="all"]');
     var cofact_list = [];
     if (document.querySelector('input[id="all"]').checked) {
         /*
@@ -643,7 +592,7 @@ function getCofactList() {
             cofact_list.push("adp_c");
         }
     }
-    console.log(cofact_list);
+    //console.log(cofact_list);
     return cofact_list;
 }
 
@@ -722,4 +671,57 @@ document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
 //         jsonFileToGraph([textFromFileLoaded]);
 //     };
 //     fileReader.readAsText(fileToLoad, "UTF-8");
+// }
+
+// QUE DES SPHERES
+// export function displayGraph(object) {
+//     window.GRAPH = ForceGraph3D();
+//     window.GRAPH(document.getElementById('graph-3d'))
+//         .nodeAutoColorBy('group')
+//         .linkOpacity(0.5)
+//         .graphData(object)
+//         .onNodeDragEnd(node => {
+//             node.fx = node.x;
+//             node.fy = node.y;
+//             node.fz = node.z;
+//         });
+// }
+
+
+// // HEXAGONES ET SPHERES
+// export function displayGraph(object) {
+//     window.GRAPH = ForceGraph3D();
+//     window.GRAPH(document.getElementById('graph-3d'))
+//         .nodeThreeObject(({group}) => new THREE.Mesh(
+//             [
+//                 new THREE.SphereGeometry(5),
+//                 new THREE.TorusGeometry(10, 2)
+//             ][group%2]))
+//         .linkDirectionalParticles("value")
+//         .linkDirectionalParticleSpeed(d => d.value * 0.001)
+//         .graphData(object)
+//         .onNodeDragEnd(node => {
+//             node.fx = node.x;
+//             node.fy = node.y;
+//             node.fz = node.z;
+
+//         });
+
+// }
+
+
+// export function displayGraph(object) {
+
+//     const Graph = ForceGraph3D()
+//         (document.getElementById('graph-3d'))
+//         //.nodeAutoColorBy('group')
+//         .nodeThreeObject(({ group }) => new THREE.Mesh(
+//             [
+//                 new THREE.SphereGeometry(3),
+//                 new THREE.BoxGeometry(3, 2),
+//             ][group % 2]))
+//         .graphData(object)
+//         .linkDirectionalArrowLength(3.5)
+//         .linkDirectionalArrowRelPos(1)
+//         .linkCurvature(0.25);
 // }
