@@ -13,7 +13,6 @@ var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
 /**
  * Transforms each JSON file data as string from the list to JSON object
  * 
- * @param  {} fileDataList List of JSON file data as string
  */
 export function stringToJSON() {
     for (const nameFile in window.JSON_OBJECT) {
@@ -26,8 +25,7 @@ export function stringToJSON() {
 /**
  * Parse the JSON object and instanciates the objects
  * 
- * @param  {} json JSON object contains data from the JSON file
- * @return Pathway object which contains the elements
+ * @return Map object which contains the elements
  */
 export function parseJSON() {
     var map = new Map();
