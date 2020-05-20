@@ -204,7 +204,7 @@ export function duplicreate3dForceObject(map) {
                             link.source = j.id + '___' + pathway.getName();
                         }
                         link.target = i.getId() + '___' + pathway.getName();
-                        link.color = "white";
+                        link.color = "grey";
                         link.value = 2;
                         links_list.push(link);
                     }
@@ -223,7 +223,7 @@ export function duplicreate3dForceObject(map) {
                             link.target = j.id + '___' + pathway.getName();
                         }
                         link.source = i.getId() + '___' + pathway.getName();
-                        link.color = "white";
+                        link.color = "grey";
                         link.value = 1;
                         links_list.push(link);
                     }
