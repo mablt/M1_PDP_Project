@@ -1,53 +1,245 @@
-# Part 1 of the projet : JSON loading, parsing and creation of data required to 3D-Force Graph construction
+## Functions
 
-This repository contains class files and some tests.  
+<dl>
+<dt><a href="#stringToJSON">stringToJSON()</a></dt>
+<dd><p>Transforms each JSON file data as string from the list to JSON object</p>
+</dd>
+<dt><a href="#parseJSON">parseJSON()</a> ⇒</dt>
+<dd><p>Parse the JSON object and instanciates the objects</p>
+</dd>
+<dt><a href="#putElementToPreviousElementCompound">putElementToPreviousElementCompound(pathway, idCompoundToSearch, idElementToAdd)</a></dt>
+<dd><p>To do describe</p>
+</dd>
+<dt><a href="#putElementToNextElementCompound">putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementToAdd)</a></dt>
+<dd><p>To do describe</p>
+</dd>
+<dt><a href="#initCofact">initCofact(list, pathway)</a> ⇒</dt>
+<dd></dd>
+<dt><a href="#getObjectById">getObjectById(list, id)</a> ⇒</dt>
+<dd><p>Get an element corresponding to an id if it&#39;s found
+else, returns false</p>
+</dd>
+<dt><a href="#duplicreate3dForceObject">duplicreate3dForceObject(map)</a> ⇒ <code>Object</code></dt>
+<dd><p>Creates the 3D-Force object required to display the graph with the 3D-Force Graph library with duplication possibility</p>
+</dd>
+<dt><a href="#create3dForceObject">create3dForceObject(map)</a> ⇒ <code>Object</code></dt>
+<dd><p>Creates the 3D-Force object required to display the graph with 3D-Force Graph library</p>
+</dd>
+<dt><a href="#jsonFileToGraph">jsonFileToGraph()</a></dt>
+<dd><p>Reads and parses JSON file, to display the graph</p>
+</dd>
+<dt><a href="#arrowlink">arrowlink(graph3D)</a></dt>
+<dd><p>Sets links to arrows with chosen characteristics</p>
+</dd>
+<dt><a href="#particuleLink">particuleLink(graph3D)</a></dt>
+<dd><p>Adds directional particles to links</p>
+</dd>
+<dt><a href="#formNode">formNode(value, sizeproportion)</a></dt>
+<dd><p>Allows the choice of the node geometry between TorusKnot, Sphere and Box.</p>
+</dd>
+<dt><a href="#displayGraph">displayGraph(object, map)</a></dt>
+<dd><p>Displays graphs and loads elements information on click</p>
+</dd>
+<dt><a href="#loadFileAsText">loadFileAsText()</a></dt>
+<dd><p>Loads files selected by the user and calls conversion function</p>
+</dd>
+<dt><a href="#get3dForceObject">get3dForceObject()</a> ⇒ <code>Object</code></dt>
+<dd><p>Gets ans returns currently displayed graph</p>
+</dd>
+<dt><a href="#saveGraphToJSON">saveGraphToJSON()</a></dt>
+<dd><p>Calls functions to save displayed graph as a new JSON file</p>
+</dd>
+<dt><a href="#createFile">createFile()</a></dt>
+<dd><p>Create JSON file(s) with modifications from the graph</p>
+</dd>
+<dt><a href="#modify3DForceGraph">modify3DForceGraph(object3dForce)</a></dt>
+<dd><p>Modify the coordinates in the 3D Force Graph object with the coordinates of the graph</p>
+</dd>
+<dt><a href="#getCofactList">getCofactList()</a></dt>
+<dd><p>return cofactors&#39; id in list with user selection on interface</p>
+</dd>
+</dl>
 
-* The first test consists to check if the class are well instanciate. For that, a HTML test file, call JS test file, is present in the `test` folder : `classTest.html`.
-* The second test consists to check the JSON loading and parsing step.  
-  1. A JSON file (`data.json`) is loaded in gross in the code and a JSON object is created.
-  
-  2. The JSON object is parsed and some objects (`Pathway`, `Reaction`, `Compound`) are instanciate thanks to the `parseJSON()` function.  
+<a name="stringToJSON"></a>
 
-  3. With the `Patwhay`, data required for the 3D-Force Graph library are created thanks to the `create3dForceObject()` function.
+## stringToJSON()
+Transforms each JSON file data as string from the list to JSON object
 
-  4. The graph is displayed in a HTML page.
+**Kind**: global function  
+<a name="parseJSON"></a>
 
-## Diagram of the class  
+## parseJSON() ⇒
+Parse the JSON object and instanciates the objects
 
-![class diagrame](./UML_V4.png)
+**Kind**: global function  
+**Returns**: Map object which contains the elements  
+<a name="putElementToPreviousElementCompound"></a>
 
-## Installation
+## putElementToPreviousElementCompound(pathway, idCompoundToSearch, idElementToAdd)
+To do describe
 
-### Import of the repository
+**Kind**: global function  
 
-`git clone https://gitlab.gencovery.com/dev/internships/2020/m1-ubordeaux/testclass.git`
+| Param | Type | Description |
+| --- | --- | --- |
+| pathway | <code>Pathway</code> | Pathway object which is created during the parsing |
+| idCompoundToSearch | <code>String</code> | Id of the compound where the reaction id will be added in previous elements |
+| idElementToAdd | <code>String</code> | Id of the reaction to add |
 
-### Node installation and set up
+<a name="putElementToNextElementCompound"></a>
 
-`sudo apt-get install npm`
+## putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementToAdd)
+To do describe
 
-Then, the http-server package is needed :  
+**Kind**: global function  
 
-`sudo npm install -g http-server`
+| Param | Type | Description |
+| --- | --- | --- |
+| patwhay | <code>Pathway</code> | Pathway object which is created during the parsing |
+| idCompoundToSearch | <code>String</code> | Id of the compound where the reaction id will be added in next elements |
+| idElementToAdd | <code>String</code> | Id of the reaction to add |
 
-## Usage
+<a name="initCofact"></a>
 
-To test this data, the use of a browser is required.  
-Moreover, the use of a local server is needed to don't have 'CORS policy errors' du to the browser.  
-The node local server is required (See below).  
+## initCofact(list, pathway) ⇒
+**Kind**: global function  
+**Returns**: list of Cofactor objects  
+**Constuctor**: ??  
 
-Execution of the test :
-`cd testClass/`
+| Param | Type | Description |
+| --- | --- | --- |
+| list | <code>Object</code> | array containing id of certain elements |
+| pathway | <code>Pathway</code> | object which is created during the parsing |
 
-`http-server`
+<a name="getObjectById"></a>
 
-Then, open the fisrt link the browser (`http://127.0.0.1:8080`).  
-Go to the `test` folder.  
-Choose the test : `classTest.html` or `test3dForce.html`.  
-Open the console in development tools (`CTRL+SHIFT+I`) if the `classTest.html` test is called.  
+## getObjectById(list, id) ⇒
+Get an element corresponding to an id if it's found
+else, returns false
 
-## Programs versions used
+**Kind**: global function  
+**Returns**: Element object or "false"(boolean)  
 
-* Google Chrome 79.0.3945.117
-* Firefox 72.0.1
-* Node 6.13.4
+| Param | Type | Description |
+| --- | --- | --- |
+| list | <code>Object</code> | List containing objects |
+| id | <code>String</code> | String corresponding to an element's id |
+
+<a name="duplicreate3dForceObject"></a>
+
+## duplicreate3dForceObject(map) ⇒ <code>Object</code>
+Creates the 3D-Force object required to display the graph with the 3D-Force Graph library with duplication possibility
+
+**Kind**: global function  
+**Returns**: <code>Object</code> - 3D-Force object which contains nodes and links data  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| map | <code>Map</code> | Map object which contains the pathways |
+
+<a name="create3dForceObject"></a>
+
+## create3dForceObject(map) ⇒ <code>Object</code>
+Creates the 3D-Force object required to display the graph with 3D-Force Graph library
+
+**Kind**: global function  
+**Returns**: <code>Object</code> - 3D-Force object which contains nodes and links data  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| map | <code>Map</code> | Map object which contains the pathways |
+
+<a name="jsonFileToGraph"></a>
+
+## jsonFileToGraph()
+Reads and parses JSON file, to display the graph
+
+**Kind**: global function  
+<a name="arrowlink"></a>
+
+## arrowlink(graph3D)
+Sets links to arrows with chosen characteristics
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| graph3D | <code>Object</code> | 3D-Force graph object |
+
+<a name="particuleLink"></a>
+
+## particuleLink(graph3D)
+Adds directional particles to links
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| graph3D | <code>Object</code> | 3D-Force graph object |
+
+<a name="formNode"></a>
+
+## formNode(value, sizeproportion)
+Allows the choice of the node geometry between TorusKnot, Sphere and Box.
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| value | <code>String</code> | corresponds to the choice of geometry we want to apply to our nodes |
+| sizeproportion | <code>Number</code> | is useful in order to display bigger reaction nodes compared to the metabolites ones |
+
+<a name="displayGraph"></a>
+
+## displayGraph(object, map)
+Displays graphs and loads elements information on click
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object | <code>Object</code> | 3D-Force object which contains nodes and links data |
+| map | <code>Map</code> | Map object which contains the pathways data |
+
+<a name="loadFileAsText"></a>
+
+## loadFileAsText()
+Loads files selected by the user and calls conversion function
+
+**Kind**: global function  
+<a name="get3dForceObject"></a>
+
+## get3dForceObject() ⇒ <code>Object</code>
+Gets ans returns currently displayed graph
+
+**Kind**: global function  
+**Returns**: <code>Object</code> - ForceObject 3D Force Graph object which contains data  
+<a name="saveGraphToJSON"></a>
+
+## saveGraphToJSON()
+Calls functions to save displayed graph as a new JSON file
+
+**Kind**: global function  
+<a name="createFile"></a>
+
+## createFile()
+Create JSON file(s) with modifications from the graph
+
+**Kind**: global function  
+<a name="modify3DForceGraph"></a>
+
+## modify3DForceGraph(object3dForce)
+Modify the coordinates in the 3D Force Graph object with the coordinates of the graph
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| object3dForce | <code>Object</code> | 3D Force Graph object |
+
+<a name="getCofactList"></a>
+
+## getCofactList()
+return cofactors' id in list with user selection on interface
+
+**Kind**: global function  
