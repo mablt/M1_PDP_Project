@@ -12,7 +12,7 @@
 <head>
 
     <div id="uploads">
-        <div class="dropzone" id="dropzone"> Drop multiple files here at the same time to upload
+        <div class="dropzone" id="dropzone"> Drop one or multiple files here at the same time to upload
         </div>
 
     </div>
@@ -32,7 +32,7 @@
                     // Allows us to check if the upload is working 
                     for (let x = 0; x < files.length; x = x + 1) {
                         formData.append('file[]', files[x]);
-                        document.getElementById("dropzone").innerHTML = " files uploaded ";
+                        document.getElementById("dropzone").innerHTML = " file(s) uploaded ";
                         return formData;
                     }
 
