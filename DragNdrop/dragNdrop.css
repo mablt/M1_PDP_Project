@@ -1,0 +1,55 @@
+body {
+    font-family: "Arial", sans-serif;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    color: floralwhite;
+}
+
+body {
+    overflow: hidden;
+    height: inherit;
+    /*background-color: darkslategrey;*/
+}
+
+
+/*footer {
+	display : table-row;
+    height: 100px; à titre d'exemple 
+    width: 100%;
+}*/
+
+#uploads {
+    margin-left: -50px;
+}
+
+.dropzone {
+    width: 60%;
+    height: 100px;
+    border: 2px dashed #ccc;
+    color: #ccc;
+    line-height: 100px;
+    text-align: 100%;
+    text-align: center;
+    margin-left: 10px;
+}
+
+.dropzone.dragover {
+    border-color: #000;
+    color: #000;
+}
+
+#graph {
+    transition: all .5s;
+}
+
+#graph-3d {
+    /*margin-left:20%;*/
+    background-color: black;
+    /*width:80%;*/
+    height: 100%-100px;
+}

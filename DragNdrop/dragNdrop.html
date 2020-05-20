@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="test interface" />
+    <meta name="author" content="M1 bioinformatics bordeaux univerty" />
+    <link href="dragNdrop.css" rel="stylesheet">
+    <title> Test dragNdrop </title>
+</head>
+
+<head>
+
+    <div id="uploads">
+        <div class="dropzone" id="dropzone"> Drop multiple files here at the same time to upload
+        </div>
+
+    </div>
+
+    <div id="graph">
+        <div id="graph-3d"></div>
+    </div>
+    <script>
+        function dragNdrop() {
+
+            // Retrieves the dropzone element 
+            var dropzone = document.getElementById('dropzone');
+            // Retrieves the files from a list 
+            var formData = new FormData();
+            var upload = function(files) {
+                    console.log(files);
+                    // Allows us to check if the upload is working 
+                    for (let x = 0; x < files.length; x = x + 1) {
+                        formData.append('file[]', files[x]);
+                        document.getElementById("dropzone").innerHTML = " files uploaded ";
+                        return formData;
+                    }
+
+                }
+                // Prevents the opening of the file(s)
+            dropzone.ondrop = function(e) {
+                e.preventDefault();
+                this.className = 'dropzone';
+                upload(e.dataTransfer.files);
+            }
+
+            dropzone.ondragover = function() {
+                this.className = 'dropzone dragover';
+                return false;
+            }
+            dropzone.ondragleave = function() {
+                this.className = 'dropzone';
+                return false;
+            }
+
+
+        };
+        dragNdrop();
+    </script>
