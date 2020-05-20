@@ -90,6 +90,8 @@ export function parseJSON() {
 
 
 /**
+ * To do describe
+ * 
  * @param  {Pathway} pathway Pathway object which is created during the parsing
  * @param  {String} idCompoundToSearch Id of the compound where the reaction id will be added in previous elements
  * @param  {String} idElementToAdd Id of the reaction to add
@@ -104,6 +106,8 @@ function putElementToPreviousElementCompound(pathway, idCompoundToSearch, idElem
 
 
 /**
+ * To do describe
+ * 
  * @param  {Pathway} patwhay Pathway object which is created during the parsing
  * @param  {String} idCompoundToSearch Id of the compound where the reaction id will be added in next elements
  * @param  {String} idElementToAdd Id of the reaction to add
@@ -118,50 +122,52 @@ function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementT
 //Adds for duplication ; initCofact, getElementById, duplicreate3dForceObject
 /**
  * 
- * @param {*} list 
- * @param {*} pathway 
+ * @constuctor ??
+ * @param {Object} list - array containing id of certain elements
+ * @param {Pathway} pathway - object which is created during the parsing
+ * @return list of Cofactor objects
  */
 export function initCofact(list, pathway) {
-    var cofact_list = [];
-    for (var elt in list) {
+    var Cofactor_list = [];
+    for (var id_cofact of list) {
         var elements = pathway.getElements();
-        var element = getElementById(elements, list[elt]);
+        var element = getObjectById(elements, id_cofact);
         if (element === false) {
-            var cofact = new Cofact(list[elt], 0, list[elt]);
+            var cofact = new Cofact(id_cofact, 0, id_cofact);
         }
         else {
-            var cofact = new Cofact(list[elt], 0, element.getName());
+            var cofact = new Cofact(element.getId(), 0, element.getName());
         }
-        cofact_list.push(cofact);
+        Cofactor_list.push(cofact);
     }
-    return cofact_list;
+    console.log(Cofactor_list);
+    return Cofactor_list;
 }
 
 
 /**
- * Returns an element corresponding to an id if it's found
+ * Get an element corresponding to an id if it's found
  * else, returns false
  * 
- * @param {} list List containing elements of a pathway
+ * @param {Object} list List containing objects
  * @param {String} id String corresponding to an element's id
  * @return Element object or "false"(boolean)
- * 
  */
 
-export function getElementById(list, id) {
+export function getObjectById(list, id) {
     for (var elt in list) {
         if (list[elt].id === id) {
-            return list[elt];
+            return list[elt]; 
         }
     }
     return false;
 }
 
 /**
- * Creates the 3D-Force object required to display the graph with the 3D-Force Graph library
+ * Creates the 3D-Force object required to display the graph with the 3D-Force Graph library with duplication possibility
  * 
  * @param  {Map} map Map object which contains the pathways
- * @return {} 3D-Force object which contains nodes and links data
+ * @return {Object} 3D-Force object which contains nodes and links data
  */
 export function duplicreate3dForceObject(map) {
     var nodes_list = [];
@@ -192,7 +198,7 @@ export function duplicreate3dForceObject(map) {
                     for (var j of i.getPreviousElements()) {
                         var link = {};
                         if (cofact_list.includes(j.id)) {
-                            var cofacteur = getElementById(cofacts, j.id);
+                            var cofacteur = getObjectById(cofacts, j.id);
                             var val = cofacteur.nb;
                             var ind = val;
                             var duplicat_id = j.id + "#" + String(ind) + '___' + pathway.getName();
@@ -204,14 +210,14 @@ export function duplicreate3dForceObject(map) {
                             link.source = j.id + '___' + pathway.getName();
                         }
                         link.target = i.getId() + '___' + pathway.getName();
-                        link.color = "grey";
+                        link.color = "white";
                         link.value = 2;
                         links_list.push(link);
                     }
                     for (var j of i.getNextElements()) {
                         var link = {};
                         if (cofact_list.includes(j.id)) {
-                            var cofacteur = getElementById(cofacts, j.id);
+                            var cofacteur = getObjectById(cofacts, j.id);
                             var val = cofacteur.nb;
                             var ind = val;
                             var duplicat_id = j.id + "#" + String(ind) + '___' + pathway.getName();
@@ -223,7 +229,7 @@ export function duplicreate3dForceObject(map) {
                             link.target = j.id + '___' + pathway.getName();
                         }
                         link.source = i.getId() + '___' + pathway.getName();
-                        link.color = "grey";
+                        link.color = "white";
                         link.value = 1;
                         links_list.push(link);
                     }
@@ -245,6 +251,7 @@ export function duplicreate3dForceObject(map) {
                 elem.id = cofacteur.id + "#" + String(i) + '___' + pathway.getName();
                 elem.name = cofacteur.name;
                 elem.group = 2; // cofacteur = entity not reaction or create 3 groups
+                elem.graph_id = pathway.id;
                 //console.log(elem);
                 nodes_list.push(elem);
 
@@ -267,7 +274,7 @@ export function duplicreate3dForceObject(map) {
  * Creates the 3D-Force object required to display the graph with 3D-Force Graph library
  * 
  * @param  {Map} map Map object which contains the pathways
- * @return {} 3D-Force object which contains nodes and links data
+ * @return {Object} 3D-Force object which contains nodes and links data
  */
 export function create3dForceObject(map) {
     var nodes_list = [];
@@ -298,7 +305,7 @@ export function create3dForceObject(map) {
                     var link = {};
                     link.source = i.getId() + '___' + pathway.getName();
                     link.target = j.id + '___' + pathway.getName();
-                    link.color = "grey";
+                    link.color = "white";
                     link.value = 2;
                     links_list.push(link);
                     console.log("link : ", link);
@@ -335,10 +342,10 @@ export function jsonFileToGraph() {
 
 /**
  * Sets links to arrows with chosen characteristics
- * @param {} graph 3D-Force graph object
+ * @param {Object} graph3D 3D-Force graph object
  */
-export function arrowlink(graph) {
-    graph
+export function arrowlink(graph3D) {
+    graph3D
         .linkDirectionalArrowLength(3.5)
         .linkDirectionalArrowRelPos(1)
         .linkCurvature(0);
@@ -346,18 +353,18 @@ export function arrowlink(graph) {
 
 /**
  * Adds directional particles to links
- * @param {} graph 3D-Force graph object
+ * @param {Object} graph3D 3D-Force graph object
  */
-export function particuleLink(graph) {
-    graph
+export function particuleLink(graph3D) {
+    graph3D
         .linkDirectionalParticles("value")
         .linkDirectionalParticleSpeed(d => d.value * 0.001);
 }
 
 /**
  * Allows the choice of the node geometry between TorusKnot, Sphere and Box.
- * @param {} value corresponds to the choice of geometry we want to apply to our nodes 
- * @param {} sizeproportion is useful in order to display bigger reaction nodes compared to the metabolites ones
+ * @param {String} value corresponds to the choice of geometry we want to apply to our nodes 
+ * @param {Number} sizeproportion is useful in order to display bigger reaction nodes compared to the metabolites ones
  */
 export function formNode(value, sizeproportion) {
     var size = 3 + sizeproportion;
@@ -375,7 +382,7 @@ export function formNode(value, sizeproportion) {
 
 /**
  * Displays graphs and loads elements information on click
- * @param {} object 3D-Force object which contains nodes and links data
+ * @param {Object} object 3D-Force object which contains nodes and links data
  * @param {Map} map Map object which contains the pathways data
  */
 
@@ -393,7 +400,7 @@ export function displayGraph(object, map) {
         .graphData(object)
         .onNodeClick(node => {
             //console.log("AAAAAAAAAAAAAA", node);
-
+            console.log(node);
             var graph = map.getGraphById(node.graph_id);
             //console.log("graph du node", graph, );
             var element = graph.getElementsByName(node.name);
@@ -462,7 +469,7 @@ export function loadFileAsText() {
 
 /**
  * Gets ans returns currently displayed graph
- * @return {} ForceObject 3D Force Graph object which contains data
+ * @return {Object} ForceObject 3D Force Graph object which contains data
  */
 export function get3dForceObject() {
     //console.log("++++++++++++++++");
@@ -511,7 +518,7 @@ function createFile() {
 /**
  * Modify the coordinates in the 3D Force Graph object with the coordinates of the graph 
  * 
- * @param {} object3dForce 3D Force Graph object
+ * @param {Object} object3dForce 3D Force Graph object
  */
 export function modify3DForceGraph(object3dForce) {
     for (var node of object3dForce.nodes) {
@@ -553,19 +560,19 @@ export function modify3DForceGraph(object3dForce) {
 }
 
 /**
+ * return cofactors' id in list with user selection on interface
  * 
  */
 
 function getCofactList() {
-    // var allcofact = document.querySelector('input[value="all"]');
     var cofact_list = [];
     if (document.querySelector('input[id="all"]').checked) {
         /*
-      document.querySelector('input[id="h"]').checked
-      document.querySelector('input[id="h2o"]').checked
-      document.querySelector('input[id="co2"]').checked
-      document.querySelector('input[id="atp"]').checked
-      document.querySelector('input[id="adp"]').checked
+      document.querySelector('input[id="h"]').checked;
+      document.querySelector('input[id="h2o"]').checked;
+      document.querySelector('input[id="co2"]').checked;
+      document.querySelector('input[id="atp"]').checked;
+      document.querySelector('input[id="adp"]').checked;
       */
         cofact_list = ["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"];
 

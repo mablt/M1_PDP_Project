@@ -17,6 +17,8 @@ export class Map{
 
     getGraphById(id){
         for (var graph of this.graphs){
+            console.log(graph.getId());
+            console.log(this.graphs);
             if (graph.getId()===id){
                 return graph;
             }
