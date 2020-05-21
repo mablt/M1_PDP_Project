@@ -15,34 +15,34 @@ var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
 export function saveGraphToJSON() {
   var ForceObject = graphUtils.get3dForceObject();
   graphUtils.modifyJSONObject(ForceObject);
-  createFile();
+  createNewFile();
 }
 
 /**
-* Create JSON file(s) with modifications from the graph
-*/
-function createFile() {
-  for (const fileName in window.JSON_OBJECT) {
-      var json = window.JSON_OBJECT[fileName];
-      var jsonAsText = JSON.stringify(json, null, 1);
-      var textFileAsBlob = new Blob([jsonAsText], { type: 'application/json' });
-      var downloadLink = document.createElement("a");
-      downloadLink.download = fileName + '_' + SAVE_GRAPH_EXTENSION + '.json';
-      downloadLink.innerHTML = "Download File";
-      if (window.webkitURL != null) {
-          // Chrome allows links to be clicked without actually adding it to the DOM.
-          downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-      }
-      else {
-          // Firefox requires links to be added to the DOM before it can be clicked.
-          downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-          downloadLink.onclick = destroyClickedElement;
-          downloadLink.style.display = "none";
-          document.body.appendChild(downloadLink);
-      }
+ * Creates JSON file(s) with modifications from the graph
+ */
+function createNewFile() {
+    for (const fileName in window.JSON_OBJECT) {
+        var json = window.JSON_OBJECT[fileName];
+        var jsonAsText = JSON.stringify(json, null, 1);
+        var textFileAsBlob = new Blob([jsonAsText], { type: 'application/json' });
+        var downloadLink = document.createElement("a");
+        downloadLink.download = fileName + SAVE_GRAPH_EXTENSION + '.json';
+        downloadLink.innerHTML = "Download File";
+        if (window.webkitURL != null) {
+            // Chrome allows links to be clicked without actually adding it to the DOM.
+            downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+        }
+        else {
+            // Firefox requires links to be added to the DOM before it can be clicked.
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+            downloadLink.onclick = destroyClickedElement;
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+        }
 
-      downloadLink.click();
-  }
+        downloadLink.click();
+    }
 }
 
 /**
@@ -56,8 +56,8 @@ export function loadFileAsText() {
   var fileReader = new FileReader();
   function readFile(index) {
       if (index >= filesToLoad.length) {
-            firstgraph();
-          return;
+        jsonFileToGraph();
+        return;
       }
 
       var file = filesToLoad[index];
@@ -163,15 +163,19 @@ function getCofactList() {
     return cofact_list;
 }
 
-function firstgraph(){
-  graphUtils.stringToJSON();
-  var map=graphUtils.parseJSON();
-  console.log(map);
-  var obj=graphUtils.duplicreate3dForceObject(map,getCofactList());
-  console.log(obj);
-  displayGraph(obj,map);
+/**
+ * Reads and parses JSON file, to display the graph
+ */
+export function jsonFileToGraph() {
+    graphUtils.stringToJSON();
+    var mapCreatedByParseJSON = graphUtils.parseJSON();
+    var object = graphUtils.duplicreate3dForceObject(mapCreatedByParseJSON, getCofactList());
+    displayGraph(object, mapCreatedByParseJSON);
 }
 
+/**
+ * Applies custom changes on curent graph
+ */
 function graphChange(){
     var map=graphUtils.parseJSON();
     var obj = graphUtils.get3dForceObject();
