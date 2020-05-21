@@ -1,4 +1,50 @@
-## Functions
+# Metabolic Mapping
+
+Web application to visualise in 3D metabolic pathway.  
+
+![example screenshot](./example_screenshot.png)  
+
+## Install
+
+### Repository import
+
+`git clone https://gitlab.gencovery.com/dev/internships/2020/m1-ubordeaux/testclass.git`
+
+### Node server installation & set up
+
+Node installation :  
+`sudo apt install npm`  
+Server installation, with the `http-server` package :  
+`sudo npm install -g http-server`  
+
+## Usage
+
+To run the web application, the use of a browser is required. Only Chrome and FIrefox browser are guaranteed. The node  local server is required (See below).
+
+```cd testclass/
+http-server
+```
+
+Open the first link to open the browser (`http://127.0.0.1:8080`).
+
+## Autors  
+
+Students of the Bioinformatics Master of the University of Bordeaux.  
+
+> Marine ALVES DE BARROS - [marine.alves-de-barros@etu.u-bordeaux.fr](mailto:marine.alves-de-barros@etu.u-bordeaux.fr)  
+> Mathieu BOLTEAU - [mathieu.bolteau1@gmail.com](mailto:mathieu.bolteau1@gmail.com)  
+> Mélanie CARRIAT - [melanie.carriat@etu.u-bordeaux.fr](mailto:melanie.carriat@etu.u-bordeaux.fr)  
+> Solweig HENNECHART - [solweig.hennechart@etu.u-bordeaux.fr](mailto:solweig.hennechart@etu.u-bordeaux.fr)  
+
+## Programs versions used  
+
+* Google Chrome 79.0.3945.117  
+* Firefox 72.0.1  
+* Node 6.13.4  
+
+## API  
+
+### Table of Contents  
 
 <dl>
 <dt><a href="#stringToJSON">stringToJSON()</a></dt>
@@ -59,6 +105,8 @@ else, returns false</p>
 <dd><p>return cofactors&#39; id in list with user selection on interface</p>
 </dd>
 </dl>
+
+---
 
 <a name="stringToJSON"></a>
 
