@@ -148,7 +148,7 @@ export function initCofact(list, pathway) {
  * 
  * @param {Object} list List containing objects
  * @param {String} id String corresponding to an element's id
- * @return {Element, boolean} Element object or "false"(boolean)
+ * @return {Element|boolean} Element object or "false"(boolean)
  */
 
 export function getObjectById(list, id) {
