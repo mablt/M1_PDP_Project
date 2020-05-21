@@ -43,9 +43,9 @@ Students of the Bioinformatics Master of the University of Bordeaux.
 * Firefox 72.0.1  
 * Node 6.13.4  
 
-## Architecture  
+## Architecture  
 
-Classes implemented are organizsed like this diagram :  
+Classes implemented are organised like this diagram :  
 
 ![UML](./UML.png)  
 
