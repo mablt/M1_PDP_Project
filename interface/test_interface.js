@@ -1,21 +1,16 @@
-
 import * as graphUtils from "./../src/utils.js";
 
-
 // Global variables
-var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
-
-
-
+var SAVE_GRAPH_EXTENSION = '_GENCOVERY';
 
 /**
  * Calls functions to save displayed graph as a new JSON file
  */
 
 export function saveGraphToJSON() {
-  var ForceObject = graphUtils.get3dForceObject();
-  graphUtils.modifyJSONObject(ForceObject);
-  createNewFile();
+    var ForceObject = graphUtils.get3dForceObject();
+    graphUtils.modifyJSONObject(ForceObject);
+    createNewFile();
 }
 
 /**
@@ -49,40 +44,41 @@ function createNewFile() {
  * Loads files selected by the user and calls conversion function
  */
 export function loadFileAsText() {
-  var textFiles = [];
-  //console.log("------" + typeof textFiles);
-  window.JSON_OBJECT = {};
-  var filesToLoad = document.getElementById("files").files;
-  var fileReader = new FileReader();
-  function readFile(index) {
-      if (index >= filesToLoad.length) {
-        jsonFileToGraph();
-        return;
-      }
+    var textFiles = [];
+    //console.log("------" + typeof textFiles);
+    window.JSON_OBJECT = {};
+    var filesToLoad = document.getElementById("files").files;
+    var fileReader = new FileReader();
+    function readFile(index) {
+        if (index >= filesToLoad.length) {
+            jsonFileToGraph();
+            return;
+        }
 
-      var file = filesToLoad[index];
-      var fileName = file.name;
-      var re = /(\w+)\.json/;
+        var file = filesToLoad[index];
+        var fileName = file.name;
+        var re = /(\w+)\.json/;
 
-      var fileNameWithoutExtension = fileName.replace(re, '$1');
-      //console.log(fileNameWithoutExtension);
-      // window.JSON_OBJECT[fileNameWithoutExtension] = "";
-      //console.log("aaaaaasjdkfbsdjfskdf");
-      //console.log(window.JSON_OBJECT);
-      fileReader.onload = function (fileLoadedEvent) {
-          var content = fileLoadedEvent.target.result;
-          textFiles.push(content);
-          window.JSON_OBJECT[fileNameWithoutExtension] = content;
-          readFile(index + 1);
-      };
-      fileReader.readAsText(file, "UTF-8");
+        var fileNameWithoutExtension = fileName.replace(re, '$1');
+        //console.log(fileNameWithoutExtension);
+        // window.JSON_OBJECT[fileNameWithoutExtension] = "";
+        //console.log("aaaaaasjdkfbsdjfskdf");
+        //console.log(window.JSON_OBJECT);
+        fileReader.onload = function (fileLoadedEvent) {
+            var content = fileLoadedEvent.target.result;
+            textFiles.push(content);
+            window.JSON_OBJECT[fileNameWithoutExtension] = content;
+            readFile(index + 1);
+        };
+        fileReader.readAsText(file, "UTF-8");
 
-  }
-  readFile(0);
+    }
+    readFile(0);
 }
 
 /**
  * Displays graphs and loads elements information on click
+ * 
  * @param {Object} object 3D-Force object which contains nodes and links data
  * @param {Map} map Map object which contains the pathways data
  */
@@ -130,9 +126,9 @@ export function displayGraph(object, map) {
 
 /**
  * Return cofactors' id in list with user selection on interface
+ * 
  * @return {Object} Cofactors List
  */
-
 function getCofactList() {
     var cofact_list = [];
     if (document.querySelector('input[id="all"]').checked) {
@@ -176,18 +172,17 @@ export function jsonFileToGraph() {
 /**
  * Applies custom changes on curent graph
  */
-function graphChange(){
-    var map=graphUtils.parseJSON();
+function graphChange() {
+    var map = graphUtils.parseJSON();
     var obj = graphUtils.get3dForceObject();
-    if( getCofactList().length != 0){
+    if (getCofactList().length != 0) {
         obj = graphUtils.duplicreate3dForceObject(map, getCofactList());
-    }  
-  displayGraph(obj,map);
+    }
+    displayGraph(obj, map);
 }
 
 
- document.getElementById('ok').addEventListener('click', loadFileAsText);
- document.getElementById('new').addEventListener('click', loadFileAsText);
- document.getElementById('change').addEventListener('click', graphChange);
-
- document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
+document.getElementById('ok').addEventListener('click', loadFileAsText);
+document.getElementById('new').addEventListener('click', loadFileAsText);
+document.getElementById('change').addEventListener('click', graphChange);
+document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);

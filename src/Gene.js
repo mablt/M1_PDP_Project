@@ -1,38 +1,39 @@
 import { Entity } from "./Entity.js";
 
-export class Gene extends Entity{
-    
-    constructor(id, parent, name, notes="", annotation={}){
+export class Gene extends Entity {
+
+    constructor(id, parent, name, notes = "", annotation = {}) {
         super(id, parent);
         this.name = name;
         this.notes = notes;
         this.annotation = annotation;
     }
 
-    getName(){
+    /* ----------- Methods ----------- */
+
+    addAnotation(dbName, annotation) {
+        this.annotation.add(dbName, annotation);
+    }
+    
+    /* ----------- Getters & Setters ----------- */
+
+    getName() {
         return this.name;
     }
 
-
-    getNotes(){
+    getNotes() {
         return this.notes;
     }
 
-    getAnnotation(){
+    getAnnotation() {
         return this.annotation;
     }
 
-    setName(name){
+    setName(name) {
         this.name = name;
     }
-    
-    setAnnotation(annotation){
+
+    setAnnotation(annotation) {
         this.annotation = annotation;
     }
-
-    addAnotation(DbName, annotation){
-        this.annotation.add(DbName,annotation);
-    }
-
-
 }

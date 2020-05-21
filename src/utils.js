@@ -76,7 +76,7 @@ export function parseJSON() {
         // Genes objects creation
         for (var g of json.genes) {
             var gene = new Gene(g.id, g.name);
-            
+
         }
         map.addGraph(pathway);
     }
@@ -143,8 +143,7 @@ export function initCofact(list, pathway) {
 
 
 /**
- * Gets an element corresponding to an id if it's found
- * else, returns false
+ * Gets an element corresponding to an id if it's found, else, returns false
  * 
  * @param {Object} list List containing objects
  * @param {String} id String corresponding to an element's id
@@ -322,6 +321,7 @@ export function create3dForceObject(map) {
 
 /**
  * Sets links to arrows with chosen characteristics
+ * 
  * @param {Object} graph3D 3D-Force graph object
  */
 export function arrowlink(graph3D) {
@@ -333,6 +333,7 @@ export function arrowlink(graph3D) {
 
 /**
  * Adds directional particles to links
+ * 
  * @param {Object} graph3D 3D-Force graph object
  */
 export function particuleLink(graph3D) {
@@ -343,6 +344,7 @@ export function particuleLink(graph3D) {
 
 /**
  * Allows the choice of the node geometry between TorusKnot, Sphere and Box.
+ * 
  * @param {String} value corresponds to the choice of geometry we want to apply to our nodes 
  * @param {Number} sizeproportion is useful in order to display bigger reaction nodes compared to the metabolites ones
  * @return {Object} 3D Force Graph Icon
@@ -363,6 +365,7 @@ export function formNode(value, sizeproportion) {
 
 /**
  * Displays graphs and loads elements information on click
+ * 
  * @param {Object} object 3D-Force object which contains nodes and links data
  * @param {Map} map Map object which contains the pathways data
  */
@@ -452,6 +455,7 @@ export function formNode(value, sizeproportion) {
 
 /**
  * Gets and returns currently displayed graph
+ * 
  * @return {Object} ForceObject 3D Force Graph object which contains data
  */
 export function get3dForceObject() {

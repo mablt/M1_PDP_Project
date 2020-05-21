@@ -1,25 +1,17 @@
-import { Graph } from "./Graph.js";
+export class Map {
 
-export class Map{
-
-    constructor(id){
+    constructor(id) {
         this.id = id;
         this.graphs = [];
     }
 
-    getId(){
-        return this.id;
-    }
-    
-    getGraphs(){
-        return this.graphs;
-    }
+    /* ----------- Methods ----------- */
 
-    getGraphById(id){
-        for (var graph of this.graphs){
+    getGraphById(id) {
+        for (var graph of this.graphs) {
             console.log(graph.getId());
             console.log(this.graphs);
-            if (graph.getId()===id){
+            if (graph.getId() === id) {
                 return graph;
             }
         }
@@ -27,19 +19,29 @@ export class Map{
         return false;
     }
 
-    setId(id){
-        this.id = id;
-    }
-
-    addGraph(graph){
+    addGraph(graph) {
         this.graphs.push(graph);
     }
 
-    removeGraph(id){
-        for(var i=0; i< this.graph.length; i++){
+    removeGraph(id) {
+        for (var i = 0; i < this.graph.length; i++) {
             if (graph.id === id) {
                 graphs.splice(i, 1);
             }
         }
+    }
+
+    /* ----------- Getters & Setters ----------- */
+
+    getId() {
+        return this.id;
+    }
+
+    getGraphs() {
+        return this.graphs;
+    }
+
+    setId(id) {
+        this.id = id;
     }
 }

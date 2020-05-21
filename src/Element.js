@@ -1,57 +1,67 @@
-export class Element{
-    constructor(id, parent){
+export class Element {
+
+    constructor(id, parent) {
         this.id = id;
         this.parent = parent;
         this.previousElements = [];
         this.nextElements = [];
         this.coordinates = {};
-        
     }
 
-    // Getters
-    getId(){
-        return this.id;
-    }
-    getPreviousElements(){
-        return this.previousElements;
-    }
-    getNextElements(){
-        return this.nextElements;
-    }
-    getCoordinates(){
-        return this.coordinates;
-    }
-    getParent(){
-        return this.parent;
-    }
+    /* ----------- Methods ----------- */
 
-    // Setters
-    setId(id){
-        this.id = id;
-    }
-    addPreviousElement(element){
+    addPreviousElement(element) {
         this.previousElements.push(element);
     }
-    addNextElement(element){
+
+    addNextElement(element) {
         this.nextElements.push(element);
     }
-    setCoordinates(x,y,z){
-        var coordinates = {"x": x,"y":y, "z":z};
-        this.coordinates = coordinates;
-    }
-    setParent(parent){
-        this.parent = parent;
-    }
 
-    removePreviousElement(element){
+    removePreviousElement(element) {
         var index = this.previousElements.indexOf(element);
         if (index !== -1)
             this.previousElements.splice(index, 1);
     }
 
-    removeNextElement(element){
+    removeNextElement(element) {
         var index = this.nextElements.indexOf(element);
         if (index !== -1)
             this.nextElements.splice(index, 1);
+    }
+
+    /* ----------- Getters & Setters ----------- */
+
+    getId() {
+        return this.id;
+    }
+
+    getPreviousElements() {
+        return this.previousElements;
+    }
+
+    getNextElements() {
+        return this.nextElements;
+    }
+
+    getCoordinates() {
+        return this.coordinates;
+    }
+
+    getParent() {
+        return this.parent;
+    }
+
+    setId(id) {
+        this.id = id;
+    }
+
+    setCoordinates(x, y, z) {
+        var coordinates = { "x": x, "y": y, "z": z };
+        this.coordinates = coordinates;
+    }
+
+    setParent(parent) {
+        this.parent = parent;
     }
 }

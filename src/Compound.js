@@ -1,8 +1,8 @@
 import { Entity } from "./Entity.js";
 
-export class Compound extends Entity{
-    
-    constructor(id, parent, name, compartment=null, charge=null, formula=null, notes="", annotation={}){
+export class Compound extends Entity {
+
+    constructor(id, parent, name, compartment = null, charge = null, formula = null, notes = "", annotation = {}) {
         super(id, parent);
         this.name = name;
         this.compartment = compartment;
@@ -12,57 +12,59 @@ export class Compound extends Entity{
         this.annotation = annotation;
     }
 
-    getName(){
+    /* ----------- Methods ----------- */
+
+    addAnotation(dbName, annotation) {
+        this.annotation.add(dbName, annotation);
+    }
+    
+    /* ----------- Getters & Setters ----------- */
+
+    getName() {
         return this.name;
     }
 
-    getCompartment(){
+    getCompartment() {
         return this.compartment;
     }
 
-    getCharge(){
+    getCharge() {
         return this.charge;
     }
 
-    getFormula(){
+    getFormula() {
         return this.formula;
     }
 
-    getNotes(){
+    getNotes() {
         return this.notes;
     }
 
-    getAnnotation(){
+    getAnnotation() {
         return this.annotation;
     }
 
-    setName(name){
+    setName(name) {
         this.name = name;
     }
-    
-    setCompartement(compartment){
+
+    setCompartement(compartment) {
         this.compartment = compartment;
     }
 
-    setCharge(charge){
+    setCharge(charge) {
         this.charge = charge;
     }
 
-    setFormula(formula){
+    setFormula(formula) {
         this.formula = formula;
     }
 
-    setNotes(notes){
+    setNotes(notes) {
         this.notes = notes;
     }
 
-    setAnnotation(annotation){
+    setAnnotation(annotation) {
         this.annotation = annotation;
     }
-
-    addAnotation(DbName, annotation){
-        this.annotation.add(DbName,annotation);
-    }
-
-
 }

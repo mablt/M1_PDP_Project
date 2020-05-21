@@ -1,37 +1,43 @@
 import { Graph } from "./Graph.js";
 
-export class Pathway extends Graph{
-    constructor(id, name = "", compartments = {}, version = ""){
+export class Pathway extends Graph {
+
+    constructor(id, name = "", compartments = {}, version = "") {
         super(id);
         this.name = name;
         this.compartments = compartments;
         this.version = version;
     }
 
-    // Getters
-    getName(){
+    /* ----------- Methods ----------- */
+
+    addCompartment(key, value) {
+        this.compartments.add(key, value);
+    }
+
+    /* ----------- Getters & Setters ----------- */
+
+    getName() {
         return this.name;
     }
-    getCompartments(){
+
+    getCompartments() {
         return this.compartments;
     }
-    getVersion(){
+
+    getVersion() {
         return this.version;
     }
 
-    // Setters
-    setName(name){
-        this.name=name;
+    setName(name) {
+        this.name = name;
     }
-    setCompartments(compartments){
+
+    setCompartments(compartments) {
         this.compartments = compartments;
     }
-    addCompartement(key,value){
-        this.compartments.add(key,value);
-    }
-    setVersion(version){
-        this.version= version;
-    }
 
-
+    setVersion(version) {
+        this.version = version;
+    }
 }

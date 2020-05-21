@@ -1,7 +1,8 @@
 import { Relation } from "./Relation.js";
 
-export class Reaction extends Relation{
-    constructor(id, parent, name, lowerBound=null, upperBound=null, substystem=null){
+export class Reaction extends Relation {
+
+    constructor(id, parent, name, lowerBound = null, upperBound = null, substystem = null) {
         super(id, parent);
         this.name = name;
         this.lowerBound = lowerBound;
@@ -10,62 +11,69 @@ export class Reaction extends Relation{
         this.notes = "";
         this.annotation = {};
         this.enzyme = "";
-
     }
-    
-    // Getters
-    getName(){
+
+    /* ----------- Methods ----------- */
+
+    addAnotation(dbName, annotation) {
+        this.annotation.add(dbName, annotation);
+    }
+
+    /* ----------- Getters & Setters ----------- */
+
+    getName() {
         return this.name;
     }
 
-    getLowerBound(){
+    getLowerBound() {
         return this.lowerBound;
     }
-    getUpperBound(){
+
+    getUpperBound() {
         return this.upperBound;
     }
-    getSubsystem(){
+
+    getSubsystem() {
         return this.substystem;
     }
-    getNotes(){
+
+    getNotes() {
         return this.notes;
     }
-    getAnnotation(){
+
+    getAnnotation() {
         return this.annotation;
     }
-    getEnzyme(){
+
+    getEnzyme() {
         return this.enzyme;
     }
 
-    //Setters
-    setName(name){
+    setName(name) {
         this.name = name;
     }
 
-    setLowerBound(lowerBound){
+    setLowerBound(lowerBound) {
         this.lowerBound = lowerBound;
     }
-    setUpperBound(upperBound){
-        this.upperBound=upperBound;
+
+    setUpperBound(upperBound) {
+        this.upperBound = upperBound;
     }
 
-    setSubsystem(subsystem){
+    setSubsystem(subsystem) {
         this.substystem = subsystem;
     }
 
-    setNotes(notes){
+    setNotes(notes) {
         this.notes = notes;
     }
 
-    setAnnotation(annotation){
+    setAnnotation(annotation) {
         this.annotation = annotation;
     }
 
-    addAnotation(DbName, annotation){
-        this.annotation.add(DbName,annotation);
+    setEnzyme(enzyme) {
+        this.enzyme = enzyme;
     }
-    setEnzyme(enzyme){
-        this.enzyme=enzyme;
-    }
-
 }

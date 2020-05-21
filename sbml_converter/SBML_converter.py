@@ -1,16 +1,12 @@
+// Libraries imports
 import xml.dom.minidom
 import json
 import os
 from tkinter import *
 from tkinter import filedialog
 
-
-"""
-Reads metabolites from the SBML file and returns a dictionnary
-"""
-
-
 def getMetabolites(doc):
+    """Reads metabolites from the SBML file and returns a dictionnary"""
     species = doc.getElementsByTagName("species")
     metabolites = []
     for sp in species:
@@ -24,12 +20,8 @@ def getMetabolites(doc):
     return metabolites
 
 
-"""
-Reads products from the SBML file and returns a dictionnary
-"""
-
-
 def getProducts(products_list):
+    """Reads products from the SBML file and returns a dictionnary"""
     final_products = {}
     for prod in products_list:
         products = prod.getElementsByTagName("speciesReference")
@@ -40,12 +32,8 @@ def getProducts(products_list):
     return final_products
 
 
-"""
-Reads reactants from the SBML file and returns a dictionnary
-"""
-
-
 def getReactants(reactants_list):
+    """Reads reactants from the SBML file and returns a dictionnary"""
     final_reactants = {}
     for react in reactants_list:
         reactants = react.getElementsByTagName("speciesReference")
@@ -54,17 +42,14 @@ def getReactants(reactants_list):
             final_reactants[r.getAttribute("species")] = stoichio
     return final_reactants
 
-'''
-Returns a list of the elements which are int list1 but not in list2
-'''
+
 def difference(list1,list2):
+    """Returns a list of the elements which are int list1 but not in list2"""
     return(list(set(list1)-set(list2)))
 
-"""
-Reads gene reaction rule from the SBML file and returns a string
-"""
 
 def getGeneReactionRules(reaction):
+    """Reads gene reaction rule from the SBML file and returns a string"""
     geneReactionRule = ''
     genes = reaction.getElementsByTagName('fbc:geneProductRef')
     if (len(genes))== 0:
@@ -115,15 +100,14 @@ def getGeneReactionRules(reaction):
     
     return geneReactionRule
 
-"""
-Reads reactions from the SBML file 
-Calls functions getProducts() and getReactants() 
-to deal with stoichiometry
-Returns a dictionnary
-"""
-
 
 def getReactions(doc):
+    """Reads reactions from the SBML file 
+
+    Calls functions getProducts() and getReactants() 
+    to deal with stoichiometry
+    Returns a dictionnary
+    """
     reacts = doc.getElementsByTagName("reaction")
     reactions = []
     for re in reacts:
@@ -144,13 +128,8 @@ def getReactions(doc):
     return reactions
 
 
-
-
-"""
-Reads genes from the SBML file and returns a dictionnary
-"""
-
 def getGenes(doc):
+    """Reads genes from the SBML file and returns a dictionnary"""
     allGenes = doc.getElementsByTagName("fbc:geneProduct")
     genes = []
     for g in allGenes:
@@ -160,12 +139,9 @@ def getGenes(doc):
         genes.append(gene)
     return genes
 
-"""
-Reads compartments from the SBML file and returns a dictionnary
-"""
-
 
 def getCompartments(doc):
+    """Reads compartments from the SBML file and returns a dictionnary"""
     comparts = doc.getElementsByTagName("compartment")
     compartments = {}
     for comp in comparts:
@@ -173,12 +149,8 @@ def getCompartments(doc):
     return compartments
 
 
-"""
-Calls all reading functions and builds a json type variable
-"""
-
-
 def createJSON(doc):
+    """Calls all reading functions and builds a json type variable"""
     json = {}
     json["metabolites"] = getMetabolites(doc)
     json["reactions"] = getReactions(doc)
@@ -190,12 +162,8 @@ def createJSON(doc):
     return json
 
 
-"""
-Checks SBML level
-"""
-
-
 def formatVerif(doc):
+    """Checks SBML level"""
     level = doc.getElementsByTagName("sbml")
     level = level[0].getAttribute("level")
     if level == "3":
@@ -204,7 +172,7 @@ def formatVerif(doc):
         return False
 
 
-# -------  GRAPHIC PART --------#
+# -------  GRAPHIC PART ------- #
 
 class App(object):
     def __init__(self, root):
@@ -219,13 +187,14 @@ class App(object):
         self.label2 = Label(self.textframe, text="", font=("Helvetica", 14),bg="#6ca7c9")
         self.label2.pack()
 
-    """
-    On click, allows the user to select a SBML file
-    Creates a directory for the converted file (if it doesn't exist)
-    Reads the SBML file and saves a JSON file in the directory.
-    """
+    
 
     def upload(self):
+        """
+        On click, allows the user to select a SBML file
+        Creates a directory for the converted file (if it doesn't exist)
+        Reads the SBML file and saves a JSON file in the directory.
+        """
         filename = filedialog.askopenfilename()
         print("Selected:", filename)
         try:

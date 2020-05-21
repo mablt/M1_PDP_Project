@@ -1,19 +1,25 @@
-html, body {
-	height: 100%;
-    margin: 0; padding: 0;
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
     color: floralwhite;
     background-color: black;
 }
-.sidebar, #graph-3d{
-    padding:1px 0;
+
+.sidebar,
+#graph-3d {
+    padding: 1px 0;
     height: inherit;
-    }
+}
+
 body {
     overflow: hidden;
     height: inherit;
     /*background-color: darkslategrey;*/
 }
-h1{
+
+h1 {
     text-align: center;
     margin: 0;
     top: 6px;
@@ -24,8 +30,8 @@ h1{
     background-color: rgb(26, 48, 48);
 }
 
-footer{
-    position:absolute;
+footer {
+    position: absolute;
     bottom: 0;
     width: 100%;
     /*left: 50%;*/
@@ -33,10 +39,13 @@ footer{
     color: slategrey;
     opacity: 0.7;
     font-size: 13px;
-  }
+}
 
-
-#uploads,#options,#info,#save,#duplicate {
+#uploads,
+#options,
+#info,
+#save,
+#duplicate {
     margin-left: 1%;
     font-size: 15px;
     display: none;
@@ -58,12 +67,13 @@ footer{
     color: #ccc;
 }
 
-#graph{
+#graph {
     width: 80%;
     padding-left: 20%;
     transition: all .5s;
 }
-.sidebar{
+
+.sidebar {
     position: fixed;
     left: -0;
     padding-top: 6%;
@@ -72,20 +82,23 @@ footer{
     font-family: Didot, serif;
     width: 20%;
     background-color: darkslategrey;
-    background-image:linear-gradient( rgb(26, 48, 48),darkslategrey);
+    background-image: linear-gradient( rgb(26, 48, 48), darkslategrey);
     padding-bottom: 6%;
     transition: all .5s ease;
 }
 
-#graph-3d{
+#graph-3d {
     /*margin-left:20%;*/
-	background-color:black;
-	/*width:80%;*/
-    height:100%-100px;
+    background-color: black;
+    /*width:80%;*/
+    height: 100%-100px;
 }
-.name{
+
+.name {
     font-size: large;
 }
+
+
 /* 
 .bord{
     display: none;
@@ -99,22 +112,19 @@ footer{
     margin-bottom: 10px;
 } */
 
-
-
-#check{
+#check {
     display: none;
-
 }
 
-#btn, #cancel{
+#btn,
+#cancel {
     position: absolute;
     cursor: pointer;
-    color:rgb(89, 167, 167);
+    color: rgb(89, 167, 167);
     border-radius: 3px;
-
 }
 
-#cancel{
+#cancel {
     z-index: 1111;
     left: 18%;
     top: 10px;
@@ -123,7 +133,7 @@ footer{
     transition: all .5s ease;
 }
 
-#btn{
+#btn {
     left: -20%;
     top: 3px;
     font-size: 25px;
@@ -131,41 +141,42 @@ footer{
     transition: all .5s;
 }
 
-#check:checked ~ .sidebar{
+#check:checked~.sidebar {
     left: -20%;
 }
-#check:checked ~ label #cancel{
+
+#check:checked~label #cancel {
     left: 18%;
     opacity: 0;
     pointer-events: none;
 }
 
-#check:checked ~ label #btn{
+#check:checked~label #btn {
     left: 1%;
 }
 
-#check:checked ~ #graph{
+#check:checked~#graph {
     width: 100%;
     padding-left: 0%;
 }
 
-a{
+a {
     color: whitesmoke;
     text-decoration-line: underline;
     border-right: 5px solid transparent;
     display: block;
 }
 
-a:hover{
+a:hover {
     color: rgb(115, 196, 196);
     text-decoration-line: underline;
     border-right-color: rgb(89, 167, 167);
-    background-color: rgb(62, 82, 126,0.1);
+    background-color: rgb(62, 82, 126, 0.1);
 }
 
 nav ul {
     user-select: none;
-    box-sizing : border-box;
+    box-sizing: border-box;
     height: 100%;
     padding: 0;
 }
@@ -175,22 +186,22 @@ nav ul li {
     line-height: 200%;
     display: block;
     list-style: none;
-    border-bottom: 2px solid rgba(89, 167, 167,0.3);
+    border-bottom: 2px solid rgba(89, 167, 167, 0.3);
 }
 
-nav ul li a{
+nav ul li a {
     position: relative;
     display: block;
     padding-left: 10%;
     height: 100%;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
     display: block;
     padding-left: 20%;
 }
 
-nav ul li a span{
+nav ul li a span {
     position: absolute;
     right: 20px;
     top: 50%;
@@ -199,8 +210,7 @@ nav ul li a span{
     padding-left: 10%;
 }
 
-nav ul li a:hover span{
-
+nav ul li a:hover span {
     transform: translateY(-25%) rotate(-180deg);
     right: 5px;
 }
@@ -208,5 +218,4 @@ nav ul li a:hover span{
 #uploads:checked {
     cursor: pointer;
     display: block;
-
 }
