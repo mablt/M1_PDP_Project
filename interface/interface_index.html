@@ -9,8 +9,8 @@
 
     <script src="//unpkg.com/3d-force-graph"></script>
     <script src="//unpkg.com/three"></script>
-    <script type="module" src="./test_interface.js"></script>
-  <!--<script type="module" src="./../src/utils.js"></script>-->
+    <!-- <script type="module" src="./test_interface.js"></script> -->
+    <script type="module" src="./../src/utils.js"></script>
 
     <title> metabolic mapping </title>
 </head>
@@ -27,7 +27,7 @@
         <nav>
             <ul>
                 <li>
-                    <a href="#" id="uploadbar">Upload <span class = "fas fa-caret-down first"></span></a>
+                    <a href="#" id="uploadbar">Upload <span class="fas fa-caret-down first"></span></a>
                     <div id="uploads">
                         <div class="dropzone" id="dropzone"> Drop files here to upload</div>
                         <input type="file" id="files" name="myFiles" accept=".json" multiple>
@@ -35,24 +35,26 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#" id="optionbar">Options <span class = "fas fa-caret-down"></span></a>
+                    <a href="#" id="optionbar">Options <span class="fas fa-caret-down"></span></a>
                     <div id="options">
                         <div id="duplicate">
                             <p class="name">Duplicate</p>
-                            <label class="cofact"><input type ="checkbox" id="all" name="all"value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'> All</label>
-                            <label class="cofact"><input type ="checkbox" id="h" value="h"> H+</label>
-                            <label class="cofact"><input type ="checkbox" id="co2" value="co2"> CO2</label>
-                            <label class="cofact"><input type ="checkbox" id="h2o" value="h2o"> H2O</label>
-                            <label class="cofact"><input type ="checkbox" id="atp" value="atp"> ATP</label>
-                            <label class="cofact"><input type ="checkbox" id="adp" value="adp"> ADP</label>
+                            <label class="cofact"><input type="checkbox" id="all" name="all"
+                                    value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'>
+                                All</label>
+                            <label class="cofact"><input type="checkbox" id="h" value="h"> H+</label>
+                            <label class="cofact"><input type="checkbox" id="co2" value="co2"> CO2</label>
+                            <label class="cofact"><input type="checkbox" id="h2o" value="h2o"> H2O</label>
+                            <label class="cofact"><input type="checkbox" id="atp" value="atp"> ATP</label>
+                            <label class="cofact"><input type="checkbox" id="adp" value="adp"> ADP</label>
                         </div>
 
                         <div id="link">
                             <label for="link-select">Choose link style:</label>
                             <select name="link-style" id="link-select">
-                        <option value="arrow" selected>Arrow</option>
-                        <option value="particle">Oriented particle</option>
-                    </select>
+                                <option value="arrow" selected>Arrow</option>
+                                <option value="particle">Oriented particle</option>
+                            </select>
 
 
                         </div>
@@ -60,19 +62,19 @@
                         <div id="nodeR">
                             <label for="nodeRgeometry-select">Choose node geometry for reactions : </label>
                             <select name="nodeRgeometry-style" id="nodeRgeometry-select">
-                        <option value="sphere" selected>sphere</option>
-                        <option value="box">box</option>
-                        <option value="torusknot" selected>torusknot</option>
-                    </select>
+                                <option value="sphere" selected>sphere</option>
+                                <option value="box">box</option>
+                                <option value="torusknot" selected>torusknot</option>
+                            </select>
                         </div>
                         <div id="nodeM">
                             <label for="nodeMgeometry-select">Choose node geometry for metabolites : </label>
                             <select name="nodeMgeometry-style" id="nodeMgeometry-select">
-                                    <option value="sphere" selected>sphere</option>
-                                    <option value="box">box</option>
-                                    <option value="torusknot" selected>torusknot</option>
-                    
-                </select>
+                                <option value="sphere" selected>sphere</option>
+                                <option value="box">box</option>
+                                <option value="torusknot" selected>torusknot</option>
+
+                            </select>
                         </div>
 
 
@@ -81,25 +83,25 @@
                         <div id="colorR">
                             <label for="nodeRcolor-select"> Choose reactions color : </label>
                             <select name="nodeR-style" id="nodeRcolor-select">
-                            <option value="#4CB62D" selected>green</option>
-                            <option value="#BF2B2B">red</option>
-                            <option value="#2D91B6" selected>blue</option>
-                        </select>
+                                <option value="#4CB62D" selected>green</option>
+                                <option value="#BF2B2B">red</option>
+                                <option value="#2D91B6" selected>blue</option>
+                            </select>
 
                         </div>
 
                         <div id="colorM">
                             <label for="nodeMcolor-select"> Choose metabolites color : </label>
                             <select name="nodeM-style" id="nodeMcolor-select">
-                            <option value="#4CB62D" selected>green</option>
-                            <option value="#BF2B2B">red</option>
-                            <option value="#2D91B6" selected>blue</option>
-                        </select>
+                                <option value="#4CB62D" selected>green</option>
+                                <option value="#BF2B2B">red</option>
+                                <option value="#2D91B6" selected>blue</option>
+                            </select>
                             <button id="change"> Apply changes </button>
                         </div>
                 </li>
                 <li>
-                    <a href="#" id="infobar">Informations <span class = "fas fa-caret-down"></span></a>
+                    <a href="#" id="infobar">Informations <span class="fas fa-caret-down"></span></a>
                     <div id="info">
                         <p><span id="selected-node-name">Click on a node to display information</span> </p>
                         <p><span id="selected-node-id"></span> </p>
@@ -107,7 +109,7 @@
                     </div>
                 </li>
                 <li>
-                    <a href="#" id="savebar">Save graph as JSON file <span class = "fas fa-caret-down"></span></a>
+                    <a href="#" id="savebar">Save graph as JSON file <span class="fas fa-caret-down"></span></a>
                     <div id="save">
                         <div>
                             <button id="saveGraph"> Save Graph </button>
@@ -115,7 +117,7 @@
                     </div>
                 </li>
             </ul>
-            </div>
+    </div>
     </div>
     </nav>
     <script language="JavaScript">
