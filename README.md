@@ -19,7 +19,7 @@ Server installation, with the `http-server` package :
 
 ## Usage
 
-To run the web application, the use of a browser is required. Only Chrome and Firefox browser are guaranteed. The node  local server is required (See below).
+To run the web application, browser use is required. Only Chrome and Firefox browser are guaranteed. Local node server is required (See below).
 
 ```
 cd testclass/
