@@ -4,10 +4,10 @@ import { Compound } from "./Compound.js";
 import { Reaction } from "./Reaction.js";
 import { Gene } from "./Gene.js";
 import { Map } from "./Map.js";
-import { Cofact } from "./Cofacteur.js";
+import { Cofact } from "./Cofactor.js";
 
-// Global variables
-var SAVE_GRAPH_EXTENSION = '_GENCOVERY';
+// // Global variables
+// var SAVE_GRAPH_EXTENSION = '_GENCOVERY';
 
 
 /**
@@ -186,12 +186,12 @@ export function duplicreate3dForceObject(map, cofact_list) {
                     for (var j of i.getPreviousElements()) {
                         var link = {};
                         if (cofact_list.includes(j.id)) {
-                            var cofacteur = getObjectById(cofacts, j.id);
-                            var val = cofacteur.nb;
+                            var cofactor = getObjectById(cofacts, j.id);
+                            var val = cofactor.nb;
                             var ind = val;
                             var duplicat_id = j.id + "#" + String(ind) + '___' + pathway.getName();
                             val++;
-                            cofacteur.setNb(val);
+                            cofactor.setNb(val);
                             link.source = duplicat_id;
                         }
                         else {
@@ -205,12 +205,12 @@ export function duplicreate3dForceObject(map, cofact_list) {
                     for (var j of i.getNextElements()) {
                         var link = {};
                         if (cofact_list.includes(j.id)) {
-                            var cofacteur = getObjectById(cofacts, j.id);
-                            var val = cofacteur.nb;
+                            var cofactor = getObjectById(cofacts, j.id);
+                            var val = cofactor.nb;
                             var ind = val;
                             var duplicat_id = j.id + "#" + String(ind) + '___' + pathway.getName();
                             val++;
-                            cofacteur.setNb(val);
+                            cofactor.setNb(val);
                             link.target = duplicat_id;
                         }
                         else {
@@ -233,11 +233,11 @@ export function duplicreate3dForceObject(map, cofact_list) {
         }
 
         // Here, we create all the elements corresponding to cofactors 
-        for (var cofacteur of cofacts) {
-            for (var i = 0; i < cofacteur.nb; i++) {
+        for (var cofactor of cofacts) {
+            for (var i = 0; i < cofactor.nb; i++) {
                 var elem = {};
-                elem.id = cofacteur.id + "#" + String(i) + '___' + pathway.getName();
-                elem.name = cofacteur.name;
+                elem.id = cofactor.id + "#" + String(i) + '___' + pathway.getName();
+                elem.name = cofactor.name;
                 elem.group = 2; // cofactor = entity not reaction or create 3 groups
                 elem.graph_id = pathway.id;
                 nodes_list.push(elem);
@@ -581,7 +581,7 @@ function getCofactList() {
 
 
 
-document.getElementById('ok').addEventListener('click', loadFileAsText);
-document.getElementById('change').addEventListener('click', graphChange);
+// document.getElementById('ok').addEventListener('click', loadFileAsText);
+// document.getElementById('change').addEventListener('click', graphChange);
 
-document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
+// document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);

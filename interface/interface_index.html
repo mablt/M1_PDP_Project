@@ -9,8 +9,8 @@
 
     <script src="//unpkg.com/3d-force-graph"></script>
     <script src="//unpkg.com/three"></script>
-    <!-- <script type="module" src="./test_interface.js"></script> -->
-    <script type="module" src="./../src/utils.js"></script>
+    <script type="module" src="./test_interface.js"></script>
+    <!-- <script type="module" src="./../src/utils.js"></script> -->
 
     <title> metabolic mapping </title>
 </head>
@@ -35,70 +35,77 @@
                     </div>
                 </li>
                 <li>
+                    <a href="#" id="duplicatebar">Duplicate <span class="fas fa-caret-down"></span></a>
+                    <div id="duplicate">
+                        <p>Choose cofactors to duplicate : </p>
+                        <label class="cofact"><input type="checkbox" id="all" name="all"
+                                value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'>
+                            All</label>
+                        <label class="cofact"><input type="checkbox" id="h" value="h"> H+</label>
+                        <label class="cofact"><input type="checkbox" id="co2" value="co2"> CO2</label>
+                        <label class="cofact"><input type="checkbox" id="h2o" value="h2o"> H2O</label>
+                        <label class="cofact"><input type="checkbox" id="atp" value="atp"> ATP</label>
+                        <label class="cofact"><input type="checkbox" id="adp" value="adp"> ADP</label>
+                        <button id="new"> Show new graph </button>
+                    </div>
+                </li>
+                <li>
                     <a href="#" id="optionbar">Options <span class="fas fa-caret-down"></span></a>
                     <div id="options">
-                        <div id="duplicate">
-                            <p class="name">Duplicate</p>
-                            <label class="cofact"><input type="checkbox" id="all" name="all"
-                                    value='["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"]'>
-                                All</label>
-                            <label class="cofact"><input type="checkbox" id="h" value="h"> H+</label>
-                            <label class="cofact"><input type="checkbox" id="co2" value="co2"> CO2</label>
-                            <label class="cofact"><input type="checkbox" id="h2o" value="h2o"> H2O</label>
-                            <label class="cofact"><input type="checkbox" id="atp" value="atp"> ATP</label>
-                            <label class="cofact"><input type="checkbox" id="adp" value="adp"> ADP</label>
-                        </div>
-
                         <div id="link">
                             <label for="link-select">Choose link style:</label>
                             <select name="link-style" id="link-select">
                                 <option value="arrow" selected>Arrow</option>
                                 <option value="particle">Oriented particle</option>
                             </select>
-
-
                         </div>
 
-                        <div id="nodeR">
-                            <label for="nodeRgeometry-select">Choose node geometry for reactions : </label>
-                            <select name="nodeRgeometry-style" id="nodeRgeometry-select">
-                                <option value="sphere" selected>sphere</option>
-                                <option value="box">box</option>
-                                <option value="torusknot" selected>torusknot</option>
-                            </select>
-                        </div>
-                        <div id="nodeM">
-                            <label for="nodeMgeometry-select">Choose node geometry for metabolites : </label>
-                            <select name="nodeMgeometry-style" id="nodeMgeometry-select">
-                                <option value="sphere" selected>sphere</option>
-                                <option value="box">box</option>
-                                <option value="torusknot" selected>torusknot</option>
+                        <div id="node">
+                            <div id="meta">
 
-                            </select>
-                        </div>
+                            <div id="nodeM">
+                                <label for="nodeMgeometry-select">Choose node geometry for metabolites : </label>
+                                <select name="nodeMgeometry-style" id="nodeMgeometry-select">
+                                    <option value="sphere">sphere</option>
+                                    <option value="box">box</option>
+                                    <option value="torusknot" selected>torusknot</option>
+    
+                                </select>
+                            </div>
+                            <div id="colorM">
+                                <label for="nodeMcolor-select"> Choose metabolites color : </label>
+                                <select name="nodeM-style" id="nodeMcolor-select">
+                                    <option value="#4CB62D" selected>green</option>
+                                    <option value="#BF2B2B">red</option>
+                                    <option value="#2D91B6">blue</option>
+                                </select>
+                            </div>
 
+                            </div>
+                            <div id="react">
+                                <div id="nodeR">
+                                    <label for="nodeRgeometry-select">Choose node geometry for reactions : </label>
+                                    <select name="nodeRgeometry-style" id="nodeRgeometry-select">
+                                        <option value="sphere">sphere</option>
+                                        <option value="box" selected>box</option>
+                                        <option value="torusknot">torusknot</option>
+                                    </select>
+                                </div>
+        
+                                <div id="colorR">
+                                    <label for="nodeRcolor-select"> Choose reactions color : </label>
+                                    <select name="nodeR-style" id="nodeRcolor-select">
+                                        <option value="#4CB62D">green</option>
+                                        <option value="#BF2B2B" selected>red</option>
+                                        <option value="#2D91B6" >blue</option>
+                                    </select>
+        
+                                </div>
 
-
-
-                        <div id="colorR">
-                            <label for="nodeRcolor-select"> Choose reactions color : </label>
-                            <select name="nodeR-style" id="nodeRcolor-select">
-                                <option value="#4CB62D" selected>green</option>
-                                <option value="#BF2B2B">red</option>
-                                <option value="#2D91B6" selected>blue</option>
-                            </select>
-
-                        </div>
-
-                        <div id="colorM">
-                            <label for="nodeMcolor-select"> Choose metabolites color : </label>
-                            <select name="nodeM-style" id="nodeMcolor-select">
-                                <option value="#4CB62D" selected>green</option>
-                                <option value="#BF2B2B">red</option>
-                                <option value="#2D91B6" selected>blue</option>
-                            </select>
+                            </div>
                             <button id="change"> Apply changes </button>
                         </div>
+                    </div>
                 </li>
                 <li>
                     <a href="#" id="infobar">Informations <span class="fas fa-caret-down"></span></a>
@@ -117,9 +124,8 @@
                     </div>
                 </li>
             </ul>
+        </nav>
     </div>
-    </div>
-    </nav>
     <script language="JavaScript">
         let uploadbar = document.getElementById("uploadbar");
         let uploads = document.getElementById("uploads");
@@ -129,6 +135,8 @@
         let info = document.getElementById("info");
         let savebar = document.getElementById("savebar");
         let save = document.getElementById("save");
+        let duplicatebar = document.getElementById("duplicatebar");
+        let duplicate = document.getElementById("duplicate");
 
         function displayblock(clickelement, displayelement) {
             clickelement.addEventListener("click", () => {
@@ -144,9 +152,11 @@
         displayblock(optionbar, options);
         displayblock(infobar, info);
         displayblock(savebar, save);
+        displayblock(duplicatebar, duplicate);
+        duplicatebar.addEventListener("click",() => {window.alert("Warning : know that it is impossible to save a graph (s) with duplication, and that by performing such an action you will lose your editions on the graph (s)")});
     </script>
     <div id="graph">
-        <div id="graph-3d">
+        <div id="graph-3d"></div>
             <footer>
                 <p>Left-click: rotate, Mouse-wheel/middle-click: zoom, Right-click: pan</p>
             </footer>
