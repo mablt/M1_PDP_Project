@@ -473,6 +473,7 @@ export function loadFileAsText() {
 export function get3dForceObject() {
     //console.log("++++++++++++++++");
     var ForceObject = window.GRAPH.graphData();
+    console.log(ForceObject);
     return ForceObject;
 }
 

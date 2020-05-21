@@ -99,15 +99,15 @@ export function loadFileAsText() {
   var fileReader = new FileReader();
   function readFile(index) {
       if (index >= filesToLoad.length) {
-          console.log(graphUtils.get3dForceObject);
-          if (graphUtils.get3dForceObject===undefined || getCofactList!={}){
+        //   console.log(graphUtils.get3dForceObject());
+        //   if (graphUtils.get3dForceObject===undefined || getCofactList!={}){
             firstgraph();
-            console.log("newgraph");
-          }
-          else{
-            othergraph();
-            console.log("samegraph");
-          }
+            console.log("newgraph");  
+        //   }
+        //   else{
+        //     othergraph();
+        //     console.log("samegraph");
+        //   }
           return;
       }
 
@@ -189,13 +189,18 @@ function firstgraph(){
 }
 
 function othergraph(){
-  graphUtils.stringToJSON();
-  var map=graphUtils.parseJSON();
-  displayGraph(graphUtils.get3dForceObject(),map);
+    var map=graphUtils.parseJSON();
+    var obj = graphUtils.get3dForceObject();
+    if( getCofactList().length != 0){
+        obj = graphUtils.duplicreate3dForceObject(map, getCofactList());
+    }
+//   graphUtils.stringToJSON();
+  
+  displayGraph(obj,map);
 }
 
 
 document.getElementById('ok').addEventListener('click', loadFileAsText);
-document.getElementById('change').addEventListener('click', loadFileAsText);
+document.getElementById('change').addEventListener('click', othergraph);
 
 document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
