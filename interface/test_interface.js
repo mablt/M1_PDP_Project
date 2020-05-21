@@ -62,7 +62,7 @@ var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
 //             console.log("newgraph");  
 //         //   }
 //         //   else{
-//         //     graphChangement();
+//         //     graphChange();
 //         //     console.log("samegraph");
 //         //   }
 //           return;
@@ -145,7 +145,7 @@ var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
 //   displayGraph(obj,map);
 // }
 
-// function graphChangement(){
+// function graphChange(){
 //     var map=graphUtils.parseJSON();
 //     var obj = graphUtils.get3dForceObject();
 //     if( getCofactList().length != 0){
@@ -158,6 +158,6 @@ var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
 
 
 // document.getElementById('ok').addEventListener('click', loadFileAsText);
-// document.getElementById('change').addEventListener('click', graphChangement);
+// document.getElementById('change').addEventListener('click', graphChange);
 
 // document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
