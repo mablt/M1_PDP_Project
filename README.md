@@ -1,6 +1,6 @@
 # Metabolic Mapping
 
-Web application to visualise in 3D metabolic pathway.  
+Web application to visualise in 3D metabolic pathways.  
 
 ![example screenshot](./example_screenshot.png)  
 
