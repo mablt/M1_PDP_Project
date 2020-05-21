@@ -19,9 +19,10 @@ Server installation, with the `http-server` package :
 
 ## Usage
 
-To run the web application, the use of a browser is required. Only Chrome and FIrefox browser are guaranteed. The node  local server is required (See below).
+To run the web application, the use of a browser is required. Only Chrome and Firefox browser are guaranteed. The node  local server is required (See below).
 
-```cd testclass/
+```
+cd testclass/
 http-server
 ```
 
@@ -36,7 +37,7 @@ Students of the Bioinformatics Master of the University of Bordeaux.
 > Mélanie CARRIAT - [melanie.carriat@etu.u-bordeaux.fr](mailto:melanie.carriat@etu.u-bordeaux.fr)  
 > Solweig HENNECHART - [solweig.hennechart@etu.u-bordeaux.fr](mailto:solweig.hennechart@etu.u-bordeaux.fr)  
 
-## Programs versions used  
+## Programs versions used  
 
 * Google Chrome 79.0.3945.117  
 * Firefox 72.0.1  
