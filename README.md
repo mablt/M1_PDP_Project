@@ -1,6 +1,6 @@
 # Metabolic Mapping
 
-Web application to visualise metabolic pathway in a 3-dimensional space. Uses [3D Force Graph](https://github.com/vasturiano/3d-force-graph) and [ThreeJS](https://github.com/mrdoob/three.js/) libraries.  
+Web application to visualise metabolic pathways in a 3-dimensional space. Uses [3D Force Graph](https://github.com/vasturiano/3d-force-graph) and [ThreeJS](https://github.com/mrdoob/three.js/) libraries.  
 
 ![example screenshot](./example_screenshot.png)  
 
