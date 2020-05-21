@@ -5,10 +5,10 @@ import { Reaction } from "./Reaction.js";
 import { Gene } from "./Gene.js";
 import { Map } from "./Map.js";
 import { Cofact } from "./Cofacteur.js";
-
+/*
 // Global variables
 var SAVE_GRAPH_EXTENSION = 'GENCOVERY';
-
+*/
 
 /**
  * Transforms each JSON file data as string from the list to JSON object
@@ -165,12 +165,13 @@ export function getObjectById(list, id) {
  * Creates the 3D-Force object required to display the graph with the 3D-Force Graph library with duplication possibility
  * 
  * @param  {Map} map Map object which contains the pathways
+ * @param  {Object} cofact_list list of cofactor ids to duplicate
  * @return {Object} 3D-Force object which contains nodes and links data
  */
-export function duplicreate3dForceObject(map) {
+export function duplicreate3dForceObject(map,cofact_list) {
     var nodes_list = [];
     var links_list = [];
-    var cofact_list = getCofactList();
+    //var cofact_list = getCofactList();
     for (var pathway of map.getGraphs()) {
         // var cofacts is a list of cofactor objects {id: , nb: , name: }
         var cofacts = initCofact(cofact_list, pathway);
@@ -561,17 +562,16 @@ export function modify3DForceGraph(object3dForce) {
  * return cofactors' id in list with user selection on interface
  * 
  */
-
+/*
 function getCofactList() {
     var cofact_list = [];
     if (document.querySelector('input[id="all"]').checked) {
-        /*
-      document.querySelector('input[id="h"]').checked;
-      document.querySelector('input[id="h2o"]').checked;
-      document.querySelector('input[id="co2"]').checked;
-      document.querySelector('input[id="atp"]').checked;
-      document.querySelector('input[id="adp"]').checked;
-      */
+      /*document.querySelector('input[id="h"]').checked= true;
+      document.querySelector('input[id="h2o"]').checked= true;
+      document.querySelector('input[id="co2"]').checked= true;
+      document.querySelector('input[id="atp"]').checked= true;
+      document.querySelector('input[id="adp"]').checked= true;
+      
         cofact_list = ["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"];
 
     }
@@ -599,13 +599,13 @@ function getCofactList() {
     }
     //console.log(cofact_list);
     return cofact_list;
-}
-
+}*/
+/*
 document.getElementById('ok').addEventListener('click', loadFileAsText);
 document.getElementById('change').addEventListener('click', loadFileAsText);
 
 document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
-
+*/
 //document.getElementById('cofact').addEventListener('click',loadFileAsText);
 
 
