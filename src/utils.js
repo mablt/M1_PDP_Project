@@ -408,10 +408,10 @@ export function displayGraph(object, map) {
  */
 
 function graphChange() {
-    var map = graphUtils.parseJSON();
-    var obj = graphUtils.get3dForceObject();
+    var map = parseJSON();
+    var obj = get3dForceObject();
     if (getCofactList().length != 0) {
-        obj = graphUtils.duplicreate3dForceObject(map, getCofactList());
+        obj = duplicreate3dForceObject(map, getCofactList());
     }
     displayGraph(obj, map);
 }
