@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="description" content="test interface" />
-    <meta name="author" content="M1 bioinformatics bordeaux univerty" />
+    <meta name="author" content="M1 bioinformatics bordeaux university" />
     <link href="interface_style.css" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
@@ -153,7 +153,9 @@
         displayblock(infobar, info);
         displayblock(savebar, save);
         displayblock(duplicatebar, duplicate);
-        duplicatebar.addEventListener("click", () => { window.alert("Warning : know that it is impossible to save a graph (s) with duplication, and that by performing such an action you will lose your editions on the graph (s)") });
+        duplicatebar.addEventListener("click", () => {
+            window.alert("Warning : know that it is impossible to save a graph (s) with duplication, and that by performing such an action you will lose your editions on the graph (s)")
+        });
     </script>
     <div id="graph">
         <div id="graph-3d"></div>
