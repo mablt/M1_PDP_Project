@@ -106,7 +106,7 @@ else, returns false</p>
 <dt><a href="#saveGraphToJSON">saveGraphToJSON()</a></dt>
 <dd><p>Calls functions to save displayed graph as a new JSON file</p>
 </dd>
-<dt><a href="#createNewFile">createNewFile()</a></dt>
+<dt><a href="#createNewFile">createNewFile(SAVE_GRAPH_EXTENSION)</a></dt>
 <dd><p>Creates JSON file(s) with modifications from the graph</p>
 </dd>
 <dt><a href="#modifyJSONObject">modifyJSONObject(object3dForce)</a></dt>
@@ -291,10 +291,15 @@ Calls functions to save displayed graph as a new JSON file
 **Kind**: global function  
 <a name="createNewFile"></a>
 
-## createNewFile()
+## createNewFile(SAVE\_GRAPH\_EXTENSION)
 Creates JSON file(s) with modifications from the graph
 
-**Kind**: global function  
+**Kind**: global function 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| SAVE\_GRAPH\_EXTENSION | <code>String</code> | new file name extension | 
+
 <a name="modifyJSONObject"></a>
 
 ## modifyJSONObject(object3dForce)
