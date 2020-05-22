@@ -1,4 +1,4 @@
-import * as graphUtils from "./../src/utils.js";
+import * as graphUtils from "../src/utils.js";
 
 // Global variables
 var SAVE_GRAPH_EXTENSION = '_GENCOVERY';
@@ -8,36 +8,10 @@ var SAVE_GRAPH_EXTENSION = '_GENCOVERY';
  */
 
 export function saveGraphToJSON() {
+    console.log("save graph");
     var ForceObject = graphUtils.get3dForceObject();
     graphUtils.modifyJSONObject(ForceObject);
-    createNewFile();
-}
-
-/**
- * Creates JSON file(s) with modifications from the graph
- */
-function createNewFile() {
-    for (const fileName in window.JSON_OBJECT) {
-        var json = window.JSON_OBJECT[fileName];
-        var jsonAsText = JSON.stringify(json, null, 1);
-        var textFileAsBlob = new Blob([jsonAsText], { type: 'application/json' });
-        var downloadLink = document.createElement("a");
-        downloadLink.download = fileName + SAVE_GRAPH_EXTENSION + '.json';
-        downloadLink.innerHTML = "Download File";
-        if (window.webkitURL != null) {
-            // Chrome allows links to be clicked without actually adding it to the DOM.
-            downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-        }
-        else {
-            // Firefox requires links to be added to the DOM before it can be clicked.
-            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-            downloadLink.onclick = destroyClickedElement;
-            downloadLink.style.display = "none";
-            document.body.appendChild(downloadLink);
-        }
-
-        downloadLink.click();
-    }
+    createNewFile(SAVE_GRAPH_EXTENSION);
 }
 
 /**
@@ -60,10 +34,6 @@ export function loadFileAsText() {
         var re = /(\w+)\.json/;
 
         var fileNameWithoutExtension = fileName.replace(re, '$1');
-        //console.log(fileNameWithoutExtension);
-        // window.JSON_OBJECT[fileNameWithoutExtension] = "";
-        //console.log("aaaaaasjdkfbsdjfskdf");
-        //console.log(window.JSON_OBJECT);
         fileReader.onload = function (fileLoadedEvent) {
             var content = fileLoadedEvent.target.result;
             textFiles.push(content);
@@ -120,7 +90,6 @@ export function displayGraph(object, map) {
     if (document.getElementById("link-select").value === "particle") {
         graphUtils.particuleLink(window.GRAPH(document.getElementById('graph-3d')));
     }
-    //nodeStyle(window.GRAPH(document.getElementById('graph-3d')));
 
 }
 

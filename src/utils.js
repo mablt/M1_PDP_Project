@@ -6,9 +6,6 @@ import { Gene } from "./Gene.js";
 import { Map } from "./Map.js";
 import { Cofact } from "./Cofactor.js";
 
-// // Global variables
-// var SAVE_GRAPH_EXTENSION = '_GENCOVERY';
-
 
 /**
  * Transforms each JSON file data as string from the list to JSON object
@@ -93,7 +90,7 @@ export function parseJSON() {
  * @param  {String} idCompoundToSearch Id of the compound where the reaction id will be added in PreviousElements list
  * @param  {String} idElementToAdd Id of the reaction to add
  */
-function putElementToPreviousElementCompound(pathway, idCompoundToSearch, idElementToAdd) {
+export function putElementToPreviousElementCompound(pathway, idCompoundToSearch, idElementToAdd) {
     for (var element of pathway.getElements()) {
         if (element.getId() == idCompoundToSearch) {
             element.addPreviousElement({ "id": idElementToAdd });
@@ -109,7 +106,7 @@ function putElementToPreviousElementCompound(pathway, idCompoundToSearch, idElem
  * @param  {String} idCompoundToSearch Id of the compound where the reaction id will be added in next elements
  * @param  {String} idElementToAdd Id of the reaction to add
  */
-function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementToAdd) {
+export function putElementToNextElementCompound(patwhay, idCompoundToSearch, idElementToAdd) {
     for (var element of patwhay.getElements()) {
         if (element.getId() === idCompoundToSearch) {
             element.addNextElement({ "id": idElementToAdd });
@@ -312,12 +309,12 @@ export function create3dForceObject(map) {
 /**
  * Reads and parses JSON file, to display the graph
  */
-// export function jsonFileToGraph() {
-//     stringToJSON();
-//     var mapCreatedByParseJSON = parseJSON();
-//     var object = duplicreate3dForceObject(mapCreatedByParseJSON, getCofactList());
-//     displayGraph(object, mapCreatedByParseJSON);
-// }
+export function jsonFileToGraph() {
+    stringToJSON();
+    var mapCreatedByParseJSON = parseJSON();
+    var object = create3dForceObject(mapCreatedByParseJSON);
+    displayGraph(object, mapCreatedByParseJSON);
+}
 
 /**
  * Sets links to arrows with chosen characteristics
@@ -370,86 +367,73 @@ export function formNode(value, sizeproportion) {
  * @param {Map} map Map object which contains the pathways data
  */
 
-// export function displayGraph(object, map) {
-//     window.GRAPH = ForceGraph3D();
-//     window.GRAPH(document.getElementById('graph-3d'))
-//         .nodeThreeObject(({ group }) => new THREE.Mesh(
-//             [
-//                 formNode(document.getElementById("nodeMgeometry-select").value, 6),
-//                 formNode(document.getElementById("nodeRgeometry-select").value, 0)
-//             ][group % 2], [
-//                 new THREE.MeshBasicMaterial({ color: document.getElementById("nodeMcolor-select").value }),
-//                 new THREE.MeshBasicMaterial({ color: document.getElementById("nodeRcolor-select").value })
-//             ][group % 2]))
-//         .graphData(object)
-//         .onNodeClick(node => {
-//             console.log(node);
-//             var graph = map.getGraphById(node.graph_id);
-//             var element = graph.getElementsByName(node.name);
-//             document.getElementById("selected-node-name").innerHTML = " name : " + element.name;
-//             document.getElementById("selected-node-id").innerHTML = "id : " + element.id;
-//             document.getElementById("selected-node-pathway").innerHTML = "pathway : " + element.parent.name;
-//         })
-//         .onNodeDragEnd(node => {
-//             node.fx = node.x;
-//             node.fy = node.y;
-//             node.fz = node.z;
+export function displayGraph(object, map) {
+    window.GRAPH = ForceGraph3D();
+    window.GRAPH(document.getElementById('graph-3d'))
+        .nodeThreeObject(({ group }) => new THREE.Mesh(
+            [
+                formNode("torusknot", 6),
+                formNode("box", 0)
+            ][group % 2], [
+                new THREE.MeshBasicMaterial({ color: "#4CB62D" }),
+                new THREE.MeshBasicMaterial({ color: "#BF2B2B".value })
+            ][group % 2]))
+        .graphData(object)
+        .onNodeDragEnd(node => {
+            node.fx = node.x;
+            node.fy = node.y;
+            node.fz = node.z;
 
-//         });
+        });
 
-//     if (document.getElementById("link-select").value === "arrow") {
-//         arrowlink(window.GRAPH(document.getElementById('graph-3d')));
-//     }
-//     if (document.getElementById("link-select").value === "particle") {
-//         particuleLink(window.GRAPH(document.getElementById('graph-3d')));
-//     }
+    arrowlink(window.GRAPH(document.getElementById('graph-3d')));
 
-// }
+}
 
 /**
  * Applies custom changes
  */
 
-// function graphChange() {
-//     var map = parseJSON();
-//     var obj = get3dForceObject();
-//     if (getCofactList().length != 0) {
-//         obj = duplicreate3dForceObject(map, getCofactList());
-//     }
-//     displayGraph(obj, map);
-// }
+export function graphChange() {
+    var map = parseJSON();
+    var obj = get3dForceObject();
+    if (getCofactList().length != 0) {
+        obj = create3dForceObject(map);
+    }
+    displayGraph(obj, map);
+}
 
 
 /**
  * Loads files selected by the user and calls conversion function
  */
-// export function loadFileAsText() {
-//     var textFiles = [];
-//     window.JSON_OBJECT = {};
-//     var filesToLoad = document.getElementById("files").files;
-//     var fileReader = new FileReader();
-//     function readFile(index) {
-//         if (index >= filesToLoad.length) {
-//             jsonFileToGraph();
-//             return;
-//         }
+export function loadFileAsText() {
+    var textFiles = [];
+    window.JSON_OBJECT = {};
+    var filesToLoad = document.getElementById("files").files;
+    var fileReader = new FileReader();
+    function readFile(index) {
+        if (index >= filesToLoad.length) {
+            jsonFileToGraph();
+            return;
+        }
 
-//         var file = filesToLoad[index];
-//         var fileName = file.name;
-//         var re = /(\w+)\.json/;
+        var file = filesToLoad[index];
+        var fileName = file.name;
+        var re = /(\w+)\.json/;
 
-//         var fileNameWithoutExtension = fileName.replace(re, '$1');
-//         fileReader.onload = function (fileLoadedEvent) {
-//             var content = fileLoadedEvent.target.result;
-//             textFiles.push(content);
-//             window.JSON_OBJECT[fileNameWithoutExtension] = content;
-//             readFile(index + 1);
-//         };
-//         fileReader.readAsText(file, "UTF-8");
+        var fileNameWithoutExtension = fileName.replace(re, '$1');
+        fileReader.onload = function (fileLoadedEvent) {
+            var content = fileLoadedEvent.target.result;
+            textFiles.push(content);
+            window.JSON_OBJECT[fileNameWithoutExtension] = content;
+            readFile(index + 1);
+        };
+        fileReader.readAsText(file, "UTF-8");
 
-//     }
-//     readFile(0);
-// }
+    }
+    readFile(0);
+}
 
 
 
@@ -460,7 +444,6 @@ export function formNode(value, sizeproportion) {
  */
 export function get3dForceObject() {
     var ForceObject = window.GRAPH.graphData();
-    console.log(ForceObject);
     return ForceObject;
 }
 
@@ -468,38 +451,40 @@ export function get3dForceObject() {
  * Calls functions to save displayed graph as a new JSON file
  */
 
-// export function saveGraphToJSON() {
-//     var ForceObject = get3dForceObject();
-//     modifyJSONObject(ForceObject);
-//     createNewFile();
-// }
+export function saveGraphToJSON() {
+    console.log("save graph");
+    var ForceObject = get3dForceObject();
+    modifyJSONObject(ForceObject);
+    createNewFile();
+}
 
 /**
  * Creates JSON file(s) with modifications from the graph
+ * @param {String} SAVE_GRAPH_EXTENSION new file name extension
 */
-// function createNewFile() {
-//     for (const fileName in window.JSON_OBJECT) {
-//         var json = window.JSON_OBJECT[fileName];
-//         var jsonAsText = JSON.stringify(json, null, 1);
-//         var textFileAsBlob = new Blob([jsonAsText], { type: 'application/json' });
-//         var downloadLink = document.createElement("a");
-//         downloadLink.download = fileName + SAVE_GRAPH_EXTENSION + '.json';
-//         downloadLink.innerHTML = "Download File";
-//         if (window.webkitURL != null) {
-//             // Chrome allows links to be clicked without actually adding it to the DOM.
-//             downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-//         }
-//         else {
-//             // Firefox requires links to be added to the DOM before it can be clicked.
-//             downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-//             downloadLink.onclick = destroyClickedElement;
-//             downloadLink.style.display = "none";
-//             document.body.appendChild(downloadLink);
-//         }
+export function createNewFile(SAVE_GRAPH_EXTENSION) {
+    for (const fileName in window.JSON_OBJECT) {
+        var json = window.JSON_OBJECT[fileName];
+        var jsonAsText = JSON.stringify(json, null, 1);
+        var textFileAsBlob = new Blob([jsonAsText], { type: 'application/json' });
+        var downloadLink = document.createElement("a");
+        downloadLink.download = fileName + SAVE_GRAPH_EXTENSION + '.json';
+        downloadLink.innerHTML = "Download File";
+        if (window.webkitURL != null) {
+            // Chrome allows links to be clicked without actually adding it to the DOM.
+            downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+        }
+        else {
+            // Firefox requires links to be added to the DOM before it can be clicked.
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+            downloadLink.onclick = destroyClickedElement;
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+        }
 
-//         downloadLink.click();
-//     }
-// }
+        downloadLink.click();
+    }
+}
 
 
 /**
@@ -545,47 +530,3 @@ export function modifyJSONObject(object3dForce) {
         }
     }
 }
-
-
-
-/**
- * Return cofactors' id in list with user selection on interface
- * @return {Object} Cofactors List
- */
-
-// function getCofactList() {
-//     var cofact_list = [];
-//     if (document.querySelector('input[id="all"]').checked) {
-//         cofact_list = ["h_e", "h_c", "co2_e", "co2_c", "h2o_e", "h2o_c", "atp_e", "atp_c", "adp_e", "adp_c"];
-//     }
-//     else {
-//         if (document.querySelector('input[id="h"]').checked) {
-//             cofact_list.push("h_e");
-//             cofact_list.push("h_c");
-//         }
-//         if (document.querySelector('input[id="h2o"]').checked) {
-//             cofact_list.push("h2o_e");
-//             cofact_list.push("h2o_c");
-//         }
-//         if (document.querySelector('input[id="co2"]').checked) {
-//             cofact_list.push("co2_e");
-//             cofact_list.push("co2_c");
-//         }
-//         if (document.querySelector('input[id="atp"]').checked) {
-//             cofact_list.push("atp_e");
-//             cofact_list.push("atp_c");
-//         }
-//         if (document.querySelector('input[id="adp"]').checked) {
-//             cofact_list.push("adp_e");
-//             cofact_list.push("adp_c");
-//         }
-//     }
-//     return cofact_list;
-// }
-
-
-
-// document.getElementById('ok').addEventListener('click', loadFileAsText);
-// document.getElementById('change').addEventListener('click', graphChange);
-
-// document.getElementById('saveGraph').addEventListener('click', saveGraphToJSON);
