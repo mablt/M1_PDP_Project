@@ -7,17 +7,17 @@ var SAVE_GRAPH_EXTENSION = '_GENCOVERY';
  * Calls functions to save displayed graph as a new JSON file
  */
 
-export function saveGraphToJSON() {
+function saveGraphToJSON() {
     console.log("save graph");
     var ForceObject = graphUtils.get3dForceObject();
     graphUtils.modifyJSONObject(ForceObject);
-    createNewFile(SAVE_GRAPH_EXTENSION);
+    graphUtils.createNewFile(SAVE_GRAPH_EXTENSION);
 }
 
 /**
  * Loads files selected by the user and calls conversion function
  */
-export function loadFileAsText() {
+function loadFileAsText() {
     var textFiles = [];
     //console.log("------" + typeof textFiles);
     window.JSON_OBJECT = {};
@@ -53,7 +53,7 @@ export function loadFileAsText() {
  * @param {Map} map Map object which contains the pathways data
  */
 
-export function displayGraph(object, map) {
+function displayGraph(object, map) {
     window.GRAPH = ForceGraph3D();
     window.GRAPH(document.getElementById('graph-3d'))
         .nodeThreeObject(({ group }) => new THREE.Mesh(
