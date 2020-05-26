@@ -19,7 +19,6 @@ function saveGraphToJSON() {
  */
 function loadFileAsText() {
     var textFiles = [];
-    //console.log("------" + typeof textFiles);
     window.JSON_OBJECT = {};
     var filesToLoad = document.getElementById("files").files;
     var fileReader = new FileReader();
@@ -66,12 +65,9 @@ function displayGraph(object, map) {
             ][group % 2]))
         .graphData(object)
         .onNodeClick(node => {
-            //console.log("AAAAAAAAAAAAAA", node);
             console.log(node);
             var graph = map.getGraphById(node.graph_id);
-            //console.log("graph du node", graph, );
             var element = graph.getElementsByName(node.name);
-            //console.log("element du node", element);
             document.getElementById("selected-node-name").innerHTML = " name : " + element.name;
             document.getElementById("selected-node-id").innerHTML = "id : " + element.id;
             document.getElementById("selected-node-pathway").innerHTML = "pathway : " + element.parent.name;
@@ -83,7 +79,6 @@ function displayGraph(object, map) {
 
         });
 
-    //console.log("link value", document.getElementById("link-select").value);
     if (document.getElementById("link-select").value === "arrow") {
         graphUtils.arrowlink(window.GRAPH(document.getElementById('graph-3d')));
     }
