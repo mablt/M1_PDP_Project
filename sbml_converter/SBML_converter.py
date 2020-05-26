@@ -1,4 +1,4 @@
-// Libraries imports
+# Libraries imports
 import xml.dom.minidom
 import json
 import os
