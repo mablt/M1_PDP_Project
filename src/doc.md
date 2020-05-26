@@ -235,10 +235,15 @@ Calls functions to save displayed graph as a new JSON file
 **Kind**: global function  
 <a name="createNewFile"></a>
 
-## createNewFile()
+## createNewFile(SAVE\_GRAPH\_EXTENSION)
 Creates JSON file(s) with modifications from the graph
 
-**Kind**: global function  
+**Kind**: global function 
+
+| Param | Type | Description |
+| --- | --- | --- |
+| SAVE\_GRAPH\_EXTENSION | <code>String</code> | new file name extension | 
+
 <a name="modifyJSONObject"></a>
 
 ## modifyJSONObject(object3dForce)
