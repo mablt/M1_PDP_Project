@@ -28,7 +28,7 @@ http-server
 
 Open the first link to open the browser (`http://127.0.0.1:8080`).
 
-## Autors  
+## Authors  
 
 Students of the Bioinformatics Master of the University of Bordeaux.  
 
